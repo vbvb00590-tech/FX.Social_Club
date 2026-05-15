@@ -812,7 +812,6 @@
   </ul>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-bg-grid"></div>
   <div class="hero-glow"></div>
@@ -851,7 +850,6 @@
   </div>
 </section>
 
-<!-- COMPETENCIES -->
 <section id="competencies">
   <div class="section-header reveal">
     <span class="section-num">01</span>
@@ -892,7 +890,6 @@
   </div>
 </section>
 
-<!-- AI AGENTS -->
 <section id="agents">
   <div class="section-header reveal">
     <span class="section-num">02</span>
@@ -965,7 +962,6 @@
   </div>
 </section>
 
-<!-- STRATEGY -->
 <section id="strategy">
   <div class="section-header reveal">
     <span class="section-num">03</span>
@@ -1001,7 +997,6 @@
   </div>
 </section>
 
-<!-- TECH STACK -->
 <section id="stack">
   <div class="section-header reveal">
     <span class="section-num">04</span>
@@ -1062,7 +1057,6 @@
   </div>
 </section>
 
-<!-- EXPERIENCE -->
 <section id="experience">
   <div class="section-header reveal">
     <span class="section-num">05</span>
@@ -1088,7 +1082,6 @@
   </div>
 </section>
 
-<!-- CONTACT -->
 <section id="contact">
   <div class="contact-inner">
     <div class="reveal">
@@ -1124,20 +1117,31 @@
     cursor.style.top = e.clientY - 3 + 'px';
   });
 
-  // Reveal on scroll
+  // Fixed Reveal on scroll & load
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
+        const index = Array.from(reveals).indexOf(entry.target);
         setTimeout(() => {
           entry.target.classList.add('visible');
-        }, 80 * (Array.from(reveals).indexOf(entry.target) % 4));
+        }, 80 * (index % 4));
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.05, rootMargin: "0px 0px 50px 0px" });
 
   reveals.forEach(el => observer.observe(el));
+
+  // Extra check for elements already in view on page load
+  window.addEventListener('DOMContentLoaded', () => {
+    reveals.forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        el.classList.add('visible');
+      }
+    });
+  });
 </script>
 </body>
 </html>
