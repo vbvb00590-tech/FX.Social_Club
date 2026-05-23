@@ -3,504 +3,545 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vadim Motorny — Frontend Developer & AI Automation</title>
+<title>Vadim Motorny — AI Automation Engineer</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  --bg: #0c0c0f;
-  --bg2: #111118;
-  --bg3: #16161f;
-  --border: #1e1e2e;
+  --bg:      #0c0c0f;
+  --bg2:     #111118;
+  --bg3:     #16161f;
+  --border:  #1e1e2e;
   --border2: #2a2a3e;
-  --white: #f0f0f8;
-  --gray: #6b6b88;
-  --gray2: #9090aa;
-  --violet: #8b5cf6;
-  --violet2: #a78bfa;
-  --violet3: #c4b5fd;
-  --violet-bg: rgba(139,92,246,0.08);
-  --violet-border: rgba(139,92,246,0.25);
-  --green: #34d399;
+  --white:   #f0f0f8;
+  --gray:    #6b6b88;
+  --gray2:   #9090aa;
+  --v:       #8b5cf6;
+  --v2:      #a78bfa;
+  --v3:      #c4b5fd;
+  --vbg:     rgba(139,92,246,.08);
+  --vborder: rgba(139,92,246,.25);
+  --green:   #34d399;
 }
 
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
-body {
-  font-family: 'Inter', sans-serif;
-  background: var(--bg);
-  color: var(--white);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--white);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
 }
 
-/* NAV */
-nav {
-  position: fixed; top:0; left:0; right:0; z-index:100;
-  background: rgba(12,12,15,0.95);
-  border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(12px);
-  padding: 0 48px; height: 56px;
-  display: flex; align-items: center; justify-content: space-between;
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(12,12,15,.96);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(12px);
+  padding:0 48px;height:56px;
+  display:flex;align-items:center;justify-content:space-between;
 }
-.nav-logo {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 14px; font-weight: 500;
-  color: var(--violet2); text-decoration: none;
-  letter-spacing: 0.05em;
+.logo{
+  font-family:'JetBrains Mono',monospace;
+  font-size:14px;font-weight:500;
+  color:var(--v2);text-decoration:none;letter-spacing:.05em;
 }
-.nav-links { display: flex; gap: 32px; list-style: none; }
-.nav-links a {
-  font-size: 13px; color: var(--gray);
-  text-decoration: none; transition: color .15s;
+.nav-links{display:flex;gap:28px;list-style:none;}
+.nav-links a{font-size:13px;color:var(--gray);text-decoration:none;transition:color .15s;}
+.nav-links a:hover{color:var(--white);}
+.nav-cta{
+  font-size:13px;font-weight:500;
+  color:var(--bg)!important;
+  background:var(--v);padding:7px 18px;
+  transition:opacity .15s!important;
 }
-.nav-links a:hover { color: var(--white); }
-.nav-cta {
-  font-size: 13px; font-weight: 500;
-  color: var(--bg) !important;
-  background: var(--violet);
-  padding: 7px 18px; transition: opacity .15s !important;
+.nav-cta:hover{opacity:.8!important;}
+.burger{display:none;background:none;border:none;cursor:pointer;padding:4px;}
+.burger span{display:block;width:22px;height:1.5px;background:var(--white);margin:5px 0;}
+.mob{
+  display:none;position:fixed;inset:0;z-index:99;
+  background:var(--bg);padding:80px 48px 48px;
+  flex-direction:column;
 }
-.nav-cta:hover { opacity: 0.8 !important; }
-.burger { display:none; background:none; border:none; cursor:pointer; padding:4px; }
-.burger span { display:block; width:22px; height:1.5px; background:var(--white); margin:5px 0; }
-.mob {
-  display:none; position:fixed; inset:0; z-index:99;
-  background:var(--bg); padding:80px 48px 48px;
-  flex-direction:column; gap:0;
-}
-.mob.open { display:flex; }
-.mob a {
-  font-size:22px; font-weight:500; color:var(--white);
-  text-decoration:none; border-bottom:1px solid var(--border);
-  padding: 20px 0;
-}
+.mob.open{display:flex;}
+.mob a{font-size:22px;font-weight:500;color:var(--white);text-decoration:none;border-bottom:1px solid var(--border);padding:20px 0;}
 
-/* MAIN */
-main { padding-top: 56px; }
-
-/* HERO */
-.hero {
-  padding: 80px 48px 72px;
-  border-bottom: 1px solid var(--border);
-  max-width: 960px; margin: 0 auto;
-  position: relative; overflow: hidden;
+/* ── HERO ── */
+main{padding-top:56px;}
+.hero{
+  padding:80px 48px 72px;
+  border-bottom:1px solid var(--border);
+  max-width:960px;margin:0 auto;
+  position:relative;overflow:hidden;
 }
-.hero::before {
-  content: '';
-  position: absolute; top: -100px; right: -100px;
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(139,92,246,0.12) 0%, transparent 70%);
-  pointer-events: none;
+.hero::before{
+  content:'';position:absolute;top:-100px;right:-100px;
+  width:500px;height:500px;
+  background:radial-gradient(circle,rgba(139,92,246,.12) 0%,transparent 70%);
+  pointer-events:none;
 }
-.hero-label {
-  font-size: 12px; letter-spacing: 0.15em;
-  color: var(--gray); text-transform: uppercase;
-  margin-bottom: 20px;
-  font-family: 'JetBrains Mono', monospace;
-}
-.hero-name {
-  font-size: clamp(44px, 7vw, 84px);
-  font-weight: 600; line-height: 1;
-  letter-spacing: -0.03em; margin-bottom: 16px;
-  color: var(--white);
-}
-.hero-name span { color: var(--violet2); }
-.hero-sub {
-  font-size: clamp(16px,2.5vw,22px);
-  font-weight: 300; color: var(--gray2);
-  margin-bottom: 28px;
-}
-.status-pill {
-  display: inline-flex; align-items: center; gap: 7px;
-  font-size: 11px; color: var(--green);
-  border: 1px solid rgba(52,211,153,0.2);
-  background: rgba(52,211,153,0.06);
-  padding: 5px 12px; margin-bottom: 28px;
-  font-family: 'JetBrains Mono', monospace;
-}
-.sdot { width:5px; height:5px; border-radius:50%; background:var(--green); animation:pulse 2s infinite; }
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
-
-.hero-bio {
-  max-width: 600px; font-size: 15px;
-  line-height: 1.8; color: var(--gray2); margin-bottom: 36px;
-}
-.hero-bio strong { color: var(--white); font-weight: 500; }
-
-.stats { display:flex; border:1px solid var(--border); max-width:480px; margin-bottom:36px; }
-.stat { flex:1; padding:18px 22px; border-right:1px solid var(--border); }
-.stat:last-child { border-right:none; }
-.stat-val {
-  font-size:26px; font-weight:600;
-  letter-spacing:-0.03em; font-family:'JetBrains Mono',monospace;
-  margin-bottom:4px; color:var(--violet2);
-}
-.stat-lbl { font-size:11px; color:var(--gray); line-height:1.4; }
-
-.contacts { display:flex; flex-wrap:wrap; gap:10px; }
-.contact {
-  display:inline-flex; align-items:center; gap:6px;
-  font-size:12px; color:var(--gray2);
-  text-decoration:none; border:1px solid var(--border);
-  padding:7px 14px; transition:all .15s;
+.hero-label{
+  font-size:12px;letter-spacing:.15em;color:var(--gray);
+  text-transform:uppercase;margin-bottom:20px;
   font-family:'JetBrains Mono',monospace;
 }
-.contact:hover { border-color:var(--violet); color:var(--violet3); }
-.ck { color:var(--gray); font-size:10px; }
-
-/* SECTION */
-.section {
-  max-width:960px; margin:0 auto;
-  padding:72px 48px; border-bottom:1px solid var(--border);
+.hero-name{
+  font-size:clamp(44px,7vw,84px);
+  font-weight:600;line-height:1;
+  letter-spacing:-.03em;margin-bottom:16px;
 }
-.sh { display:flex; align-items:baseline; gap:14px; margin-bottom:44px; }
-.snum { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--gray); letter-spacing:0.1em; }
-.stitle { font-size:22px; font-weight:600; letter-spacing:-0.02em; color:var(--white); }
-.sline { flex:1; height:1px; background:var(--border); margin-left:6px; }
-
-/* COMP GRID */
-.comp-grid {
-  display:grid; grid-template-columns:repeat(3,1fr);
-  gap:1px; background:var(--border); border:1px solid var(--border);
+.hero-name span{color:var(--v2);}
+.hero-sub{
+  font-size:clamp(15px,2.2vw,20px);
+  font-weight:300;color:var(--gray2);
+  margin-bottom:28px;
 }
-.comp-card { background:var(--bg2); padding:28px 22px; transition:background .15s; }
-.comp-card:hover { background:var(--bg3); }
-.comp-icon { font-size:18px; margin-bottom:12px; }
-.comp-name { font-size:14px; font-weight:600; margin-bottom:12px; color:var(--white); }
-.comp-list { list-style:none; }
-.comp-list li {
-  font-size:12px; color:var(--gray2);
-  padding:5px 0; border-bottom:1px solid var(--border); line-height:1.5;
-}
-.comp-list li:last-child { border-bottom:none; }
-.comp-list li strong { color:var(--violet3); font-weight:500; }
-
-/* PROJECTS */
-.proj-list { display:flex; flex-direction:column; gap:1px; background:var(--border); border:1px solid var(--border); }
-.proj {
-  background:var(--bg2); padding:30px 26px;
-  display:grid; grid-template-columns:1fr auto;
-  gap:20px; align-items:start; transition:background .15s;
-}
-.proj:hover { background:var(--bg3); }
-.pnum { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--gray); letter-spacing:0.1em; margin-bottom:8px; }
-.pname { font-size:17px; font-weight:600; margin-bottom:10px; letter-spacing:-0.02em; color:var(--white); }
-.pdesc { font-size:13px; color:var(--gray2); line-height:1.7; margin-bottom:14px; }
-.ptags { display:flex; flex-wrap:wrap; gap:6px; }
-.ptag {
-  font-size:11px; padding:3px 10px;
-  border:1px solid var(--border2); color:var(--gray2);
+.status-pill{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:11px;color:var(--green);
+  border:1px solid rgba(52,211,153,.2);
+  background:rgba(52,211,153,.06);
+  padding:5px 12px;margin-bottom:28px;
   font-family:'JetBrains Mono',monospace;
-  transition: all .15s;
 }
-.ptag:hover { border-color:var(--violet); color:var(--violet3); }
-.pbadge {
-  font-size:10px; letter-spacing:0.1em; color:var(--gray);
-  text-transform:uppercase; font-family:'JetBrains Mono',monospace;
-  text-align:right; white-space:nowrap; padding-top:26px;
-}
+.sdot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 
-/* STACK */
-.stack { display:flex; flex-direction:column; border:1px solid var(--border); }
-.srow { display:grid; grid-template-columns:160px 1fr; border-bottom:1px solid var(--border); align-items:center; min-height:52px; }
-.srow:last-child { border-bottom:none; }
-.srow-lbl {
-  padding:14px 22px; font-size:10px; color:var(--gray);
-  letter-spacing:0.12em; text-transform:uppercase;
+.hero-bio{
+  max-width:640px;font-size:15px;
+  line-height:1.85;color:var(--gray2);margin-bottom:24px;
+}
+.hero-bio strong{color:var(--white);font-weight:500;}
+
+.priorities{
+  max-width:640px;margin-bottom:36px;
+  display:flex;flex-direction:column;gap:1px;
+  border:1px solid var(--border);
+}
+.priority{
+  display:grid;grid-template-columns:200px 1fr;
+  background:var(--bg2);
+  border-bottom:1px solid var(--border);
+  transition:background .15s;
+}
+.priority:last-child{border-bottom:none;}
+.priority:hover{background:var(--bg3);}
+.pr-key{
+  padding:14px 18px;
   font-family:'JetBrains Mono',monospace;
-  border-right:1px solid var(--border); align-self:stretch; display:flex; align-items:center;
+  font-size:11px;color:var(--v2);
+  letter-spacing:.05em;
+  border-right:1px solid var(--border);
+  align-self:stretch;display:flex;align-items:center;
 }
-.srow-tags { padding:14px 22px; display:flex; flex-wrap:wrap; gap:8px; }
-.stag {
-  font-size:12px; padding:4px 12px;
-  background:var(--bg3); color:var(--gray2);
-  font-family:'JetBrains Mono',monospace; border:1px solid var(--border2);
-}
-.stag.p { background:var(--violet-bg); color:var(--violet3); border-color:var(--violet-border); }
+.pr-val{padding:14px 18px;font-size:13px;color:var(--gray2);line-height:1.6;}
+.pr-val strong{color:var(--white);font-weight:500;}
 
-/* AI */
-.ai-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); border:1px solid var(--border); }
-.ai-card { background:var(--bg2); padding:26px 22px; transition:background .15s; }
-.ai-card:hover { background:var(--bg3); }
-.anum { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--gray); letter-spacing:0.12em; margin-bottom:12px; }
-.aname { font-size:15px; font-weight:600; margin-bottom:8px; color:var(--white); }
-.adesc { font-size:12px; color:var(--gray2); line-height:1.7; }
-.abar { height:1px; background:var(--border); margin-top:14px; position:relative; }
-.abar-f { position:absolute; top:0; left:0; height:1px; background:linear-gradient(90deg, var(--violet), var(--violet2)); }
+.contacts{display:flex;flex-wrap:wrap;gap:10px;}
+.contact{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:12px;color:var(--gray2);
+  text-decoration:none;border:1px solid var(--border);
+  padding:7px 14px;transition:all .15s;
+  font-family:'JetBrains Mono',monospace;
+}
+.contact:hover{border-color:var(--v);color:var(--v3);}
+.ck{color:var(--gray);font-size:10px;}
 
-/* ── CASE STUDY ── */
-.case {
-  background: var(--bg2);
-  border: 1px solid var(--violet-border);
-  position: relative; overflow: hidden;
+/* ── SECTION ── */
+.section{
+  max-width:960px;margin:0 auto;
+  padding:72px 48px;
+  border-bottom:1px solid var(--border);
 }
-.case::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, var(--violet), var(--violet2), transparent);
-}
-.case-hero {
-  padding: 40px 40px 36px;
-  border-bottom: 1px solid var(--border);
-  display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: start;
-}
-.case-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px; color: var(--violet); letter-spacing: 0.2em;
-  text-transform: uppercase; margin-bottom: 12px;
-}
-.case-title { font-size: 22px; font-weight: 600; color: var(--white); margin-bottom: 8px; }
-.case-sub { font-size: 13px; color: var(--gray2); }
-.case-bot-link {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px; color: var(--violet2);
-  text-decoration: none; border: 1px solid var(--violet-border);
-  padding: 10px 18px; white-space: nowrap;
-  transition: all .15s; background: var(--violet-bg);
-}
-.case-bot-link:hover { border-color: var(--violet); color: var(--violet3); }
+.sh{display:flex;align-items:baseline;gap:14px;margin-bottom:44px;}
+.snum{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gray);letter-spacing:.1em;}
+.stitle{font-size:22px;font-weight:600;letter-spacing:-.02em;color:var(--white);}
+.sline{flex:1;height:1px;background:var(--border);margin-left:6px;}
 
-.case-body { padding: 0; }
-.case-agents { display: grid; grid-template-columns: repeat(5,1fr); gap: 1px; background: var(--border); }
-.agent {
-  background: var(--bg2); padding: 24px 20px;
-  transition: background .15s; border: none;
+/* ── COMP GRID ── */
+.comp-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--border);border:1px solid var(--border);
 }
-.agent:hover { background: rgba(139,92,246,0.05); }
-.agent-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9px; color: var(--violet); letter-spacing: 0.2em;
-  margin-bottom: 10px;
+.comp-card{background:var(--bg2);padding:28px 22px;transition:background .15s;}
+.comp-card:hover{background:var(--bg3);}
+.comp-icon{
+  width:28px;height:28px;margin-bottom:16px;
+  border:1.5px solid var(--v);
+  position:relative;
 }
-.agent-icon { font-size: 20px; margin-bottom: 10px; }
-.agent-name { font-size: 13px; font-weight: 600; color: var(--white); margin-bottom: 6px; }
-.agent-desc { font-size: 11px; color: var(--gray); line-height: 1.6; }
-.agent-desc a { color: var(--violet2); text-decoration: none; }
-.agent-desc a:hover { text-decoration: underline; }
+.comp-icon::after{
+  content:'';position:absolute;
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  width:6px;height:6px;
+  background:var(--v2);
+}
+.comp-name{font-size:14px;font-weight:600;margin-bottom:12px;color:var(--white);}
+.comp-list{list-style:none;}
+.comp-list li{
+  font-size:12px;color:var(--gray2);
+  padding:5px 0;border-bottom:1px solid var(--border);line-height:1.5;
+}
+.comp-list li:last-child{border-bottom:none;}
+.comp-list li strong{color:var(--v3);font-weight:500;}
 
-.case-metrics {
-  display: grid; grid-template-columns: repeat(4,1fr);
-  gap: 1px; background: var(--border);
-  border-top: 1px solid var(--border);
+/* ── PROJECT ── */
+.proj-wrap{border:1px solid var(--border);}
+.proj{
+  background:var(--bg2);padding:30px 26px;
+  transition:background .15s;
 }
-.metric {
-  background: var(--bg2); padding: 22px 20px;
-  transition: background .15s;
+.proj:hover{background:var(--bg3);}
+.pnum{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gray);letter-spacing:.1em;margin-bottom:8px;}
+.proj-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:8px;}
+.bot-link{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:var(--v2);text-decoration:none;
+  border:1px solid var(--vborder);padding:5px 12px;
+  background:var(--vbg);transition:all .15s;
 }
-.metric:hover { background: var(--bg3); }
-.metric-icon { font-size: 16px; margin-bottom: 8px; }
-.metric-val {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 18px; font-weight: 500;
-  color: var(--violet2); margin-bottom: 4px;
-}
-.metric-label { font-size: 11px; color: var(--gray); line-height: 1.5; }
+.bot-link:hover{border-color:var(--v);color:var(--v3);}
+.pname{font-size:18px;font-weight:600;margin-bottom:10px;letter-spacing:-.02em;color:var(--white);}
+.pdesc{font-size:13px;color:var(--gray2);line-height:1.7;margin-bottom:20px;}
 
-.case-features {
-  display: grid; grid-template-columns: repeat(3,1fr);
-  gap: 1px; background: var(--border);
-  border-top: 1px solid var(--border);
+.feat-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);margin-bottom:16px;
 }
-.feature {
-  background: var(--bg2); padding: 20px;
-  transition: background .15s;
+.feat-block{background:var(--bg3);padding:18px 20px;}
+.feat-title{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;color:var(--v);letter-spacing:.15em;
+  text-transform:uppercase;margin-bottom:10px;
 }
-.feature:hover { background: var(--bg3); }
-.feature-text { font-size: 12px; color: var(--gray2); line-height: 1.6; }
-.feature-text strong { color: var(--white); font-weight: 500; }
+.feat-list{list-style:none;}
+.feat-list li{
+  font-size:12px;color:var(--gray2);
+  padding:4px 0;border-bottom:1px solid var(--border);line-height:1.5;
+}
+.feat-list li:last-child{border-bottom:none;}
+.feat-list li span{color:var(--white);}
+.feat-list li a{color:var(--v2);text-decoration:none;}
+.feat-list li a:hover{text-decoration:underline;}
 
-/* ABOUT */
-.about-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--border); border:1px solid var(--border); }
-.about-cell { background:var(--bg2); padding:24px; }
-.albl { font-size:10px; letter-spacing:0.15em; color:var(--gray); text-transform:uppercase; font-family:'JetBrains Mono',monospace; margin-bottom:8px; }
-.aval { font-size:14px; line-height:1.6; color:var(--white); }
-.aval span { color:var(--gray); font-size:12px; }
+.ptags{display:flex;flex-wrap:wrap;gap:6px;}
+.ptag{
+  font-size:11px;padding:3px 10px;
+  border:1px solid var(--border2);color:var(--gray2);
+  font-family:'JetBrains Mono',monospace;transition:all .15s;
+}
+.ptag:hover{border-color:var(--v);color:var(--v3);}
 
-/* FOOTER */
-footer {
-  max-width:960px; margin:0 auto;
+/* ── STACK ── */
+.stack{display:flex;flex-direction:column;border:1px solid var(--border);}
+.srow{display:grid;grid-template-columns:160px 1fr;border-bottom:1px solid var(--border);min-height:52px;align-items:center;}
+.srow:last-child{border-bottom:none;}
+.srow-lbl{
+  padding:14px 22px;font-size:10px;color:var(--gray);
+  letter-spacing:.12em;text-transform:uppercase;
+  font-family:'JetBrains Mono',monospace;
+  border-right:1px solid var(--border);
+  align-self:stretch;display:flex;align-items:center;
+}
+.srow-tags{padding:14px 22px;display:flex;flex-wrap:wrap;gap:8px;}
+.stag{
+  font-size:12px;padding:4px 12px;
+  background:var(--bg3);color:var(--gray2);
+  font-family:'JetBrains Mono',monospace;border:1px solid var(--border2);
+}
+.stag.p{background:var(--vbg);color:var(--v3);border-color:var(--vborder);}
+
+/* ── CASE ── */
+.case{
+  background:var(--bg2);
+  border:1px solid var(--vborder);
+  position:relative;overflow:hidden;
+}
+.case::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--v),var(--v2),transparent);
+}
+.case-hero{
+  padding:36px 40px;border-bottom:1px solid var(--border);
+  display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start;
+}
+.case-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;color:var(--v);letter-spacing:.2em;
+  text-transform:uppercase;margin-bottom:10px;
+}
+.case-title{font-size:20px;font-weight:600;color:var(--white);margin-bottom:6px;}
+.case-sub{font-size:13px;color:var(--gray2);}
+
+.agents{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  gap:1px;background:var(--border);
+  border-top:1px solid var(--border);
+}
+.agent{background:var(--bg2);padding:22px 18px;transition:background .15s;}
+.agent:hover{background:rgba(139,92,246,.05);}
+.agent-num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;color:var(--v);letter-spacing:.2em;margin-bottom:10px;
+}
+.agent-icon{font-size:18px;margin-bottom:8px;}
+.agent-name{font-size:13px;font-weight:600;color:var(--white);margin-bottom:6px;}
+.agent-desc{font-size:11px;color:var(--gray);line-height:1.6;}
+.agent-desc a{color:var(--v2);text-decoration:none;}
+
+.metrics{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--border);
+  border-top:1px solid var(--border);
+}
+.metric{background:var(--bg2);padding:20px 18px;transition:background .15s;}
+.metric:hover{background:var(--bg3);}
+.metric-icon{font-size:14px;margin-bottom:6px;}
+.metric-val{
+  font-family:'JetBrains Mono',monospace;
+  font-size:16px;font-weight:500;
+  color:var(--v2);margin-bottom:4px;
+}
+.metric-lbl{font-size:11px;color:var(--gray);line-height:1.5;}
+
+.features{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--border);
+  border-top:1px solid var(--border);
+}
+.feature{background:var(--bg2);padding:18px 20px;transition:background .15s;}
+.feature:hover{background:var(--bg3);}
+.feature-text{font-size:12px;color:var(--gray2);line-height:1.6;}
+.feature-text strong{color:var(--white);font-weight:500;}
+
+/* ── AI WORKFLOW ── */
+.ai-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--border);border:1px solid var(--border);
+}
+.ai-card{background:var(--bg2);padding:26px 22px;transition:background .15s;}
+.ai-card:hover{background:var(--bg3);}
+.anum{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gray);letter-spacing:.12em;margin-bottom:12px;}
+.aname{font-size:15px;font-weight:600;margin-bottom:8px;color:var(--white);}
+.adesc{font-size:12px;color:var(--gray2);line-height:1.7;}
+.abar{height:1px;background:var(--border);margin-top:14px;position:relative;}
+.abar-f{position:absolute;top:0;left:0;height:1px;background:linear-gradient(90deg,var(--v),var(--v2));}
+
+/* ── ABOUT ── */
+.about-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:1px;background:var(--border);border:1px solid var(--border);
+}
+.about-cell{background:var(--bg2);padding:24px;}
+.albl{
+  font-size:10px;letter-spacing:.15em;color:var(--gray);
+  text-transform:uppercase;font-family:'JetBrains Mono',monospace;margin-bottom:8px;
+}
+.aval{font-size:14px;line-height:1.7;color:var(--white);}
+.aval span{color:var(--gray);font-size:12px;}
+.aval a{color:var(--v2);text-decoration:none;}
+.aval a:hover{text-decoration:underline;}
+
+/* ── FOOTER ── */
+footer{
+  max-width:960px;margin:0 auto;
   padding:40px 48px;
-  display:flex; align-items:center; justify-content:space-between;
+  display:flex;align-items:center;justify-content:space-between;
 }
-.fcopy { font-size:12px; color:var(--gray); font-family:'JetBrains Mono',monospace; }
-.fcta {
-  font-size:13px; font-weight:500;
-  color:var(--bg); background:var(--violet);
-  padding:10px 24px; text-decoration:none; transition:opacity .15s;
+.fcopy{font-size:12px;color:var(--gray);font-family:'JetBrains Mono',monospace;}
+.fcta{
+  font-size:13px;font-weight:500;
+  color:var(--bg);background:var(--v);
+  padding:10px 24px;text-decoration:none;transition:opacity .15s;
 }
-.fcta:hover { opacity:0.8; }
+.fcta:hover{opacity:.8;}
 
-/* REVEAL */
-.reveal { opacity:0; transform:translateY(14px); transition:opacity .5s ease,transform .5s ease; }
-.reveal.visible { opacity:1; transform:none; }
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease;}
+.reveal.visible{opacity:1;transform:none;}
 
-/* MOBILE */
-@media(max-width:680px){
-  nav { padding:0 24px; }
-  .nav-links { display:none; }
-  .burger { display:block; }
-  .hero,.section,footer { padding-left:24px; padding-right:24px; }
-  .comp-grid,.ai-grid { grid-template-columns:1fr; }
-  .about-grid { grid-template-columns:1fr; }
-  .proj { grid-template-columns:1fr; }
-  .pbadge { display:none; }
-  .srow { grid-template-columns:1fr; }
-  .srow-lbl { border-right:none; border-bottom:1px solid var(--border); }
-  .stats { max-width:100%; }
-  footer { flex-direction:column; gap:20px; }
-  .case-hero { grid-template-columns:1fr; }
-  .case-agents { grid-template-columns:1fr 1fr; }
-  .case-metrics { grid-template-columns:repeat(2,1fr); }
-  .case-features { grid-template-columns:1fr; }
+/* ── MOBILE ── */
+@media(max-width:700px){
+  nav{padding:0 20px;}
+  .nav-links{display:none;}
+  .burger{display:block;}
+  .hero,.section,footer{padding-left:20px;padding-right:20px;}
+  .comp-grid,.ai-grid{grid-template-columns:1fr;}
+  .about-grid{grid-template-columns:1fr;}
+  .feat-grid{grid-template-columns:1fr;}
+  .agents{grid-template-columns:1fr 1fr;}
+  .metrics{grid-template-columns:repeat(2,1fr);}
+  .features{grid-template-columns:1fr;}
+  .case-hero{grid-template-columns:1fr;}
+  .srow{grid-template-columns:1fr;}
+  .srow-lbl{border-right:none;border-bottom:1px solid var(--border);}
+  .priority{grid-template-columns:1fr;}
+  .pr-key{border-right:none;border-bottom:1px solid var(--border);}
+  footer{flex-direction:column;gap:20px;}
 }
 </style>
 </head>
 <body>
 
 <nav>
-  <a href="#" class="nav-logo">V.M.</a>
+  <a href="#" class="logo">V.M.</a>
   <ul class="nav-links">
-    <li><a href="#competencies">Навички</a></li>
-    <li><a href="#projects">Проєкти</a></li>
+    <li><a href="#skills">Навички</a></li>
+    <li><a href="#project">Проєкт</a></li>
     <li><a href="#stack">Стек</a></li>
     <li><a href="#case">Кейс</a></li>
     <li><a href="#about">Про мене</a></li>
-    <li><a href="https://t.me/fx_social_club" class="nav-cta">Написати</a></li>
+    <li><a href="https://t.me/fx_social_club" target="_blank" class="nav-cta">Написати</a></li>
   </ul>
   <button class="burger" id="burger"><span></span><span></span><span></span></button>
 </nav>
 
 <div class="mob" id="mob">
-  <a href="#competencies" onclick="closeMob()">Навички</a>
-  <a href="#projects" onclick="closeMob()">Проєкти</a>
+  <a href="#skills" onclick="closeMob()">Навички</a>
+  <a href="#project" onclick="closeMob()">Проєкт</a>
   <a href="#stack" onclick="closeMob()">Стек</a>
   <a href="#case" onclick="closeMob()">Кейс</a>
   <a href="#about" onclick="closeMob()">Про мене</a>
-  <a href="https://t.me/fx_social_club">Написати →</a>
+  <a href="https://t.me/fx_social_club" target="_blank">Написати →</a>
 </div>
 
 <main>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-label">Frontend Developer · AI Automation · Kyiv, Ukraine</div>
+  <div class="hero-label">AI Automation Engineer · Fullstack Developer · Kyiv, Ukraine</div>
   <h1 class="hero-name">VADIM<br><span>MOTORNY</span></h1>
-  <p class="hero-sub">Frontend розробник та AI-інтегратор</p>
-  <div class="status-pill"><span class="sdot"></span>ВІДКРИТИЙ ДО ПРОПОЗИЦІЙ · REMOTE</div>
+  <p class="hero-sub">Будую інтелектуальні системи автоматизації</p>
+  <div class="status-pill"><span class="sdot"></span>ВІДКРИТИЙ ДО ПРОПОЗИЦІЙ · REMOTE / HYBRID</div>
+
   <p class="hero-bio">
-    Створюю інтерфейси, Telegram Mini Apps та AI-автоматизації.
-    Працюю з <strong>Claude API, ChatGPT, Telegram API, Facebook API</strong>.
-    Мій підхід — <strong>AI-нативна розробка</strong>:
-    швидко будую рішення які реально працюють і дають результат.
+    Будую інтелектуальні системи автоматизації, що трансформують складні бізнес-процеси у швидкі та ефективні цифрові рішення. Моя спеціалізація — <strong>AI-native продукти</strong>, де LLM та API стають фундаментом для автономної роботи системи.
   </p>
+
+  <div class="priorities">
+    <div class="priority">
+      <div class="pr-key">AI-Driven Architectures</div>
+      <div class="pr-val">Інтеграція LLM, створення <strong>автономних агентів</strong> та автоматизація логічних ланцюжків.</div>
+    </div>
+    <div class="priority">
+      <div class="pr-key">Fast-to-Market</div>
+      <div class="pr-val"><strong>Швидке прототипування</strong> та впровадження функціональних рішень, що вирішують бізнес-задачі.</div>
+    </div>
+    <div class="priority">
+      <div class="pr-key">Custom Tooling</div>
+      <div class="pr-val">Створення <strong>складних інтерфейсів</strong> та інструментів аналізу під специфічні потреби бізнесу.</div>
+    </div>
+  </div>
 
   <div class="contacts">
     <a href="tel:+380636324395" class="contact"><span class="ck">tel://</span>063-632-43-95</a>
-    <a href="https://t.me/fx_social_club" class="contact"><span class="ck">tg://</span>@fx_social_club</a>
-    <a href="https://t.me/fxsocialclub_bot" class="contact"><span class="ck">bot://</span>@fxsocialclub_bot</a>
+    <a href="https://t.me/fx_social_club" target="_blank" class="contact"><span class="ck">tg://</span>@fx_social_club</a>
+    <a href="https://t.me/fxsocialclub_bot" target="_blank" class="contact"><span class="ck">bot://</span>@fxsocialclub_bot</a>
   </div>
 </section>
 
-<!-- COMPETENCIES -->
-<section class="section reveal" id="competencies">
+<!-- SKILLS -->
+<section class="section reveal" id="skills">
   <div class="sh">
     <span class="snum">01</span>
-    <h2 class="stitle">Навички //</h2>
+    <h2 class="stitle">Технічний стек //</h2>
     <span class="sline"></span>
   </div>
   <div class="comp-grid">
     <div class="comp-card">
-      <div class="comp-icon">⬜</div>
-      <div class="comp-name">Frontend розробка</div>
+      <div class="comp-icon"></div>
+      <div class="comp-name">Frontend & Interfaces</div>
       <ul class="comp-list">
-        <li><strong>HTML5 / CSS3</strong> — семантична верстка, адаптивність</li>
-        <li><strong>JavaScript</strong> — DOM, події, fetch, Canvas API</li>
-        <li><strong>Анімації</strong> — CSS transitions, particle effects</li>
-        <li>Кастомні UI без фреймворків</li>
-        <li><strong>UX/UI Design</strong> — дизайн лендінгів та інтерфейсів</li>
+        <li><strong>HTML5, CSS3, JavaScript (ES6+)</strong></li>
+        <li><strong>Canvas API</strong> — анімації, particle effects</li>
+        <li><strong>UX/UI Design</strong> — лендінги, дашборди</li>
+        <li>Responsive Design, Web Interfaces</li>
         <li>Telegram Web App SDK — Mini Apps</li>
+        <li>Кастомні UI без фреймворків</li>
       </ul>
     </div>
     <div class="comp-card">
-      <div class="comp-icon">◈</div>
-      <div class="comp-name">AI Інтеграції</div>
+      <div class="comp-icon"></div>
+      <div class="comp-name">AI & LLM</div>
       <ul class="comp-list">
-        <li><strong>Claude API</strong> — стримінг, агенти, контекст</li>
-        <li><strong>ChatGPT API</strong> — генерація контенту</li>
+        <li><strong>Claude API</strong> — агенти, стримінг, контекст</li>
+        <li><strong>Claude Code</strong> — AI-нативна розробка</li>
         <li><strong>Higgsfield AI</strong> — генерація відео/крео</li>
-        <li>Prompt Engineering — точні запити</li>
-        <li>Claude Code — AI-нативна розробка</li>
+        <li><strong>Prompt Engineering</strong> — точні запити</li>
+        <li>AI Agent Development — автономні системи</li>
       </ul>
     </div>
     <div class="comp-card">
-      <div class="comp-icon">⬡</div>
-      <div class="comp-name">API & Автоматизація</div>
+      <div class="comp-icon"></div>
+      <div class="comp-name">System Integration</div>
       <ul class="comp-list">
-        <li><strong>Facebook API</strong> — метрики, кабінети, управління</li>
-        <li><strong>Telegram API</strong> — боти, Mini Apps, розсилки</li>
-        <li><strong>REST API</strong> — HTTP, JSON, webhooks</li>
+        <li><strong>REST API, Webhooks, JSON, HTTP/fetch</strong></li>
+        <li><strong>Facebook API</strong> — метрики, управління</li>
+        <li><strong>Telegram API</strong> — боти, розсилки</li>
+        <li><strong>n8n</strong> — автоматизація workflow</li>
         <li>Python — скрипти, автоматизація</li>
-        <li>Proxy / антидетект логіка</li>
+        <li>Proxy & Antidetect logic</li>
       </ul>
     </div>
   </div>
 </section>
 
-<!-- PROJECTS -->
-<section class="section reveal" id="projects">
+<!-- PROJECT -->
+<section class="section reveal" id="project">
   <div class="sh">
     <span class="snum">02</span>
-    <h2 class="stitle">Проєкти //</h2>
+    <h2 class="stitle">Технічний кейс //</h2>
     <span class="sline"></span>
   </div>
-  <div class="proj-list">
-    <div class="proj" style="grid-template-columns:1fr;">
-      <div>
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:8px;">
-          <div class="pnum">PROJECT_01</div>
-          <a href="https://t.me/fxsocialclub_bot" target="_blank" style="display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--violet2);text-decoration:none;border:1px solid var(--violet-border);padding:5px 12px;background:var(--violet-bg);transition:all .15s;" onmouseover="this.style.borderColor='var(--violet)'" onmouseout="this.style.borderColor='var(--violet-border)'">✈️ @fxsocialclub_bot →</a>
-        </div>
-        <div class="pname">FX Social Club — Telegram Mini App</div>
-        <div class="pdesc" style="margin-bottom:20px;">TG Webview / Mini App бот. Повноцінний AI-дашборд для управління Facebook рекламою прямо з телефону.</div>
+  <div class="proj-wrap">
+    <div class="proj">
+      <div class="proj-top">
+        <div class="pnum">AI-POWERED MANAGEMENT DASHBOARD</div>
+        <a href="https://t.me/fxsocialclub_bot" target="_blank" class="bot-link">✈️ @fxsocialclub_bot →</a>
+      </div>
+      <div class="pname">FX Social Club — Telegram Mini App</div>
+      <div class="pdesc">Розробка автономної системи керування даними та моніторингу процесів. Web-based інтерфейс для управління складними API-інтеграціями прямо з мобільного пристрою.</div>
 
-        <!-- Feature list -->
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:16px;">
-          <div style="background:var(--bg3);padding:16px 18px;">
-            <div style="font-size:10px;color:var(--violet);font-family:'JetBrains Mono',monospace;letter-spacing:0.15em;margin-bottom:8px;">AI AGENTS · 5</div>
-            <ul style="list-style:none;font-size:12px;color:var(--gray2);line-height:2;">
-              <li>• <span style="color:var(--white);">Buyer FB</span> — AI-медіабайер</li>
-              <li>• <span style="color:var(--white);">Spy Service Checker</span> — моніторинг конкурентів</li>
-              <li>• <span style="color:var(--white);">Генерація крео / відео, статика</span> — <a href="https://higgsfield.ai" target="_blank" style="color:var(--violet2);text-decoration:none;">higgsfield.ai</a> API</li>
-              <li>• <span style="color:var(--white);">Генерація лендосів</span> під крипто-офери + UX/UI дизайн</li>
-              <li>• <span style="color:var(--white);">HEAD AI агентів</span> — координатор</li>
-            </ul>
-          </div>
-          <div style="background:var(--bg3);padding:16px 18px;">
-            <div style="font-size:10px;color:var(--violet);font-family:'JetBrains Mono',monospace;letter-spacing:0.15em;margin-bottom:8px;">FB CABINETS · 11</div>
-            <ul style="list-style:none;font-size:12px;color:var(--gray2);line-height:2;">
-              <li>• <span style="color:var(--white);">ROAS · CPL · CR · CPM · CPC · CTR</span> через FB API</li>
-              <li>• <span style="color:var(--white);">Статуси кабінетів</span>, блокування в реальному часі</li>
-              <li>• <span style="color:var(--white);">Окремий Proxy</span> до кожного акаунту (антидетект)</li>
-              <li>• <span style="color:var(--white);">Зупинити рекламу</span>, вимкнути ADS, підвищити бюджет</li>
-              <li>• <span style="color:var(--white);">Масштабування зв'язки</span> в 1 клік з телефону</li>
-              <li>• <span style="color:var(--white);">Аналітика по днях і GEO</span></li>
-            </ul>
-          </div>
+      <div class="feat-grid">
+        <div class="feat-block">
+          <div class="feat-title">AI AGENTS · 5</div>
+          <ul class="feat-list">
+            <li>• <span>Buyer FB</span> — AI-медіабайер, оптимізація ставок</li>
+            <li>• <span>Spy Service Checker</span> — моніторинг конкурентів</li>
+            <li>• <span>Генерація крео / відео, статика</span> — <a href="https://higgsfield.ai" target="_blank">higgsfield.ai</a> API</li>
+            <li>• <span>Генерація лендосів</span> під крипто-офери + UX/UI</li>
+            <li>• <span>HEAD AI агентів</span> — координатор системи</li>
+          </ul>
         </div>
+        <div class="feat-block">
+          <div class="feat-title">INFRASTRUCTURE · 11 КАБІНЕТІВ</div>
+          <ul class="feat-list">
+            <li>• <span>ROAS · CPL · CR · CPM · CPC · CTR</span> через FB API</li>
+            <li>• <span>Статуси кабінетів</span>, блокування в реальному часі</li>
+            <li>• <span>Окремий Proxy</span> до кожного акаунту (антидетект)</li>
+            <li>• <span>Управління ADS</span> — зупинити, вимкнути, бюджет</li>
+            <li>• <span>Масштабування зв'язки</span> в 1 клік з телефону</li>
+            <li>• <span>Аналітика по днях і GEO</span></li>
+          </ul>
+        </div>
+      </div>
 
-        <div class="ptags">
-          <span class="ptag">Telegram Web App</span>
-          <span class="ptag">Claude API</span>
-          <span class="ptag">Facebook API</span>
-          <span class="ptag">Higgsfield AI</span>
-          <span class="ptag">Canvas API</span>
-          <span class="ptag">Vanilla JS</span>
-          <span class="ptag">HTML / CSS</span>
-          <span class="ptag">UX / UI Design</span>
-          <span class="ptag">Proxy / Antidetect</span>
-        </div>
+      <div class="ptags">
+        <span class="ptag">Telegram Web App</span>
+        <span class="ptag">Claude API</span>
+        <span class="ptag">Facebook API</span>
+        <span class="ptag">Higgsfield AI</span>
+        <span class="ptag">Canvas API</span>
+        <span class="ptag">Vanilla JS</span>
+        <span class="ptag">HTML / CSS</span>
+        <span class="ptag">UX / UI Design</span>
+        <span class="ptag">Proxy / Antidetect</span>
+        <span class="ptag">Python</span>
       </div>
     </div>
   </div>
@@ -519,22 +560,21 @@ footer {
       <div class="srow-tags">
         <span class="stag p">HTML5</span>
         <span class="stag p">CSS3</span>
-        <span class="stag p">JavaScript</span>
+        <span class="stag p">JavaScript ES6+</span>
         <span class="stag">Canvas API</span>
         <span class="stag">Telegram Web App</span>
-        <span class="stag">Responsive</span>
-        <span class="stag">CSS Animation</span>
+        <span class="stag">Responsive Design</span>
+        <span class="stag">Web Interfaces</span>
       </div>
     </div>
     <div class="srow">
       <div class="srow-lbl">AI & LLM</div>
       <div class="srow-tags">
         <span class="stag p">Claude API</span>
-        <span class="stag p">ChatGPT API</span>
         <span class="stag p">Claude Code</span>
-        <span class="stag">Higgsfield AI</span>
+        <span class="stag p">Higgsfield AI</span>
         <span class="stag">Prompt Engineering</span>
-        <span class="stag">AI Automation</span>
+        <span class="stag">AI Agent Development</span>
       </div>
     </div>
     <div class="srow">
@@ -542,10 +582,11 @@ footer {
       <div class="srow-tags">
         <span class="stag p">Facebook API</span>
         <span class="stag p">Telegram API</span>
-        <span class="stag">REST API</span>
+        <span class="stag p">REST API</span>
         <span class="stag">Webhooks</span>
         <span class="stag">JSON</span>
         <span class="stag">HTTP / fetch</span>
+        <span class="stag">n8n</span>
       </div>
     </div>
     <div class="srow">
@@ -556,6 +597,7 @@ footer {
         <span class="stag">Git</span>
         <span class="stag">GitHub Pages</span>
         <span class="stag">Proxy / Antidetect</span>
+        <span class="stag">Automation Scripting</span>
       </div>
     </div>
   </div>
@@ -572,117 +614,101 @@ footer {
     <div class="ai-card">
       <div class="anum">TOOL_01</div>
       <div class="aname">Claude / Claude Code</div>
-      <div class="adesc">Основний інструмент розробки. Генерація коду, дебагінг, AI-агенти зі стримінгом та збереженням контексту.</div>
-      <div class="abar"><div class="abar-f" style="width:92%"></div></div>
+      <div class="adesc">Основний інструмент розробки. Генерація коду, дебагінг, побудова автономних агентів зі стримінгом та збереженням контексту.</div>
+      <div class="abar"><div class="abar-f" style="width:93%"></div></div>
     </div>
     <div class="ai-card">
       <div class="anum">TOOL_02</div>
-      <div class="aname">ChatGPT</div>
-      <div class="adesc">Генерація контенту, тексти для лендінгів, brainstorming, копірайтинг для рекламних матеріалів.</div>
-      <div class="abar"><div class="abar-f" style="width:85%"></div></div>
+      <div class="aname">Higgsfield AI</div>
+      <div class="adesc">Генерація відео-крео та статичних матеріалів для Facebook реклами. Автоматична генерація під офери через API інтеграцію.</div>
+      <div class="abar"><div class="abar-f" style="width:80%"></div></div>
     </div>
     <div class="ai-card">
       <div class="anum">TOOL_03</div>
-      <div class="aname">Higgsfield AI</div>
-      <div class="adesc">Генерація відео-крео та статичних матеріалів для Facebook реклами через API інтеграцію.</div>
-      <div class="abar"><div class="abar-f" style="width:78%"></div></div>
+      <div class="aname">n8n / Automation</div>
+      <div class="adesc">Побудова workflow-автоматизацій, з'єднання сервісів через API, автономна обробка даних без ручного втручання.</div>
+      <div class="abar"><div class="abar-f" style="width:72%"></div></div>
     </div>
   </div>
 </section>
 
-<!-- CASE STUDY -->
+<!-- CASE -->
 <section class="section reveal" id="case">
   <div class="sh">
     <span class="snum">05</span>
     <h2 class="stitle">Кейс //</h2>
     <span class="sline"></span>
   </div>
-
   <div class="case">
     <div class="case-hero">
       <div>
         <div class="case-label">CASE STUDY · TG WEBVIEW / MINI APP</div>
         <div class="case-title">FX Social Club Bot</div>
-        <div class="case-sub">Повноцінний AI-дашборд для управління Facebook рекламою прямо з Telegram</div>
+        <div class="case-sub">Автономна система керування Facebook рекламою з 5 AI-агентами прямо з Telegram</div>
       </div>
-      <a href="https://t.me/fxsocialclub_bot" class="case-bot-link" target="_blank">
-        ✈️ @fxsocialclub_bot →
-      </a>
+      <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end;">
+        <a href="https://t.me/fxsocialclub_bot" target="_blank" class="bot-link">✈️ @fxsocialclub_bot →</a>
+        <a href="https://vbvb00590-tech.github.io/https-vbvb00590-tech.github.io/" target="_blank" class="bot-link" style="font-size:10px;letter-spacing:.08em;">🌐 Переглянути сайт →</a>
+      </div>
     </div>
 
-    <div class="case-body">
-
-      <!-- AGENTS -->
-      <div class="case-agents">
-        <div class="agent">
-          <div class="agent-num">AGENT_01</div>
-          <div class="agent-icon">🎯</div>
-          <div class="agent-name">Buyer FB</div>
-          <div class="agent-desc">AI-медіабайер. Аналізує рекламні кабінети, оптимізує ставки, зупиняє неефективні ADS, підвищує бюджет прибуткових зв'язок.</div>
-        </div>
-        <div class="agent">
-          <div class="agent-num">AGENT_02</div>
-          <div class="agent-icon">🔍</div>
-          <div class="agent-name">Spy Service Checker</div>
-          <div class="agent-desc">Моніторинг конкурентів через spy-сервіси. Аналіз успішних зв'язок та автоматичний збір інсайтів.</div>
-        </div>
-        <div class="agent">
-          <div class="agent-num">AGENT_03</div>
-          <div class="agent-icon">🎨</div>
-          <div class="agent-name">Генерація крео</div>
-          <div class="agent-desc">Відео та статика для FB реклами через <a href="https://higgsfield.ai" target="_blank">higgsfield.ai</a> API. Автоматична генерація під офери.</div>
-        </div>
-        <div class="agent">
-          <div class="agent-num">AGENT_04</div>
-          <div class="agent-icon">🌐</div>
-          <div class="agent-name">Генерація лендосів</div>
-          <div class="agent-desc">Повна генерація лендінгів під крипто-офери включно з UX/UI дизайном. Адаптивна верстка під будь-який гео.</div>
-        </div>
-        <div class="agent">
-          <div class="agent-num">AGENT_05</div>
-          <div class="agent-icon">🤿</div>
-          <div class="agent-name">HEAD AI агентів</div>
-          <div class="agent-desc">Мета-агент який координує роботу інших агентів, розподіляє задачі та контролює загальну стратегію.</div>
-        </div>
+    <div class="agents">
+      <div class="agent">
+        <div class="agent-num">AGENT_01</div>
+        <div class="agent-name">Buyer FB</div>
+        <div class="agent-desc">AI-медіабайер. Аналізує кабінети, оптимізує ставки, зупиняє неефективні ADS, підвищує бюджет прибуткових зв'язок.</div>
       </div>
-
-      <!-- METRICS -->
-      <div class="case-metrics">
-        <div class="metric">
-          <div class="metric-icon">📈</div>
-          <div class="metric-val">11 кабів</div>
-          <div class="metric-label">Рекламних кабінетів FB під управлінням</div>
-        </div>
-        <div class="metric">
-          <div class="metric-icon">📊</div>
-          <div class="metric-val">ROAS · CPL</div>
-          <div class="metric-label">CR · CPM · CPC · CTR через FB API в реальному часі</div>
-        </div>
-        <div class="metric">
-          <div class="metric-icon">🛡</div>
-          <div class="metric-val">Proxy</div>
-          <div class="metric-label">Окремий proxy до кожного акаунту. Принцип антидетект браузера</div>
-        </div>
-        <div class="metric">
-          <div class="metric-icon">📉</div>
-          <div class="metric-val">1 клік</div>
-          <div class="metric-label">Масштабування зв'язки для заливу прямо з телефону</div>
-        </div>
+      <div class="agent">
+        <div class="agent-num">AGENT_02</div>
+        <div class="agent-name">Spy Service Checker</div>
+        <div class="agent-desc">Моніторинг конкурентів через spy-сервіси. Аналіз успішних зв'язок та збір інсайтів.</div>
       </div>
-
-      <!-- FEATURES -->
-      <div class="case-features">
-        <div class="feature">
-          <div class="feature-text">♾ <strong>Статуси кабінетів</strong> — моніторинг блокувань та активності кожного акаунту в реальному часі</div>
-        </div>
-        <div class="feature">
-          <div class="feature-text">📉 <strong>Управління рекламою</strong> — зупинити, вимкнути неефективні ADS, підвищити бюджет прямо з бота</div>
-        </div>
-        <div class="feature">
-          <div class="feature-text">🚸 <strong>Аналітика по днях і GEO</strong> — детальна розбивка ефективності за географією та часовими відрізками</div>
-        </div>
+      <div class="agent">
+        <div class="agent-num">AGENT_03</div>
+        <div class="agent-name">Генерація крео</div>
+        <div class="agent-desc">Відео та статика для FB через <a href="https://higgsfield.ai" target="_blank">higgsfield.ai</a> API. Автоматична генерація під офери.</div>
       </div>
+      <div class="agent">
+        <div class="agent-num">AGENT_04</div>
+        <div class="agent-name">Генерація лендосів</div>
+        <div class="agent-desc">Повна генерація лендінгів під крипто-офери включно з UX/UI дизайном. Адаптивна верстка під гео.</div>
+      </div>
+      <div class="agent">
+        <div class="agent-num">AGENT_05</div>
+        <div class="agent-name">HEAD AI агентів</div>
+        <div class="agent-desc">Мета-агент координує роботу інших агентів, розподіляє задачі та контролює стратегію.</div>
+      </div>
+    </div>
 
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-val">11 кабів</div>
+        <div class="metric-lbl">Рекламних кабінетів FB під управлінням</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val">ROAS · CPL</div>
+        <div class="metric-lbl">CR · CPM · CPC · CTR через FB API в реальному часі</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val">Proxy</div>
+        <div class="metric-lbl">Окремий proxy до кожного акаунту. Антидетект логіка</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val">1 клік</div>
+        <div class="metric-lbl">Масштабування зв'язки для заливу з телефону</div>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-text"><strong>Статуси кабінетів</strong> — моніторинг блокувань та активності кожного акаунту в реальному часі</div>
+      </div>
+      <div class="feature">
+        <div class="feature-text"><strong>Управління рекламою</strong> — зупинити ADS, вимкнути неефективні, підвищити бюджет прямо з бота</div>
+      </div>
+      <div class="feature">
+        <div class="feature-text"><strong>Аналітика по днях і GEO</strong> — детальна розбивка ефективності за географією та часом</div>
+      </div>
     </div>
   </div>
 </section>
@@ -697,7 +723,7 @@ footer {
   <div class="about-grid">
     <div class="about-cell">
       <div class="albl">Локація</div>
-      <div class="aval">Київ, Україна<br><span>Remote · Повна зайнятість</span></div>
+      <div class="aval">Київ, Україна<br><span>Remote / Hybrid · Повна зайнятість</span></div>
     </div>
     <div class="about-cell">
       <div class="albl">Мови</div>
@@ -706,13 +732,13 @@ footer {
     <div class="about-cell">
       <div class="albl">Контакти</div>
       <div class="aval">
-        <a href="tel:+380636324395" style="color:var(--violet2);text-decoration:none;">063-632-43-95</a><br>
-        <a href="https://t.me/fx_social_club" style="color:var(--violet2);text-decoration:none;">@fx_social_club</a>
+        <a href="tel:+380636324395">063-632-43-95</a><br>
+        <a href="https://t.me/fx_social_club" target="_blank">@fx_social_club</a>
       </div>
     </div>
     <div class="about-cell">
       <div class="albl">Підхід</div>
-      <div class="aval">Результат важливіший за формальності.<br><span>Швидко вчусь, орієнтуюся на задачу.</span></div>
+      <div class="aval">Результат важливіший за формальності.<br><span>Швидке прототипування, орієнтація на задачу, побудова систем що працюють 24/7.</span></div>
     </div>
   </div>
 </section>
@@ -720,24 +746,24 @@ footer {
 </main>
 
 <footer>
-  <div class="fcopy">© 2026 VADIM MOTORNY · FRONTEND DEVELOPER</div>
-  <a href="https://t.me/fx_social_club" class="fcta">Написати →</a>
+  <div class="fcopy">© 2026 VADIM MOTORNY · AI AUTOMATION ENGINEER</div>
+  <a href="https://t.me/fx_social_club" target="_blank" class="fcta">Написати →</a>
 </footer>
 
 <script>
-document.getElementById('burger').addEventListener('click', () =>
+document.getElementById('burger').addEventListener('click',()=>
   document.getElementById('mob').classList.toggle('open'));
-function closeMob() { document.getElementById('mob').classList.remove('open'); }
+function closeMob(){document.getElementById('mob').classList.remove('open');}
 
-const obs = new IntersectionObserver(entries =>
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-  { threshold: 0.06 });
-document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+const obs=new IntersectionObserver(entries=>
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),
+  {threshold:.06});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const t = document.querySelector(a.getAttribute('href'));
-    if (t) { e.preventDefault(); t.scrollIntoView({ behavior:'smooth' }); }
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
   });
 });
 </script>
