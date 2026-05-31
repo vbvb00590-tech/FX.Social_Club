@@ -189,6 +189,22 @@ nav {
 }
 #particleCanvas { display: block; }
 
+/* Mobile sphere — centered background */
+@media (max-width: 900px) {
+  .hero-deco {
+    display: block !important;
+    width: 320px; height: 320px;
+    top: 42%; left: 50%;
+    right: auto;
+    transform: translate(-50%, -50%);
+    opacity: 0.55;
+  }
+  #particleCanvas {
+    width: 320px !important;
+    height: 320px !important;
+  }
+}
+
 /* ── SECTION BASE ── */
 section {
   position: relative; z-index: 1;
@@ -1136,15 +1152,19 @@ window.addEventListener('scroll', () => {
   const canvas = document.getElementById('particleCanvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  const W = 420, H = 420, CX = W / 2, CY = H / 2;
-  const RADIUS = 160;
-  const TOTAL = 900;
+  const isMobile = window.innerWidth <= 900;
+  const SIZE = isMobile ? 320 : 420;
+  canvas.width  = SIZE;
+  canvas.height = SIZE;
+  const CX = SIZE / 2, CY = SIZE / 2;
+  const RADIUS = isMobile ? 130 : 160;
+  const TOTAL  = isMobile ? 600 : 900;
 
-  let mouseX = CX, mouseY = CY, hovering = false;
+  let hovering = false;
   let rotX = 0, rotY = 0, targetRotX = 0, targetRotY = 0;
-  let pulseScale = 1, pulseDir = 1;
+  let pulseScale = 1, pulseDir = 1, pulseTime = 0;
 
-  // generate sphere points using Fibonacci lattice
+  // Fibonacci lattice sphere
   const points = [];
   const golden = Math.PI * (3 - Math.sqrt(5));
   for (let i = 0; i < TOTAL; i++) {
@@ -1155,40 +1175,47 @@ window.addEventListener('scroll', () => {
       ox: Math.cos(theta) * r,
       oy: y,
       oz: Math.sin(theta) * r,
-      size: Math.random() * 1.2 + 0.3,
+      size:   Math.random() * 1.2 + 0.3,
       bright: Math.random() * 0.5 + 0.3,
     });
   }
 
-  // track mouse over canvas parent
+  // Mouse (desktop)
   const hero = document.querySelector('.hero');
-  hero.addEventListener('mousemove', e => {
-    const rect = canvas.getBoundingClientRect();
-    mouseX = e.clientX - rect.left;
-    mouseY = e.clientY - rect.top;
-    hovering = true;
-    targetRotY = ((mouseX - CX) / CX) * 0.6;
-    targetRotX = ((mouseY - CY) / CY) * -0.4;
-  });
-  hero.addEventListener('mouseleave', () => { hovering = false; targetRotX = 0; targetRotY = 0; });
+  if (!isMobile) {
+    hero.addEventListener('mousemove', e => {
+      const rect = canvas.getBoundingClientRect();
+      hovering = true;
+      targetRotY = ((e.clientX - rect.left  - CX) / CX) *  0.6;
+      targetRotX = ((e.clientY - rect.top   - CY) / CY) * -0.4;
+    });
+    hero.addEventListener('mouseleave', () => {
+      hovering = false; targetRotX = 0; targetRotY = 0;
+    });
+  }
+
+  // Touch tilt (mobile)
+  if (isMobile && window.DeviceOrientationEvent) {
+    window.addEventListener('deviceorientation', e => {
+      targetRotY = ((e.gamma || 0) / 45) * 0.5;
+      targetRotX = ((e.beta  || 0) / 45) * 0.3;
+    });
+  }
 
   let autoAngle = 0;
 
   function draw() {
-    ctx.clearRect(0, 0, W, H);
+    ctx.clearRect(0, 0, SIZE, SIZE);
 
-    // smooth rotation
     rotX += (targetRotX - rotX) * 0.06;
     rotY += (targetRotY - rotY) * 0.06;
 
-    // auto slow spin when not hovering
-    if (!hovering) autoAngle += 0.002;
+    if (!hovering) autoAngle += isMobile ? 0.004 : 0.002;
 
-    // pulse on hover
-    if (hovering) {
-      pulseScale += pulseDir * 0.008;
-      if (pulseScale > 1.12) pulseDir = -1;
-      if (pulseScale < 0.95) pulseDir = 1;
+    // Breathing pulse (always on mobile, hover-triggered on desktop)
+    if (isMobile || hovering) {
+      pulseTime += 0.025;
+      pulseScale = 1 + Math.sin(pulseTime) * 0.07;
     } else {
       pulseScale += (1 - pulseScale) * 0.05;
     }
@@ -1197,33 +1224,28 @@ window.addEventListener('scroll', () => {
     const cosRY = Math.cos(rotY + autoAngle), sinRY = Math.sin(rotY + autoAngle);
 
     const projected = points.map(p => {
-      // rotate Y
       let x = p.ox * cosRY - p.oz * sinRY;
       let z = p.ox * sinRY + p.oz * cosRY;
-      // rotate X
       let y = p.oy * cosRX - z * sinRX;
-      z     = p.oy * sinRX + z * cosRX;
-
-      const scale = (z + 1.5) / 2.5; // depth factor
-      const r = RADIUS * pulseScale;
+          z = p.oy * sinRX + z * cosRX;
+      const depth = (z + 1) / 2;
+      const scale = (z + 1.5) / 2.5;
       return {
-        sx: CX + x * r,
-        sy: CY + y * r,
-        depth: (z + 1) / 2,
-        size: p.size * scale,
+        sx: CX + x * RADIUS * pulseScale,
+        sy: CY + y * RADIUS * pulseScale,
+        depth,
+        size:   p.size   * scale,
         bright: p.bright * scale,
       };
     });
 
-    // sort back-to-front
     projected.sort((a, b) => a.depth - b.depth);
 
     projected.forEach(p => {
-      const alpha = p.bright * (hovering ? 1.0 : 0.7);
-      const sz = p.size;
+      const alpha = p.bright * (hovering ? 1.0 : isMobile ? 0.85 : 0.7);
       ctx.beginPath();
-      ctx.arc(p.sx, p.sy, sz, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,255,255,${alpha.toFixed(2)})`;
+      ctx.arc(p.sx, p.sy, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${Math.min(alpha,1).toFixed(2)})`;
       ctx.fill();
     });
 
