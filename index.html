@@ -56,8 +56,9 @@ nav {
   display: flex; align-items: center; gap: 12px;
   text-decoration: none;
 }
-.nav-logo img {
-  height: 36px; width: 36px; object-fit: contain;
+.nav-logo svg {
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 6px rgba(255,255,255,0.4));
 }
 .nav-logo-text {
   font-family: 'Space Mono', monospace;
@@ -179,16 +180,14 @@ nav {
   margin-top: 4px;
 }
 
-/* Hero decoration */
+/* Hero decoration — particle sphere */
 .hero-deco {
   position: absolute; top: 50%; right: 48px;
   transform: translateY(-50%);
   width: 420px; height: 420px;
-  z-index: 0; pointer-events: none;
+  z-index: 0;
 }
-.hero-deco svg { width: 100%; height: 100%; opacity: 0.18; }
-@keyframes rotate-slow { to { transform: rotate(360deg); } }
-.deco-ring { transform-origin: center; animation: rotate-slow 20s linear infinite; }
+#particleCanvas { display: block; }
 
 /* ── SECTION BASE ── */
 section {
@@ -714,7 +713,58 @@ footer {
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">
-    <img src="logo.png" alt="FX. Social Club">
+    <!-- Logo SVG — точна копія оригіналу -->
+    <svg width="38" height="34" viewBox="0 0 200 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="logoGlow" x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="4" result="blur"/>
+          <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+        </filter>
+        <filter id="logoGlowStrong" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="8" result="blur"/>
+          <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+        </filter>
+      </defs>
+      <g filter="url(#logoGlowStrong)" opacity="0.5" stroke="white" stroke-width="1" fill="none">
+        <!-- legs -->
+        <line x1="100" y1="5"  x2="12"  y2="160"/>
+        <line x1="100" y1="5"  x2="188" y2="160"/>
+        <path d="M12,160 Q100,110 188,160"/>
+        <path d="M100,5 Q100,140 100,155"/>
+      </g>
+      <g filter="url(#logoGlow)" stroke="white" stroke-width="1.6" fill="none">
+        <!-- outer legs -->
+        <line x1="100" y1="5"  x2="12"  y2="160"/>
+        <line x1="100" y1="5"  x2="188" y2="160"/>
+        <!-- bottom arch -->
+        <path d="M12,160 Q100,110 188,160"/>
+        <!-- inner arch smaller -->
+        <path d="M38,120 Q100,82 162,120"/>
+        <!-- vertical spine -->
+        <line x1="100" y1="5" x2="100" y2="155"/>
+        <!-- horizontals inside triangle -->
+        <line x1="38"  y1="120" x2="162" y2="120"/>
+        <line x1="57"  y1="88"  x2="143" y2="88"/>
+        <line x1="72"  y1="58"  x2="128" y2="58"/>
+        <line x1="85"  y1="32"  x2="115" y2="32"/>
+        <!-- left diagonals -->
+        <line x1="72"  y1="58"  x2="38"  y2="120"/>
+        <line x1="57"  y1="88"  x2="38"  y2="120"/>
+        <!-- right diagonals -->
+        <line x1="128" y1="58"  x2="162" y2="120"/>
+        <line x1="143" y1="88"  x2="162" y2="120"/>
+        <!-- inner intersections -->
+        <line x1="85"  y1="32"  x2="57"  y2="88"/>
+        <line x1="115" y1="32"  x2="143" y2="88"/>
+      </g>
+      <!-- glitch lines -->
+      <g opacity="0.7" stroke="white" stroke-width="0.8">
+        <line x1="30" y1="108" x2="52"  y2="108"/>
+        <line x1="148" y1="108" x2="170" y2="108"/>
+        <line x1="22" y1="140" x2="35"  y2="140"/>
+        <line x1="165" y1="140" x2="178" y2="140"/>
+      </g>
+    </svg>
     <span class="nav-logo-text">FX. SOCIAL CLUB</span>
   </a>
   <div class="nav-links">
@@ -738,28 +788,18 @@ footer {
   </p>
   <div class="hero-actions">
     <a href="#cases" class="btn-primary">Дивитись кейси</a>
-    <a href="#contact" class="btn-secondary">Обговорити проект</a>
+    <a href="https://t.me/fx_social_club" target="_blank" class="btn-secondary">Обговорити проект</a>
   </div>
 
-  <!-- Deco -->
+  <!-- Particle sphere -->
   <div class="hero-deco" aria-hidden="true">
-    <svg viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle class="deco-ring" cx="210" cy="210" r="180" stroke="white" stroke-width="0.5" stroke-dasharray="4 8"/>
-      <circle cx="210" cy="210" r="120" stroke="white" stroke-width="0.5" opacity="0.6"/>
-      <circle cx="210" cy="210" r="60" stroke="white" stroke-width="0.5" opacity="0.4"/>
-      <line x1="30" y1="210" x2="390" y2="210" stroke="white" stroke-width="0.5" opacity="0.2"/>
-      <line x1="210" y1="30" x2="210" y2="390" stroke="white" stroke-width="0.5" opacity="0.2"/>
-      <circle cx="210" cy="210" r="4" fill="white" opacity="0.5"/>
-      <circle cx="390" cy="210" r="3" fill="white" opacity="0.4"/>
-      <circle cx="30" cy="210" r="3" fill="white" opacity="0.4"/>
-      <circle cx="210" cy="30" r="3" fill="white" opacity="0.4"/>
-    </svg>
+    <canvas id="particleCanvas" width="420" height="420"></canvas>
   </div>
 
   <!-- Stats -->
   <div class="hero-stats">
     <div class="stat-item">
-      <div class="stat-num">15<span>+</span></div>
+      <div class="stat-num">100<span>+</span></div>
       <div class="stat-label">Проектів</div>
     </div>
     <div class="stat-item">
@@ -1069,7 +1109,7 @@ footer {
   <div class="cta-label">Готові почати?</div>
   <h2 class="cta-title">Давайте створимо<br>щось <em>видатне</em></h2>
   <p class="cta-sub">Розкажіть про ваш проект — ми відповімо впродовж 24 годин з першими ідеями.</p>
-  <a href="mailto:hello@fxsocialclub.com" class="cta-email">hello@fxsocialclub.com</a>
+  <a href="https://t.me/fx_social_club" target="_blank" class="cta-email">Написати в Telegram →</a>
 </section>
 
 <!-- FOOTER -->
@@ -1084,13 +1124,114 @@ footer {
 </footer>
 
 <script>
-// Scroll progress bar
+// ── Scroll progress bar ──
 const line = document.getElementById('scrollLine');
 window.addEventListener('scroll', () => {
   const s = document.documentElement.scrollTop;
   const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
   line.style.width = (s / h * 100) + '%';
 });
+
+// ── Particle Sphere ──
+(function () {
+  const canvas = document.getElementById('particleCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = 420, H = 420, CX = W / 2, CY = H / 2;
+  const RADIUS = 160;
+  const TOTAL = 900;
+
+  let mouseX = CX, mouseY = CY, hovering = false;
+  let rotX = 0, rotY = 0, targetRotX = 0, targetRotY = 0;
+  let pulseScale = 1, pulseDir = 1;
+
+  // generate sphere points using Fibonacci lattice
+  const points = [];
+  const golden = Math.PI * (3 - Math.sqrt(5));
+  for (let i = 0; i < TOTAL; i++) {
+    const y = 1 - (i / (TOTAL - 1)) * 2;
+    const r = Math.sqrt(1 - y * y);
+    const theta = golden * i;
+    points.push({
+      ox: Math.cos(theta) * r,
+      oy: y,
+      oz: Math.sin(theta) * r,
+      size: Math.random() * 1.2 + 0.3,
+      bright: Math.random() * 0.5 + 0.3,
+    });
+  }
+
+  // track mouse over canvas parent
+  const hero = document.querySelector('.hero');
+  hero.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    mouseX = e.clientX - rect.left;
+    mouseY = e.clientY - rect.top;
+    hovering = true;
+    targetRotY = ((mouseX - CX) / CX) * 0.6;
+    targetRotX = ((mouseY - CY) / CY) * -0.4;
+  });
+  hero.addEventListener('mouseleave', () => { hovering = false; targetRotX = 0; targetRotY = 0; });
+
+  let autoAngle = 0;
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // smooth rotation
+    rotX += (targetRotX - rotX) * 0.06;
+    rotY += (targetRotY - rotY) * 0.06;
+
+    // auto slow spin when not hovering
+    if (!hovering) autoAngle += 0.002;
+
+    // pulse on hover
+    if (hovering) {
+      pulseScale += pulseDir * 0.008;
+      if (pulseScale > 1.12) pulseDir = -1;
+      if (pulseScale < 0.95) pulseDir = 1;
+    } else {
+      pulseScale += (1 - pulseScale) * 0.05;
+    }
+
+    const cosRX = Math.cos(rotX), sinRX = Math.sin(rotX);
+    const cosRY = Math.cos(rotY + autoAngle), sinRY = Math.sin(rotY + autoAngle);
+
+    const projected = points.map(p => {
+      // rotate Y
+      let x = p.ox * cosRY - p.oz * sinRY;
+      let z = p.ox * sinRY + p.oz * cosRY;
+      // rotate X
+      let y = p.oy * cosRX - z * sinRX;
+      z     = p.oy * sinRX + z * cosRX;
+
+      const scale = (z + 1.5) / 2.5; // depth factor
+      const r = RADIUS * pulseScale;
+      return {
+        sx: CX + x * r,
+        sy: CY + y * r,
+        depth: (z + 1) / 2,
+        size: p.size * scale,
+        bright: p.bright * scale,
+      };
+    });
+
+    // sort back-to-front
+    projected.sort((a, b) => a.depth - b.depth);
+
+    projected.forEach(p => {
+      const alpha = p.bright * (hovering ? 1.0 : 0.7);
+      const sz = p.size;
+      ctx.beginPath();
+      ctx.arc(p.sx, p.sy, sz, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${alpha.toFixed(2)})`;
+      ctx.fill();
+    });
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
 </script>
 
 </body>
