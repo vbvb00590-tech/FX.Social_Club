@@ -686,6 +686,52 @@ footer {
 }
 
 /* ── RESPONSIVE ── */
+/* ── MOBILE PULSE CIRCLE ── */
+.hero-pulse-bg {
+  display: none;
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+}
+.hero-pulse-bg::before,
+.hero-pulse-bg::after,
+.hero-pulse-bg span {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(200,255,0,0.25);
+}
+.hero-pulse-bg::before { animation: pulse-ring 3s ease-out infinite; }
+.hero-pulse-bg::after  { animation: pulse-ring 3s ease-out infinite 1s; }
+.hero-pulse-bg span    { display:block; animation: pulse-ring 3s ease-out infinite 2s; }
+
+@keyframes pulse-ring {
+  0%   { transform: scale(0.7); opacity: 0.6; border-color: rgba(200,255,0,0.4); }
+  70%  { transform: scale(1.15); opacity: 0.15; }
+  100% { transform: scale(1.3); opacity: 0; }
+}
+
+/* Inner glowing dot in center of pulse */
+.hero-pulse-bg::after {
+  inset: auto;
+  width: 6px; height: 6px;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%) scale(1);
+  background: rgba(200,255,0,0.8);
+  border: none;
+  box-shadow: 0 0 20px rgba(200,255,0,0.6), 0 0 40px rgba(200,255,0,0.3);
+  animation: dot-pulse 3s ease-in-out infinite;
+}
+@keyframes dot-pulse {
+  0%,100% { opacity: 1; box-shadow: 0 0 20px rgba(200,255,0,0.6), 0 0 40px rgba(200,255,0,0.3); }
+  50%      { opacity: 0.6; box-shadow: 0 0 8px rgba(200,255,0,0.3); }
+}
+
 @media (max-width: 900px) {
   nav { padding: 0 20px; }
   .nav-links { display: none; }
@@ -693,6 +739,7 @@ footer {
   .hero { padding: 100px 20px 80px; }
   .hero-stats { display: none; }
   .hero-deco { display: none; }
+  .hero-pulse-bg { display: block; }
   .services-grid { grid-template-columns: 1fr; }
   .ai-grid { grid-template-columns: 1fr; gap: 40px; }
   .cases-grid { grid-template-columns: 1fr; }
@@ -740,7 +787,10 @@ footer {
     <a href="https://t.me/fx_social_club" target="_blank" class="btn-secondary">Обговорити проект</a>
   </div>
 
-  <!-- Particle sphere -->
+  <!-- Mobile pulse background -->
+  <div class="hero-pulse-bg" aria-hidden="true"><span></span></div>
+
+  <!-- Particle sphere (desktop only) -->
   <div class="hero-deco" aria-hidden="true">
     <canvas id="particleCanvas" width="420" height="420"></canvas>
   </div>
