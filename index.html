@@ -6,777 +6,413 @@
 <title>FX. Social Club — UX/UI Design Studio</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-/* ── ROOT ── */
 :root {
-  --black: #000;
-  --dark: #080808;
-  --card: #0d0d0d;
-  --card2: #111;
-  --white: #f0f0f0;
-  --grey: #555;
-  --lgrey: #888;
-  --border: rgba(255,255,255,0.07);
-  --border2: rgba(255,255,255,0.12);
-  --accent: #c8ff00;
-  --accent2: rgba(200,255,0,0.15);
-  --accent3: rgba(200,255,0,0.06);
-  --glow: 0 0 24px rgba(200,255,0,0.35);
+  --black:#000; --dark:#080808; --card:#0d0d0d; --card2:#111;
+  --white:#f0f0f0; --grey:#555; --lgrey:#888;
+  --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.12);
+  --accent:#c8ff00; --accent2:rgba(200,255,0,0.15); --accent3:rgba(200,255,0,0.06);
+  --glow:0 0 24px rgba(200,255,0,0.35);
 }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Space Grotesk',sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;}
 
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: 'Space Grotesk', sans-serif;
-  background: var(--black);
-  color: var(--white);
-  overflow-x: hidden;
-}
-
-/* ── GRID BG ── */
-body::before {
-  content: '';
-  position: fixed; inset: 0; z-index: 0;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-  background-size: 60px 60px;
-  pointer-events: none;
-}
+body::before{content:'';position:fixed;inset:0;z-index:0;
+  background-image:linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px);
+  background-size:60px 60px;pointer-events:none;}
 
 /* ── NAV ── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
-  height: 64px; padding: 0 48px;
-  display: flex; align-items: center; justify-content: space-between;
-  background: rgba(0,0,0,0.75);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-}
-.nav-logo {
-  display: flex; align-items: center; gap: 12px;
-  text-decoration: none;
-}
-.nav-logo svg {
-  flex-shrink: 0;
-  filter: drop-shadow(0 0 6px rgba(255,255,255,0.4));
-}
-.nav-logo-text {
-  font-family: 'Space Mono', monospace;
-  font-size: 13px; font-weight: 700;
-  color: var(--white); letter-spacing: 0.05em;
-}
-.nav-links {
-  display: flex; align-items: center; gap: 36px;
-}
-.nav-links a {
-  font-size: 12px; color: var(--lgrey);
-  text-decoration: none; letter-spacing: 0.06em;
-  font-family: 'Space Mono', monospace;
-  transition: color .2s;
-}
-.nav-links a:hover { color: var(--white); }
-.nav-cta {
-  background: transparent !important;
-  border: 1px solid var(--border2) !important;
-  color: var(--white) !important;
-  padding: 8px 20px;
-  border-radius: 4px;
-  font-size: 12px !important;
-  cursor: pointer;
-  transition: all .2s !important;
-}
-.nav-cta:hover {
-  border-color: var(--accent) !important;
-  color: var(--accent) !important;
-}
+nav{position:fixed;top:0;left:0;right:0;z-index:500;height:64px;padding:0 48px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(0,0,0,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo img{height:38px;width:38px;object-fit:contain;}
+.nav-logo-text{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;color:var(--white);letter-spacing:0.05em;}
+.nav-links{display:flex;align-items:center;gap:36px;}
+.nav-links a{font-size:12px;color:var(--lgrey);text-decoration:none;letter-spacing:0.06em;font-family:'Space Mono',monospace;transition:color .2s;}
+.nav-links a:hover{color:var(--white);}
+.nav-cta{background:transparent!important;border:1px solid var(--border2)!important;color:var(--white)!important;
+  padding:8px 20px;border-radius:4px;font-size:12px!important;cursor:pointer;transition:all .2s!important;}
+.nav-cta:hover{border-color:var(--accent)!important;color:var(--accent)!important;}
+
+/* hamburger */
+.nav-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;}
+.nav-burger span{display:block;width:22px;height:1.5px;background:var(--white);transition:all .3s;}
+.nav-burger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+.nav-burger.open span:nth-child(2){opacity:0;}
+.nav-burger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+.mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;z-index:499;
+  background:rgba(0,0,0,0.97);backdrop-filter:blur(20px);
+  padding:28px 24px;border-bottom:1px solid var(--border);
+  flex-direction:column;gap:0;}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:0.06em;
+  color:var(--lgrey);text-decoration:none;padding:16px 0;
+  border-bottom:1px solid var(--border);transition:color .2s;}
+.mobile-menu a:hover{color:var(--white);}
+.mobile-menu .m-cta{color:var(--accent)!important;border-bottom:none!important;margin-top:8px;}
+
+.scroll-line{position:fixed;top:0;left:0;height:2px;z-index:1000;background:var(--accent);box-shadow:var(--glow);width:0%;}
 
 /* ── HERO ── */
-.hero {
-  position: relative; z-index: 1;
-  min-height: 100vh;
-  display: flex; flex-direction: column;
-  justify-content: center;
-  padding: 120px 48px 80px;
-}
-.hero-label {
-  font-family: 'Space Mono', monospace;
-  font-size: 10px; letter-spacing: 0.2em;
-  color: var(--accent);
-  text-transform: uppercase; margin-bottom: 28px;
-  display: flex; align-items: center; gap: 10px;
-}
-.hero-label::before {
-  content: '';
-  width: 24px; height: 1px;
-  background: var(--accent);
-  box-shadow: var(--glow);
-}
-.hero-title {
-  font-size: clamp(42px, 7vw, 96px);
-  font-weight: 700; line-height: 1.0;
-  letter-spacing: -0.03em;
-  max-width: 900px;
-  margin-bottom: 32px;
-}
-.hero-title .accent-word {
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(255,255,255,0.3);
-}
-.hero-title .accent-hl {
-  color: var(--accent);
-  text-shadow: 0 0 40px rgba(200,255,0,0.4);
-}
-.hero-sub {
-  font-size: 16px; color: var(--lgrey);
-  max-width: 500px; line-height: 1.7;
-  margin-bottom: 52px;
-}
-.hero-actions {
-  display: flex; align-items: center; gap: 24px;
-}
-.btn-primary {
-  background: var(--accent);
-  color: #000; padding: 14px 32px;
-  border-radius: 4px; font-weight: 700;
-  font-size: 13px; text-decoration: none;
-  letter-spacing: 0.04em;
-  box-shadow: 0 0 32px rgba(200,255,0,0.3);
-  transition: all .2s;
-}
-.btn-primary:hover {
-  box-shadow: 0 0 52px rgba(200,255,0,0.5);
-  transform: translateY(-2px);
-}
-.btn-secondary {
-  color: var(--lgrey); font-size: 13px;
-  text-decoration: none; letter-spacing: 0.04em;
-  display: flex; align-items: center; gap: 8px;
-  transition: color .2s;
-}
-.btn-secondary:hover { color: var(--white); }
-.btn-secondary::after {
-  content: '→';
-  transition: transform .2s;
-}
-.btn-secondary:hover::after { transform: translateX(4px); }
+.hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;
+  justify-content:center;padding:120px 48px 80px;}
+.hero-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.2em;color:var(--accent);
+  text-transform:uppercase;margin-bottom:28px;display:flex;align-items:center;gap:10px;}
+.hero-label::before{content:'';width:24px;height:1px;background:var(--accent);box-shadow:var(--glow);}
+.hero-title{font-size:clamp(42px,7vw,96px);font-weight:700;line-height:1.0;letter-spacing:-0.03em;max-width:900px;margin-bottom:32px;}
+.hero-title .accent-word{color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.3);}
+.hero-title .accent-hl{color:var(--accent);text-shadow:0 0 40px rgba(200,255,0,0.4);}
+.hero-sub{font-size:16px;color:var(--lgrey);max-width:500px;line-height:1.7;margin-bottom:52px;}
+.hero-actions{display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
+.btn-primary{background:var(--accent);color:#000;padding:14px 32px;border-radius:4px;font-weight:700;
+  font-size:13px;text-decoration:none;letter-spacing:0.04em;
+  box-shadow:0 0 32px rgba(200,255,0,0.3);transition:all .2s;}
+.btn-primary:hover{box-shadow:0 0 52px rgba(200,255,0,0.5);transform:translateY(-2px);}
+.btn-secondary{color:var(--lgrey);font-size:13px;text-decoration:none;letter-spacing:0.04em;
+  display:flex;align-items:center;gap:8px;transition:color .2s;}
+.btn-secondary:hover{color:var(--white);}
+.btn-secondary::after{content:'→';transition:transform .2s;}
+.btn-secondary:hover::after{transform:translateX(4px);}
+.hero-stats{position:absolute;bottom:60px;right:48px;display:flex;gap:48px;z-index:1;}
+.stat-item{text-align:right;}
+.stat-num{font-family:'Space Mono',monospace;font-size:28px;font-weight:700;color:var(--white);line-height:1;}
+.stat-num span{color:var(--accent);}
+.stat-label{font-size:10px;color:var(--grey);letter-spacing:0.12em;text-transform:uppercase;margin-top:4px;}
+.hero-deco{position:absolute;top:50%;right:48px;transform:translateY(-50%);width:420px;height:420px;z-index:0;}
+#particleCanvas{display:block;}
 
-/* Hero stats row */
-.hero-stats {
-  position: absolute; bottom: 60px; right: 48px;
-  display: flex; gap: 48px; z-index: 1;
-}
-.stat-item {
-  text-align: right;
-}
-.stat-num {
-  font-family: 'Space Mono', monospace;
-  font-size: 28px; font-weight: 700;
-  color: var(--white); line-height: 1;
-}
-.stat-num span { color: var(--accent); }
-.stat-label {
-  font-size: 10px; color: var(--grey);
-  letter-spacing: 0.12em; text-transform: uppercase;
-  margin-top: 4px;
-}
-
-/* Hero decoration — particle sphere */
-.hero-deco {
-  position: absolute; top: 50%; right: 48px;
-  transform: translateY(-50%);
-  width: 420px; height: 420px;
-  z-index: 0;
-}
-#particleCanvas { display: block; }
-
-/* Mobile sphere — centered background */
-@media (max-width: 900px) {
-  .hero-deco {
-    display: block !important;
-    width: 320px; height: 320px;
-    top: 42%; left: 50%;
-    right: auto;
-    transform: translate(-50%, -50%);
-    opacity: 0.55;
-  }
-  #particleCanvas {
-    width: 320px !important;
-    height: 320px !important;
-  }
+/* Mobile sphere */
+@media(max-width:900px){
+  .hero-deco{display:block!important;width:320px;height:320px;top:42%;left:50%;right:auto;transform:translate(-50%,-50%);opacity:0.55;}
+  #particleCanvas{width:320px!important;height:320px!important;}
 }
 
 /* ── SECTION BASE ── */
-section {
-  position: relative; z-index: 1;
-  padding: 100px 48px;
-}
-.section-header {
-  display: flex; align-items: flex-end;
-  justify-content: space-between;
-  margin-bottom: 60px;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 24px;
-}
-.section-label {
-  font-family: 'Space Mono', monospace;
-  font-size: 10px; letter-spacing: 0.2em;
-  color: var(--accent); text-transform: uppercase;
-  margin-bottom: 12px;
-}
-.section-title {
-  font-size: clamp(28px, 3.5vw, 44px);
-  font-weight: 700; letter-spacing: -0.02em;
-  line-height: 1.1;
-}
-.section-count {
-  font-family: 'Space Mono', monospace;
-  font-size: 11px; color: var(--grey);
-  letter-spacing: 0.1em;
-}
+section{position:relative;z-index:1;padding:100px 48px;}
+.section-header{display:flex;align-items:flex-end;justify-content:space-between;
+  margin-bottom:60px;border-bottom:1px solid var(--border);padding-bottom:24px;}
+.section-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.2em;
+  color:var(--accent);text-transform:uppercase;margin-bottom:12px;}
+.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:700;letter-spacing:-0.02em;line-height:1.1;}
+.section-count{font-family:'Space Mono',monospace;font-size:11px;color:var(--grey);letter-spacing:0.1em;}
 
 /* ── MARQUEE ── */
-.marquee-wrap {
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  overflow: hidden;
-  padding: 18px 0;
-  position: relative; z-index: 1;
-}
-.marquee-track {
-  display: flex; gap: 0;
-  animation: marquee-go 22s linear infinite;
-  white-space: nowrap;
-}
-.marquee-item {
-  display: inline-flex; align-items: center; gap: 16px;
-  padding: 0 32px;
-  font-family: 'Space Mono', monospace;
-  font-size: 11px; letter-spacing: 0.15em;
-  color: var(--grey); text-transform: uppercase;
-}
-.marquee-dot {
-  width: 4px; height: 4px; border-radius: 50%;
-  background: var(--accent);
-  flex-shrink: 0;
-}
-@keyframes marquee-go {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
+.marquee-wrap{border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  overflow:hidden;padding:18px 0;position:relative;z-index:1;}
+.marquee-track{display:flex;gap:0;animation:marquee-go 22s linear infinite;white-space:nowrap;}
+.marquee-item{display:inline-flex;align-items:center;gap:16px;padding:0 32px;
+  font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.15em;color:var(--grey);text-transform:uppercase;}
+.marquee-dot{width:4px;height:4px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+@keyframes marquee-go{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
 /* ── SERVICES ── */
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-}
-.service-card {
-  background: var(--black);
-  padding: 40px 36px;
-  position: relative; overflow: hidden;
-  transition: background .3s;
-}
-.service-card:hover { background: var(--card); }
-.service-card:hover .service-icon { box-shadow: var(--glow); border-color: var(--accent); }
-.service-num {
-  font-family: 'Space Mono', monospace;
-  font-size: 10px; color: var(--grey);
-  letter-spacing: 0.15em; margin-bottom: 28px;
-}
-.service-icon {
-  width: 44px; height: 44px;
-  border: 1px solid var(--border2);
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  margin-bottom: 24px;
-  transition: all .3s;
-  font-size: 20px;
-}
-.service-name {
-  font-size: 18px; font-weight: 600;
-  margin-bottom: 12px; letter-spacing: -0.01em;
-}
-.service-desc {
-  font-size: 13px; color: var(--lgrey);
-  line-height: 1.7;
-}
-.service-card::after {
-  content: '';
-  position: absolute; bottom: 0; left: 0;
-  width: 0; height: 2px;
-  background: var(--accent);
-  transition: width .4s ease;
-}
-.service-card:hover::after { width: 100%; }
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);}
+.service-card{background:var(--black);padding:40px 36px;position:relative;overflow:hidden;transition:background .3s;}
+.service-card:hover{background:var(--card);}
+.service-card:hover .service-icon{box-shadow:var(--glow);border-color:var(--accent);}
+.service-num{font-family:'Space Mono',monospace;font-size:10px;color:var(--grey);letter-spacing:0.15em;margin-bottom:28px;}
+.service-icon{width:44px;height:44px;border:1px solid var(--border2);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;margin-bottom:24px;transition:all .3s;font-size:20px;}
+.service-name{font-size:18px;font-weight:600;margin-bottom:12px;letter-spacing:-0.01em;}
+.service-desc{font-size:13px;color:var(--lgrey);line-height:1.7;}
+.service-card::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--accent);transition:width .4s ease;}
+.service-card:hover::after{width:100%;}
 
-/* ── HOW WE WORK ── */
-.process-list {
-  display: flex; flex-direction: column; gap: 0;
-  border: 1px solid var(--border);
+/* ── PROCESS (animated) ── */
+.process-scene{position:relative;}
+.process-track{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;}
+.process-track::before{
+  content:'';position:absolute;top:52px;left:10%;right:10%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent),var(--accent),transparent);
+  opacity:0;transition:opacity .6s .4s;z-index:0;
 }
-.process-step {
-  display: grid;
-  grid-template-columns: 80px 1fr auto;
-  align-items: center;
-  padding: 28px 40px;
-  border-bottom: 1px solid var(--border);
-  gap: 32px;
-  transition: background .2s;
-  cursor: default;
+.process-track.animated::before{opacity:.3;}
+.pstep{
+  padding:40px 28px 36px;border:1px solid var(--border);border-right:none;
+  position:relative;z-index:1;background:var(--black);
+  opacity:0;transform:translateY(32px);
+  transition:opacity .6s ease,transform .6s ease,background .25s;
 }
-.process-step:last-child { border-bottom: none; }
-.process-step:hover { background: var(--card); }
-.step-num {
-  font-family: 'Space Mono', monospace;
-  font-size: 11px; color: var(--grey);
-  letter-spacing: 0.1em;
-}
-.step-body {}
-.step-title {
-  font-size: 17px; font-weight: 600;
-  margin-bottom: 4px; letter-spacing: -0.01em;
-}
-.step-desc {
-  font-size: 13px; color: var(--lgrey); line-height: 1.6;
-}
-.step-tag {
-  font-family: 'Space Mono', monospace;
-  font-size: 9px; letter-spacing: 0.12em;
-  color: var(--accent); text-transform: uppercase;
-  border: 1px solid var(--accent2);
-  padding: 4px 10px; border-radius: 2px;
-  white-space: nowrap;
-}
+.pstep:last-child{border-right:1px solid var(--border);}
+.pstep.visible{opacity:1;transform:translateY(0);}
+.pstep:hover{background:var(--card);}
+.pstep:hover .ps-dot{box-shadow:0 0 0 6px var(--accent2),var(--glow);}
+.pstep:hover .ps-num{color:var(--accent);}
 
-/* ── WHY AI ── */
-.ai-section {
-  background: var(--dark);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+/* connector dot on top */
+.ps-dot{
+  width:10px;height:10px;border-radius:50%;background:var(--accent);
+  margin-bottom:28px;
+  box-shadow:0 0 0 3px var(--accent3),var(--glow);
+  transition:box-shadow .3s;
+  animation:dot-breathe 3s ease-in-out infinite;
 }
-.ai-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px; align-items: center;
+.pstep:nth-child(2) .ps-dot{animation-delay:.5s;}
+.pstep:nth-child(3) .ps-dot{animation-delay:1s;}
+.pstep:nth-child(4) .ps-dot{animation-delay:1.5s;}
+@keyframes dot-breathe{
+  0%,100%{box-shadow:0 0 0 3px var(--accent3),0 0 8px rgba(200,255,0,0.3);}
+  50%{box-shadow:0 0 0 8px rgba(200,255,0,0.06),0 0 24px rgba(200,255,0,0.5);}
 }
-.ai-left {}
-.ai-headline {
-  font-size: clamp(28px, 3vw, 40px);
-  font-weight: 700; letter-spacing: -0.02em;
-  line-height: 1.15; margin-bottom: 20px;
+/* animated connector line between dots */
+.ps-line{
+  position:absolute;top:44px;right:-1px;width:0;height:1px;
+  background:linear-gradient(90deg,var(--accent),rgba(200,255,0,0.2));
+  z-index:2;transition:width .8s cubic-bezier(.16,1,.3,1);
 }
-.ai-headline em {
-  font-style: normal; color: var(--accent);
+.pstep.visible .ps-line{width:100%;}
+.pstep:last-child .ps-line{display:none;}
+.ps-num{font-family:'Space Mono',monospace;font-size:9px;color:var(--grey);letter-spacing:0.15em;margin-bottom:16px;transition:color .25s;}
+.ps-title{font-size:17px;font-weight:600;margin-bottom:10px;letter-spacing:-0.01em;line-height:1.2;}
+.ps-desc{font-size:13px;color:var(--lgrey);line-height:1.65;margin-bottom:20px;}
+.ps-tag{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.12em;color:var(--accent);
+  text-transform:uppercase;border:1px solid var(--accent2);padding:4px 10px;border-radius:2px;display:inline-block;}
+
+/* ── AI SECTION ── */
+.ai-section{background:var(--dark);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.ai-headline{font-size:clamp(28px,3vw,40px);font-weight:700;letter-spacing:-0.02em;line-height:1.15;margin-bottom:20px;}
+.ai-headline em{font-style:normal;color:var(--accent);}
+.ai-text{font-size:15px;color:var(--lgrey);line-height:1.75;margin-bottom:36px;}
+.ai-right{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);}
+.ai-metric{background:var(--black);padding:28px 24px;}
+.ai-metric-val{font-family:'Space Mono',monospace;font-size:32px;font-weight:700;color:var(--white);line-height:1;margin-bottom:6px;}
+.ai-metric-val span{color:var(--accent);}
+.ai-metric-label{font-size:12px;color:var(--grey);line-height:1.5;}
+
+/* ══════════════════════════════════════
+   CASES — 3D FLOATING CARDS
+══════════════════════════════════════ */
+.cases-stage{
+  position:relative;height:640px;
+  perspective:1200px;perspective-origin:50% 45%;
+  overflow:hidden;
 }
-.ai-text {
-  font-size: 15px; color: var(--lgrey);
-  line-height: 1.75; margin-bottom: 36px;
-}
-.ai-right {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-}
-.ai-metric {
-  background: var(--black);
-  padding: 28px 24px;
-}
-.ai-metric-val {
-  font-family: 'Space Mono', monospace;
-  font-size: 32px; font-weight: 700;
-  color: var(--white); line-height: 1;
-  margin-bottom: 6px;
-}
-.ai-metric-val span { color: var(--accent); }
-.ai-metric-label {
-  font-size: 12px; color: var(--grey); line-height: 1.5;
+.cases-stage-inner{
+  position:relative;width:100%;height:100%;
+  transform-style:preserve-3d;
+  transition:transform .05s linear;
 }
 
-/* ── CASES ── */
-.cases-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
+/* Individual floating card */
+.fcard{
+  position:absolute;
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:12px;overflow:hidden;
+  cursor:pointer;text-decoration:none;color:inherit;
+  transform-style:preserve-3d;
+  transition:box-shadow .3s, border-color .3s;
+  will-change:transform;
 }
-.case-card {
-  background: var(--card);
-  position: relative; overflow: hidden;
-  text-decoration: none; color: inherit;
-  display: block;
-  transition: background .3s;
-  cursor: pointer;
-}
-.case-card:hover { background: var(--card2); }
-.case-preview {
-  width: 100%; height: 240px;
-  border-bottom: 1px solid var(--border);
-  overflow: hidden;
-  position: relative;
-  background: #050505;
-}
-.case-preview-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(to bottom, transparent 50%, var(--card) 100%);
-  z-index: 2;
-}
-.case-card:hover .case-preview-overlay {
-  background: linear-gradient(to bottom, transparent 50%, var(--card2) 100%);
+.fcard:hover{
+  border-color:var(--accent);
+  box-shadow:0 0 40px rgba(200,255,0,0.15),0 24px 60px rgba(0,0,0,0.6);
+  z-index:10!important;
 }
 
-/* ── MCLAREN PREVIEW ── */
-.prev-mclaren {
-  position: absolute; inset: 0; overflow: hidden;
-  background: #000;
+/* pulsing glow ring on each card */
+.fcard::after{
+  content:'';position:absolute;inset:-1px;border-radius:12px;
+  border:1px solid transparent;pointer-events:none;
+  transition:border-color .3s;
 }
-.prev-mclaren .pm-grid {
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(rgba(57,255,20,0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(57,255,20,0.06) 1px, transparent 1px);
-  background-size: 30px 30px;
-}
-.prev-mclaren .pm-glow {
-  position: absolute; top: 30%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 200px; height: 200px;
-  background: radial-gradient(circle, rgba(57,255,20,0.18) 0%, transparent 70%);
-}
-.prev-mclaren .pm-title {
-  position: absolute; top: 28px; left: 28px;
-  font-family: 'Space Mono', monospace;
-  font-size: 22px; font-weight: 700;
-  color: #39ff14;
-  text-shadow: 0 0 20px #39ff14, 0 0 40px rgba(57,255,20,0.5);
-  letter-spacing: -0.02em; line-height: 1.1;
-}
-.prev-mclaren .pm-line {
-  position: absolute;
-  background: #39ff14;
-  box-shadow: 0 0 8px #39ff14;
-}
-.prev-mclaren .pm-line1 { top: 100px; left: 28px; width: 60px; height: 1px; }
-.prev-mclaren .pm-line2 { top: 112px; left: 28px; width: 40px; height: 1px; opacity: .5; }
-.prev-mclaren .pm-bars {
-  position: absolute; bottom: 24px; left: 28px;
-  display: flex; align-items: flex-end; gap: 5px;
-}
-.prev-mclaren .pm-bar {
-  width: 14px; background: rgba(57,255,20,0.5);
-  border-top: 1px solid #39ff14;
-  box-shadow: 0 0 6px rgba(57,255,20,0.4);
-}
-.prev-mclaren .pm-tag {
-  position: absolute; bottom: 28px; right: 28px;
-  font-family: 'Space Mono', monospace;
-  font-size: 9px; color: rgba(57,255,20,0.6);
-  letter-spacing: 0.2em; border: 1px solid rgba(57,255,20,0.2);
-  padding: 4px 8px;
-}
-@keyframes pulse-green { 0%,100%{opacity:1} 50%{opacity:0.5} }
-.prev-mclaren .pm-dot {
-  position: absolute; top: 32px; right: 28px;
-  width: 6px; height: 6px; border-radius: 50%;
-  background: #39ff14;
-  box-shadow: 0 0 10px #39ff14;
-  animation: pulse-green 1.8s ease-in-out infinite;
-}
+.fcard:hover::after{border-color:rgba(200,255,0,0.4);}
 
-/* ── YINGER PREVIEW ── */
-.prev-yinger {
-  position: absolute; inset: 0;
-  background: #000;
-  font-family: 'Space Mono', monospace;
-}
-.prev-yinger .py-ticker {
-  position: absolute; top: 0; left: 0; right: 0;
-  height: 36px; border-bottom: 1px solid #222;
-  display: flex; align-items: center; padding: 0 20px; gap: 20px;
-}
-.prev-yinger .py-pair {
-  font-size: 9px; color: #444; letter-spacing: .05em;
-}
-.prev-yinger .py-pair span { color: #00ff88; }
-.prev-yinger .py-chart {
-  position: absolute; top: 50px; left: 20px; right: 20px; height: 100px;
-}
-.prev-yinger .py-chart svg { width: 100%; height: 100%; }
-.prev-yinger .py-grid-h {
-  position: absolute; top: 50px; left: 0; right: 0;
-}
-.prev-yinger .py-row {
-  height: 24px; border-bottom: 1px solid #111;
-  display: flex; align-items: center;
-  padding: 0 20px; gap: 16px;
-}
-.prev-yinger .py-row:first-child { border-top: 1px solid #222; }
-.prev-yinger .py-cell { font-size: 8px; color: #555; flex: 1; }
-.prev-yinger .py-cell.up { color: #00ff88; }
-.prev-yinger .py-cell.dn { color: #ff1a1a; }
-.prev-yinger .py-label {
-  position: absolute; bottom: 20px; left: 20px;
-  font-size: 8px; color: #333; letter-spacing: .15em;
-}
+/* CARD 1 — McLaren (large, center-left) */
+.fcard-1{width:320px;left:6%;top:8%;z-index:3;
+  animation:float1 6s ease-in-out infinite;}
+@keyframes float1{0%,100%{transform:rotateX(6deg) rotateY(-8deg) translateZ(20px);}
+  50%{transform:rotateX(3deg) rotateY(-5deg) translateZ(40px);}}
 
-/* ── GPT INV PREVIEW ── */
-.prev-gptinv {
-  position: absolute; inset: 0;
-  background: #060608;
-}
-.prev-gptinv .pg-atm {
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse 70% 80% at 80% 50%, rgba(180,10,24,0.35) 0%, transparent 65%);
-}
-.prev-gptinv .pg-nav {
-  position: absolute; top: 0; left: 0; right: 0;
-  height: 40px; background: rgba(6,6,8,0.9);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  display: flex; align-items: center; padding: 0 20px; gap: 10px;
-}
-.prev-gptinv .pg-badge {
-  width: 20px; height: 20px; background: #e01c2e;
-  border-radius: 5px; font-size: 9px; font-weight: 900;
-  color: #fff; display: flex; align-items: center; justify-content: center;
-  font-family: 'Space Grotesk', sans-serif;
-}
-.prev-gptinv .pg-navtitle {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 11px; font-weight: 700; color: #f4f2ee;
-  letter-spacing: -.2px;
-}
-.prev-gptinv .pg-hero {
-  position: absolute; top: 55px; left: 20px;
-}
-.prev-gptinv .pg-tag {
-  font-family: 'Space Mono', monospace;
-  font-size: 7px; color: #e01c2e; letter-spacing: .15em;
-  text-transform: uppercase; margin-bottom: 8px;
-}
-.prev-gptinv .pg-h1 {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 20px; font-weight: 900; color: #f4f2ee;
-  letter-spacing: -.03em; line-height: 1.1;
-}
-.prev-gptinv .pg-h1 span { color: #e01c2e; }
-.prev-gptinv .pg-btn {
-  margin-top: 14px;
-  background: #e01c2e;
-  color: #fff; font-size: 9px; font-weight: 700;
-  font-family: 'Space Grotesk', sans-serif;
-  padding: 7px 16px; border-radius: 6px;
-  display: inline-block;
-  box-shadow: 0 0 16px rgba(224,28,46,0.4);
-}
-.prev-gptinv .pg-card {
-  position: absolute; right: 20px; top: 50px;
-  width: 140px; background: #111116;
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 8px; padding: 12px;
-}
-.prev-gptinv .pg-clabel {
-  font-family: 'Space Mono', monospace;
-  font-size: 7px; color: #666; margin-bottom: 6px;
-}
-.prev-gptinv .pg-cval {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 18px; font-weight: 900; color: #f4f2ee;
-  letter-spacing: -.02em;
-}
-.prev-gptinv .pg-cval small { font-size: 9px; color: #22c55e; margin-left: 4px; }
-.case-body { padding: 28px 28px 32px; }
-.case-tags {
-  display: flex; gap: 8px; flex-wrap: wrap;
-  margin-bottom: 14px;
-}
-.case-tag {
-  font-family: 'Space Mono', monospace;
-  font-size: 9px; letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--grey);
-  border: 1px solid var(--border);
-  padding: 3px 8px; border-radius: 2px;
-}
-.case-title {
-  font-size: 19px; font-weight: 600;
-  letter-spacing: -0.01em; margin-bottom: 8px;
-  line-height: 1.3;
-}
-.case-desc {
-  font-size: 12px; color: var(--lgrey);
-  line-height: 1.65; margin-bottom: 20px;
-}
-.case-link {
-  display: flex; align-items: center; gap: 8px;
-  font-family: 'Space Mono', monospace;
-  font-size: 10px; letter-spacing: 0.1em;
-  color: var(--accent); text-transform: uppercase;
-  transition: gap .2s;
-}
-.case-card:hover .case-link { gap: 14px; }
-.case-num {
-  position: absolute; top: 16px; right: 16px;
-  font-family: 'Space Mono', monospace;
-  font-size: 10px; color: var(--grey);
-  background: var(--black);
-  border: 1px solid var(--border);
-  padding: 4px 8px; border-radius: 2px;
-  z-index: 2;
-}
+/* CARD 2 — Trading Terminal (medium, top-right) */
+.fcard-2{width:260px;right:8%;top:4%;z-index:4;
+  animation:float2 7s ease-in-out infinite .8s;}
+@keyframes float2{0%,100%{transform:rotateX(8deg) rotateY(10deg) translateZ(10px) rotate(-2deg);}
+  50%{transform:rotateX(4deg) rotateY(6deg) translateZ(30px) rotate(-1deg);}}
 
-/* ── CTA BOTTOM ── */
-.cta-section {
-  padding: 120px 48px;
-  text-align: center;
-  position: relative; z-index: 1;
-  border-top: 1px solid var(--border);
+/* CARD 3 — GPT INV (large, bottom-right) */
+.fcard-3{width:300px;right:5%;bottom:5%;z-index:2;
+  animation:float3 8s ease-in-out infinite 1.5s;}
+@keyframes float3{0%,100%{transform:rotateX(-5deg) rotateY(8deg) translateZ(15px) rotate(1.5deg);}
+  50%{transform:rotateX(-2deg) rotateY(4deg) translateZ(35px) rotate(.5deg);}}
+
+/* mini decorative cards */
+.fcard-mini{width:120px;height:90px;z-index:1;pointer-events:none;
+  background:var(--dark);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.fcard-m1{left:34%;top:5%;animation:float2 9s ease-in-out infinite .3s;}
+.fcard-m2{left:2%;bottom:12%;animation:float1 7.5s ease-in-out infinite 2s;}
+.fcard-m3{right:30%;bottom:10%;animation:float3 6.5s ease-in-out infinite .6s;}
+
+/* card inner layout */
+.fc-thumb{height:180px;position:relative;overflow:hidden;flex-shrink:0;}
+.fcard-1 .fc-thumb{height:200px;}
+.fcard-3 .fc-thumb{height:195px;}
+.fc-body{padding:16px 18px 20px;}
+.fc-num{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:0.15em;
+  color:var(--grey);margin-bottom:8px;text-transform:uppercase;}
+.fc-title{font-size:15px;font-weight:600;letter-spacing:-0.01em;margin-bottom:8px;line-height:1.2;}
+.fc-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;}
+.fc-tag{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--grey);border:1px solid var(--border);padding:2px 6px;border-radius:2px;}
+.fc-link{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:6px;}
+
+/* ambient glow behind cards */
+.cases-glow{
+  position:absolute;pointer-events:none;border-radius:50%;filter:blur(80px);opacity:.12;
 }
-.cta-label {
-  font-family: 'Space Mono', monospace;
-  font-size: 10px; letter-spacing: 0.2em;
-  color: var(--accent); text-transform: uppercase;
-  margin-bottom: 24px;
-}
-.cta-title {
-  font-size: clamp(32px, 5vw, 64px);
-  font-weight: 700; letter-spacing: -0.03em;
-  line-height: 1.05; margin-bottom: 20px;
-}
-.cta-title em { font-style: normal; color: var(--accent); }
-.cta-sub {
-  font-size: 15px; color: var(--lgrey);
-  margin-bottom: 48px; max-width: 460px; margin-inline: auto;
-  line-height: 1.7;
-}
-.cta-email {
-  font-family: 'Space Mono', monospace;
-  font-size: 14px; color: var(--white);
-  text-decoration: none;
-  border-bottom: 1px solid var(--border2);
-  padding-bottom: 2px;
-  transition: border-color .2s, color .2s;
-}
-.cta-email:hover { color: var(--accent); border-color: var(--accent); }
+.cg1{width:400px;height:400px;background:var(--accent);left:10%;top:10%;}
+.cg2{width:300px;height:300px;background:#00d4ff;right:15%;bottom:15%;}
+.cg3{width:200px;height:200px;background:#ff00aa;right:40%;top:5%;}
+
+/* Preview thumbnails (same CSS previews as before) */
+.prev-mclaren{position:absolute;inset:0;background:#000;}
+.prev-mclaren .pm-grid{position:absolute;inset:0;
+  background-image:linear-gradient(rgba(57,255,20,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(57,255,20,0.06) 1px,transparent 1px);
+  background-size:30px 30px;}
+.prev-mclaren .pm-glow{position:absolute;top:30%;left:50%;transform:translate(-50%,-50%);
+  width:200px;height:200px;background:radial-gradient(circle,rgba(57,255,20,0.18) 0%,transparent 70%);}
+.prev-mclaren .pm-title{position:absolute;top:28px;left:28px;font-family:'Space Mono',monospace;
+  font-size:26px;font-weight:700;color:#39ff14;text-shadow:0 0 20px #39ff14,0 0 40px rgba(57,255,20,0.5);letter-spacing:-0.02em;line-height:1.1;}
+.prev-mclaren .pm-dot{position:absolute;top:32px;right:28px;width:8px;height:8px;border-radius:50%;
+  background:#39ff14;box-shadow:0 0 12px #39ff14;animation:pg 1.8s ease-in-out infinite;}
+@keyframes pg{0%,100%{opacity:1}50%{opacity:.4}}
+.prev-mclaren .pm-bars{position:absolute;bottom:28px;left:28px;display:flex;align-items:flex-end;gap:6px;}
+.prev-mclaren .pm-bar{width:16px;background:rgba(57,255,20,0.5);border-top:1px solid #39ff14;box-shadow:0 0 6px rgba(57,255,20,.4);}
+
+.prev-yinger{position:absolute;inset:0;background:#000;font-family:'Space Mono',monospace;}
+.prev-yinger .py-ticker{position:absolute;top:0;left:0;right:0;height:36px;border-bottom:1px solid #222;
+  display:flex;align-items:center;padding:0 20px;gap:20px;}
+.prev-yinger .py-pair{font-size:9px;color:#444;letter-spacing:.05em;}
+.prev-yinger .py-pair span{color:#00ff88;}
+.prev-yinger .py-chart{position:absolute;top:50px;left:20px;right:20px;height:100px;}
+.prev-yinger .py-chart svg{width:100%;height:100%;}
+.prev-yinger .py-rows{position:absolute;top:158px;left:0;right:0;}
+.prev-yinger .py-row{height:26px;border-bottom:1px solid #111;display:flex;align-items:center;padding:0 20px;gap:16px;}
+.prev-yinger .py-cell{font-size:8px;color:#555;flex:1;}
+.prev-yinger .py-cell.up{color:#00ff88;}
+.prev-yinger .py-cell.dn{color:#ff1a1a;}
+
+.prev-gptinv{position:absolute;inset:0;background:#060608;}
+.prev-gptinv .pg-atm{position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 80% 50%,rgba(180,10,24,0.4) 0%,transparent 65%);}
+.prev-gptinv .pg-nav{position:absolute;top:0;left:0;right:0;height:40px;background:rgba(6,6,8,.9);
+  border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;padding:0 20px;gap:10px;}
+.prev-gptinv .pg-badge{width:22px;height:22px;background:#e01c2e;border-radius:6px;font-size:10px;font-weight:900;
+  color:#fff;display:flex;align-items:center;justify-content:center;}
+.prev-gptinv .pg-navtitle{font-size:12px;font-weight:700;color:#f4f2ee;}
+.prev-gptinv .pg-h1{position:absolute;bottom:28px;left:24px;font-size:32px;font-weight:900;
+  color:#f4f2ee;letter-spacing:-.03em;line-height:1;}
+.prev-gptinv .pg-h1 span{color:#e01c2e;}
+.prev-gptinv .pg-card{position:absolute;right:20px;top:56px;width:140px;background:#111116;
+  border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:14px;}
+.prev-gptinv .pg-clabel{font-family:'Space Mono',monospace;font-size:7px;color:#666;margin-bottom:6px;}
+.prev-gptinv .pg-cval{font-size:20px;font-weight:900;color:#f4f2ee;letter-spacing:-.02em;}
+.prev-gptinv .pg-cval small{font-size:10px;color:#22c55e;margin-left:4px;}
+
+/* Mobile cases: accordion */
+.cases-mobile{display:none;}
+.cm-item{border:1px solid var(--border);margin-bottom:1px;}
+.cm-header{display:flex;align-items:center;gap:16px;padding:20px 20px;cursor:pointer;
+  background:var(--card);transition:background .2s;}
+.cm-header:hover{background:var(--card2);}
+.cm-num{font-family:'Space Mono',monospace;font-size:10px;color:var(--grey);letter-spacing:0.1em;min-width:32px;}
+.cm-name{flex:1;font-size:16px;font-weight:600;letter-spacing:-0.01em;}
+.cm-chevron{font-size:16px;color:var(--lgrey);transition:transform .3s;}
+.cm-item.open .cm-chevron{transform:rotate(180deg);}
+.cm-item.open .cm-header{background:rgba(200,255,0,.04);}
+.cm-item.open .cm-num{color:var(--accent);}
+.cm-body{display:none;padding:0 20px 24px;background:var(--card);}
+.cm-item.open .cm-body{display:block;}
+.cm-thumb{height:160px;position:relative;overflow:hidden;margin-bottom:16px;border-radius:4px;}
+.cm-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+.cm-tag{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--grey);border:1px solid var(--border);padding:2px 7px;border-radius:2px;}
+.cm-desc{font-size:13px;color:var(--lgrey);line-height:1.65;margin-bottom:16px;}
+.cm-link{display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;
+  font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);text-decoration:none;}
+
+/* ── CTA ── */
+.cta-section{padding:120px 48px;text-align:center;position:relative;z-index:1;border-top:1px solid var(--border);}
+.cta-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.2em;color:var(--accent);
+  text-transform:uppercase;margin-bottom:24px;}
+.cta-title{font-size:clamp(32px,5vw,64px);font-weight:700;letter-spacing:-0.03em;line-height:1.05;margin-bottom:20px;}
+.cta-title em{font-style:normal;color:var(--accent);}
+.cta-sub{font-size:15px;color:var(--lgrey);margin-bottom:48px;max-width:460px;margin-inline:auto;line-height:1.7;}
+.cta-email{font-family:'Space Mono',monospace;font-size:14px;color:var(--white);text-decoration:none;
+  border-bottom:1px solid var(--border2);padding-bottom:2px;transition:border-color .2s,color .2s;}
+.cta-email:hover{color:var(--accent);border-color:var(--accent);}
 
 /* ── FOOTER ── */
-footer {
-  position: relative; z-index: 1;
-  padding: 32px 48px;
-  border-top: 1px solid var(--border);
-  display: flex; align-items: center;
-  justify-content: space-between;
-}
-.footer-logo {
-  font-family: 'Space Mono', monospace;
-  font-size: 12px; color: var(--grey);
-  letter-spacing: 0.06em;
-}
-.footer-copy {
-  font-family: 'Space Mono', monospace;
-  font-size: 10px; color: var(--grey);
-  letter-spacing: 0.05em;
-}
-.footer-links {
-  display: flex; gap: 28px;
-}
-.footer-links a {
-  font-family: 'Space Mono', monospace;
-  font-size: 10px; color: var(--grey);
-  text-decoration: none; letter-spacing: 0.08em;
-  transition: color .2s;
-}
-.footer-links a:hover { color: var(--white); }
+footer{position:relative;z-index:1;padding:32px 48px;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;}
+.footer-logo{font-family:'Space Mono',monospace;font-size:12px;color:var(--grey);letter-spacing:0.06em;}
+.footer-copy{font-family:'Space Mono',monospace;font-size:10px;color:var(--grey);letter-spacing:0.05em;}
+.footer-links{display:flex;gap:28px;}
+.footer-links a{font-family:'Space Mono',monospace;font-size:10px;color:var(--grey);
+  text-decoration:none;letter-spacing:0.08em;transition:color .2s;}
+.footer-links a:hover{color:var(--white);}
 
-/* ── SCROLL INDICATOR ── */
-.scroll-line {
-  position: fixed; top: 0; left: 0;
-  height: 2px; z-index: 1000;
-  background: var(--accent);
-  box-shadow: var(--glow);
-  transition: width .1s linear;
-  width: 0%;
-}
+/* ── PULSE CIRCLE (mobile hero) ── */
+.hero-pulse-bg{display:none;position:absolute;top:38%;left:50%;transform:translate(-50%,-50%);
+  width:320px;height:320px;border-radius:50%;z-index:0;pointer-events:none;}
+.hero-pulse-bg::before,.hero-pulse-bg span{content:'';position:absolute;inset:0;border-radius:50%;
+  border:1px solid rgba(200,255,0,0.25);}
+.hero-pulse-bg::before{animation:pulse-ring 3s ease-out infinite;}
+.hero-pulse-bg span{display:block;animation:pulse-ring 3s ease-out infinite .8s;}
+.hero-pulse-bg::after{content:'';position:absolute;inset:auto;width:6px;height:6px;top:50%;left:50%;
+  transform:translate(-50%,-50%);background:rgba(200,255,0,.8);border-radius:50%;
+  box-shadow:0 0 20px rgba(200,255,0,.6);animation:dot-p 3s ease-in-out infinite;}
+@keyframes pulse-ring{0%{transform:scale(.7);opacity:.6;border-color:rgba(200,255,0,.4);}70%{transform:scale(1.15);opacity:.15;}100%{transform:scale(1.3);opacity:0;}}
+@keyframes dot-p{0%,100%{opacity:1}50%{opacity:.5}}
 
 /* ── RESPONSIVE ── */
-/* ── MOBILE PULSE CIRCLE ── */
-.hero-pulse-bg {
-  display: none;
-  position: absolute;
-  top: 38%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 320px; height: 320px;
-  border-radius: 50%;
-  z-index: 0;
-  pointer-events: none;
+@media(max-width:900px){
+  nav{padding:0 20px;}
+  .nav-links{display:none;}
+  .nav-burger{display:flex;}
+  section{padding:70px 20px;}
+  .hero{padding:100px 20px 80px;}
+  .hero-stats{display:none;}
+  .hero-deco{display:none!important;}
+  .hero-pulse-bg{display:block;}
+  .services-grid{grid-template-columns:1fr;}
+  .ai-grid{grid-template-columns:1fr;gap:40px;}
+  /* process */
+  .process-track{grid-template-columns:1fr 1fr;}
+  .pstep{border-right:1px solid var(--border)!important;}
+  /* cases stage */
+  .cases-stage{height:auto;perspective:none;overflow:visible;}
+  .cases-stage-inner{transform:none!important;display:flex;flex-direction:column;gap:16px;padding:4px 0;}
+  .fcard{position:static!important;width:100%!important;animation:none!important;transform:none!important;}
+  .fcard-mini{display:none!important;}
+  .cases-glow{display:none;}
+  footer{flex-direction:column;gap:16px;text-align:center;}
+  .footer-links{justify-content:center;}
+  .section-header{flex-direction:column;align-items:flex-start;gap:8px;}
+  .cta-section{padding:80px 20px;}
+  .cases-mobile{display:none!important;}
 }
-.hero-pulse-bg::before,
-.hero-pulse-bg::after,
-.hero-pulse-bg span {
-  content: '';
-  position: absolute; inset: 0;
-  border-radius: 50%;
-  border: 1px solid rgba(200,255,0,0.25);
+@media(max-width:600px){
+  .process-track{grid-template-columns:1fr;}
+  .pstep{border-right:1px solid var(--border)!important;}
 }
-.hero-pulse-bg::before { animation: pulse-ring 3s ease-out infinite; }
-.hero-pulse-bg::after  { animation: pulse-ring 3s ease-out infinite 1s; }
-.hero-pulse-bg span    { display:block; animation: pulse-ring 3s ease-out infinite 2s; }
-
-@keyframes pulse-ring {
-  0%   { transform: scale(0.7); opacity: 0.6; border-color: rgba(200,255,0,0.4); }
-  70%  { transform: scale(1.15); opacity: 0.15; }
-  100% { transform: scale(1.3); opacity: 0; }
-}
-
-/* Inner glowing dot in center of pulse */
-.hero-pulse-bg::after {
-  inset: auto;
-  width: 6px; height: 6px;
-  top: 50%; left: 50%;
-  transform: translate(-50%,-50%) scale(1);
-  background: rgba(200,255,0,0.8);
-  border: none;
-  box-shadow: 0 0 20px rgba(200,255,0,0.6), 0 0 40px rgba(200,255,0,0.3);
-  animation: dot-pulse 3s ease-in-out infinite;
-}
-@keyframes dot-pulse {
-  0%,100% { opacity: 1; box-shadow: 0 0 20px rgba(200,255,0,0.6), 0 0 40px rgba(200,255,0,0.3); }
-  50%      { opacity: 0.6; box-shadow: 0 0 8px rgba(200,255,0,0.3); }
-}
-
-@media (max-width: 900px) {
-  nav { padding: 0 20px; }
-  .nav-links { display: none; }
-  section { padding: 70px 20px; }
-  .hero { padding: 100px 20px 80px; }
-  .hero-stats { display: none; }
-  .hero-deco { display: none; }
-  .hero-pulse-bg { display: block; }
-  .services-grid { grid-template-columns: 1fr; }
-  .ai-grid { grid-template-columns: 1fr; gap: 40px; }
-  .cases-grid { grid-template-columns: 1fr; }
-  .process-step { grid-template-columns: 60px 1fr; }
-  .step-tag { display: none; }
-  footer { flex-direction: column; gap: 16px; text-align: center; }
-  .footer-links { justify-content: center; }
-  .section-header { flex-direction: column; align-items: flex-start; gap: 8px; }
-  .cta-section { padding: 80px 20px; }
+@media(max-width:600px){
+  .services-grid{grid-template-columns:1fr;}
+  .hero-title{font-size:clamp(36px,9vw,60px);}
+  .btn-primary,.btn-secondary{font-size:12px;}
 }
 </style>
 </head>
 <body>
 
-<!-- Scroll progress -->
 <div class="scroll-line" id="scrollLine"></div>
 
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">
-    <img src="logo.png" alt="FX. Social Club" style="height:38px;width:38px;object-fit:contain;">
+    <img src="logo.png" alt="FX. Social Club">
     <span class="nav-logo-text">FX. SOCIAL CLUB</span>
   </a>
   <div class="nav-links">
@@ -785,7 +421,18 @@ footer {
     <a href="#cases">Кейси</a>
     <a href="#contact" class="nav-cta">Зв'язатись</a>
   </div>
+  <button class="nav-burger" id="burger" aria-label="Меню">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" class="mm-link">Послуги</a>
+  <a href="#process" class="mm-link">Процес</a>
+  <a href="#cases" class="mm-link">Кейси</a>
+  <a href="https://t.me/fx_social_club" target="_blank" class="m-cta">Зв'язатись →</a>
+</div>
 
 <!-- HERO -->
 <section class="hero" id="home">
@@ -795,43 +442,25 @@ footer {
     <span class="accent-word">продає</span> та<br>
     <span class="accent-hl">вражає</span>
   </h1>
-  <p class="hero-sub">
-    Ми створюємо UX/UI дизайн для бізнесу, поєднуючи глибоке розуміння людської поведінки з можливостями AI.
-  </p>
+  <p class="hero-sub">Ми створюємо UX/UI дизайн для бізнесу, поєднуючи глибоке розуміння людської поведінки з можливостями AI.</p>
   <div class="hero-actions">
     <a href="#cases" class="btn-primary">Дивитись кейси</a>
     <a href="https://t.me/fx_social_club" target="_blank" class="btn-secondary">Обговорити проект</a>
   </div>
-
-  <!-- Mobile pulse background -->
   <div class="hero-pulse-bg" aria-hidden="true"><span></span></div>
-
-  <!-- Particle sphere (desktop only) -->
   <div class="hero-deco" aria-hidden="true">
     <canvas id="particleCanvas" width="420" height="420"></canvas>
   </div>
-
-  <!-- Stats -->
   <div class="hero-stats">
-    <div class="stat-item">
-      <div class="stat-num">100<span>+</span></div>
-      <div class="stat-label">Проектів</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">3<span>×</span></div>
-      <div class="stat-label">Швидше з AI</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">100<span>%</span></div>
-      <div class="stat-label">Задоволених клієнтів</div>
-    </div>
+    <div class="stat-item"><div class="stat-num">100<span>+</span></div><div class="stat-label">Проектів</div></div>
+    <div class="stat-item"><div class="stat-num">3<span>×</span></div><div class="stat-label">Швидше з AI</div></div>
+    <div class="stat-item"><div class="stat-num">100<span>%</span></div><div class="stat-label">Задоволених клієнтів</div></div>
   </div>
 </section>
 
 <!-- MARQUEE -->
 <div class="marquee-wrap">
   <div class="marquee-track">
-    <!-- repeated twice for infinite loop -->
     <span class="marquee-item"><span class="marquee-dot"></span>UX Research</span>
     <span class="marquee-item"><span class="marquee-dot"></span>UI Design</span>
     <span class="marquee-item"><span class="marquee-dot"></span>AI-Powered</span>
@@ -856,49 +485,16 @@ footer {
 <!-- SERVICES -->
 <section id="services">
   <div class="section-header">
-    <div>
-      <div class="section-label">Що ми робимо</div>
-      <h2 class="section-title">Послуги</h2>
-    </div>
+    <div><div class="section-label">Що ми робимо</div><h2 class="section-title">Послуги</h2></div>
     <div class="section-count">06 напрямків</div>
   </div>
   <div class="services-grid">
-    <div class="service-card">
-      <div class="service-num">01</div>
-      <div class="service-icon">◈</div>
-      <div class="service-name">UX/UI Дизайн</div>
-      <p class="service-desc">Проектуємо інтерфейси з урахуванням поведінки користувача — від дослідження до фінального пікселя.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-num">02</div>
-      <div class="service-icon">▦</div>
-      <div class="service-name">Лендінги та сайти</div>
-      <p class="service-desc">Конверсійні сторінки з унікальним дизайном, що відображає суть бренду і закриває задачі бізнесу.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-num">03</div>
-      <div class="service-icon">⬡</div>
-      <div class="service-name">Дашборди та SaaS</div>
-      <p class="service-desc">Складні продукти з великою кількістю даних — робимо зрозумілими, зручними та візуально бездоганними.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-num">04</div>
-      <div class="service-icon">◎</div>
-      <div class="service-name">Брендинг</div>
-      <p class="service-desc">Візуальна ідентичність, що відрізняє — логотип, стиль, гайдлайн для всіх каналів комунікації.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-num">05</div>
-      <div class="service-icon">⬕</div>
-      <div class="service-name">Мобільні додатки</div>
-      <p class="service-desc">Дизайн iOS / Android з глибокою UX-логікою, анімаціями та готовими компонентами для розробників.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-num">06</div>
-      <div class="service-icon">✦</div>
-      <div class="service-name">AI-прискорення</div>
-      <p class="service-desc">Використовуємо AI-інструменти щоб скоротити час розробки дизайну без шкоди для якості та кастомізації.</p>
-    </div>
+    <div class="service-card"><div class="service-num">01</div><div class="service-icon">◈</div><div class="service-name">UX/UI Дизайн</div><p class="service-desc">Проектуємо інтерфейси з урахуванням поведінки користувача — від дослідження до фінального пікселя.</p></div>
+    <div class="service-card"><div class="service-num">02</div><div class="service-icon">▦</div><div class="service-name">Лендінги та сайти</div><p class="service-desc">Конверсійні сторінки з унікальним дизайном, що відображає суть бренду і закриває задачі бізнесу.</p></div>
+    <div class="service-card"><div class="service-num">03</div><div class="service-icon">⬡</div><div class="service-name">Дашборди та SaaS</div><p class="service-desc">Складні продукти з великою кількістю даних — робимо зрозумілими, зручними та візуально бездоганними.</p></div>
+    <div class="service-card"><div class="service-num">04</div><div class="service-icon">◎</div><div class="service-name">Брендинг</div><p class="service-desc">Візуальна ідентичність, що відрізняє — логотип, стиль, гайдлайн для всіх каналів комунікації.</p></div>
+    <div class="service-card"><div class="service-num">05</div><div class="service-icon">⬕</div><div class="service-name">Мобільні додатки</div><p class="service-desc">Дизайн iOS / Android з глибокою UX-логікою, анімаціями та готовими компонентами для розробників.</p></div>
+    <div class="service-card"><div class="service-num">06</div><div class="service-icon">✦</div><div class="service-name">AI-прискорення</div><p class="service-desc">Використовуємо AI-інструменти щоб скоротити час розробки дизайну без шкоди для якості та кастомізації.</p></div>
   </div>
 </section>
 
@@ -907,216 +503,233 @@ footer {
   <div class="ai-grid">
     <div class="ai-left">
       <div class="section-label">Наша перевага</div>
-      <h2 class="ai-headline">
-        AI не замінює<br>
-        дизайнера —<br>
-        він дає йому<br>
-        <em>суперсилу</em>
-      </h2>
-      <p class="ai-text">
-        Ми інтегруємо штучний інтелект у кожен етап дизайн-процесу. Генерація концепцій, автоматизація рутини, швидкий ітеративний прототипінг — все це дозволяє нам доставляти рішення рівня топ-студій за доступну ціну і у стислі терміни.
-      </p>
+      <h2 class="ai-headline">AI не замінює<br>дизайнера —<br>він дає йому<br><em>суперсилу</em></h2>
+      <p class="ai-text">Ми інтегруємо штучний інтелект у кожен етап дизайн-процесу. Генерація концепцій, автоматизація рутини, швидкий ітеративний прототипінг — все це дозволяє нам доставляти рішення рівня топ-студій за доступну ціну і у стислі терміни.</p>
       <a href="#contact" class="btn-primary">Почати проект</a>
     </div>
     <div class="ai-right">
-      <div class="ai-metric">
-        <div class="ai-metric-val">3<span>×</span></div>
-        <div class="ai-metric-label">швидше від<br>традиційних студій</div>
-      </div>
-      <div class="ai-metric">
-        <div class="ai-metric-val">↓<span>60%</span></div>
-        <div class="ai-metric-label">вартість ітерацій<br>та правок</div>
-      </div>
-      <div class="ai-metric">
-        <div class="ai-metric-val">∞</div>
-        <div class="ai-metric-label">кількість варіантів<br>на вибір</div>
-      </div>
-      <div class="ai-metric">
-        <div class="ai-metric-val">24<span>h</span></div>
-        <div class="ai-metric-label">перший концепт<br>вже завтра</div>
-      </div>
+      <div class="ai-metric"><div class="ai-metric-val">3<span>×</span></div><div class="ai-metric-label">швидше від<br>традиційних студій</div></div>
+      <div class="ai-metric"><div class="ai-metric-val">↓<span>60%</span></div><div class="ai-metric-label">вартість ітерацій<br>та правок</div></div>
+      <div class="ai-metric"><div class="ai-metric-val">∞</div><div class="ai-metric-label">кількість варіантів<br>на вибір</div></div>
+      <div class="ai-metric"><div class="ai-metric-val">24<span>h</span></div><div class="ai-metric-label">перший концепт<br>вже завтра</div></div>
     </div>
   </div>
 </section>
 
-<!-- PROCESS -->
+<!-- PROCESS (animated) -->
 <section id="process">
   <div class="section-header">
-    <div>
-      <div class="section-label">Як ми працюємо</div>
-      <h2 class="section-title">Процес</h2>
-    </div>
+    <div><div class="section-label">Як ми працюємо</div><h2 class="section-title">Процес</h2></div>
     <div class="section-count">04 етапи</div>
   </div>
-  <div class="process-list">
-    <div class="process-step">
-      <div class="step-num">01</div>
-      <div class="step-body">
-        <div class="step-title">Діскавері та брифінг</div>
-        <div class="step-desc">Занурюємось у ваш бізнес, аудиторію і конкурентів. Формуємо чітке ТЗ та бачення продукту.</div>
+  <div class="process-scene">
+    <div class="process-track" id="processTrack">
+
+      <div class="pstep" style="transition-delay:.0s">
+        <div class="ps-line"></div>
+        <div class="ps-dot"></div>
+        <div class="ps-num">01</div>
+        <div class="ps-title">Діскавері та брифінг</div>
+        <p class="ps-desc">Занурюємось у ваш бізнес, аудиторію і конкурентів. Формуємо чітке ТЗ та бачення продукту.</p>
+        <span class="ps-tag">1–2 дні</span>
       </div>
-      <div class="step-tag">1–2 дні</div>
-    </div>
-    <div class="process-step">
-      <div class="step-num">02</div>
-      <div class="step-body">
-        <div class="step-title">Концепція та wireframes</div>
-        <div class="step-desc">Структура, навігація і логіка взаємодії. Швидко тестуємо гіпотези на низькодеталізованих прототипах.</div>
+
+      <div class="pstep" style="transition-delay:.15s">
+        <div class="ps-line"></div>
+        <div class="ps-dot"></div>
+        <div class="ps-num">02</div>
+        <div class="ps-title">Концепція та wireframes</div>
+        <p class="ps-desc">Структура, навігація і логіка взаємодії. Швидко тестуємо гіпотези на прототипах.</p>
+        <span class="ps-tag">2–4 дні</span>
       </div>
-      <div class="step-tag">2–4 дні</div>
-    </div>
-    <div class="process-step">
-      <div class="step-num">03</div>
-      <div class="step-body">
-        <div class="step-title">UI та деталізація</div>
-        <div class="step-desc">Кольори, типографіка, компоненти, мікро-анімації. Дизайн-система готова до передачі розробникам.</div>
+
+      <div class="pstep" style="transition-delay:.3s">
+        <div class="ps-line"></div>
+        <div class="ps-dot"></div>
+        <div class="ps-num">03</div>
+        <div class="ps-title">UI та деталізація</div>
+        <p class="ps-desc">Кольори, типографіка, компоненти, мікро-анімації. Дизайн-система готова до передачі.</p>
+        <span class="ps-tag">3–7 днів</span>
       </div>
-      <div class="step-tag">3–7 днів</div>
-    </div>
-    <div class="process-step">
-      <div class="step-num">04</div>
-      <div class="step-body">
-        <div class="step-title">Передача та підтримка</div>
-        <div class="step-desc">Готові макети у Figma зі специфікаціями, хендовер для розробників і підтримка під час верстки.</div>
+
+      <div class="pstep" style="transition-delay:.45s">
+        <div class="ps-dot"></div>
+        <div class="ps-num">04</div>
+        <div class="ps-title">Передача та підтримка</div>
+        <p class="ps-desc">Готові макети у Figma, хендовер для розробників і підтримка під час верстки.</p>
+        <span class="ps-tag">Ongoing</span>
       </div>
-      <div class="step-tag">Ongoing</div>
+
     </div>
   </div>
 </section>
 
-<!-- CASES -->
+<!-- ═══════════════════════════════
+     CASES — hover-reveal list
+═══════════════════════════════ -->
 <section id="cases">
   <div class="section-header">
-    <div>
-      <div class="section-label">Наші роботи</div>
-      <h2 class="section-title">Кейси</h2>
-    </div>
+    <div><div class="section-label">Наші роботи</div><h2 class="section-title">Кейси</h2></div>
     <div class="section-count">03 проекти</div>
   </div>
-  <div class="cases-grid">
 
-    <!-- Case 1: McLaren / Neon Green -->
-    <a href="fx-ai-club-mclaren.html" target="_blank" class="case-card">
-      <div class="case-num">01</div>
-      <div class="case-preview">
-        <div class="prev-mclaren">
-          <div class="pm-grid"></div>
-          <div class="pm-glow"></div>
-          <div class="pm-dot"></div>
-          <div class="pm-title">FX.<br>AI CLUB</div>
-          <div class="pm-line pm-line1"></div>
-          <div class="pm-line pm-line2"></div>
-          <div class="pm-bars">
-            <div class="pm-bar" style="height:28px"></div>
-            <div class="pm-bar" style="height:44px"></div>
-            <div class="pm-bar" style="height:20px"></div>
-            <div class="pm-bar" style="height:56px"></div>
-            <div class="pm-bar" style="height:36px"></div>
-            <div class="pm-bar" style="height:48px"></div>
-            <div class="pm-bar" style="height:32px"></div>
-          </div>
-          <div class="pm-tag">MCLAREN</div>
-        </div>
-        <div class="case-preview-overlay"></div>
-      </div>
-      <div class="case-body">
-        <div class="case-tags">
-          <span class="case-tag">Landing Page</span>
-          <span class="case-tag">Automotive</span>
-          <span class="case-tag">AI Design</span>
-        </div>
-        <div class="case-title">FX. AI Club — McLaren</div>
-        <p class="case-desc">Нeonовий лендінг для автомобільного клубу — агресивна неонова палітра, глітч-ефекти, кастомний курсор.</p>
-        <div class="case-link">Переглянути проект →</div>
-      </div>
-    </a>
+  <!-- 3D FLOATING CARDS STAGE -->
+  <div class="cases-stage" id="casesStage">
+    <div class="cases-stage-inner" id="casesInner">
 
-    <!-- Case 2: Yinger Trading Terminal -->
-    <a href="fx-ai-club-yinger.html" target="_blank" class="case-card">
-      <div class="case-num">02</div>
-      <div class="case-preview">
-        <div class="prev-yinger">
-          <div class="py-ticker">
-            <span class="py-pair">EUR/USD <span>1.0823</span></span>
-            <span class="py-pair">BTC <span style="color:#00e5ff">43,210</span></span>
-            <span class="py-pair">SPX <span>5,102</span></span>
-          </div>
-          <div class="py-chart">
-            <svg viewBox="0 0 400 80" preserveAspectRatio="none">
-              <polyline points="0,70 40,58 80,62 120,40 160,48 200,30 240,22 280,35 320,18 360,28 400,12"
-                fill="none" stroke="rgba(0,255,136,0.6)" stroke-width="1.5"/>
-              <polygon points="0,70 40,58 80,62 120,40 160,48 200,30 240,22 280,35 320,18 360,28 400,12 400,80 0,80"
-                fill="rgba(0,255,136,0.05)"/>
-            </svg>
-          </div>
-          <div class="py-grid-h" style="top:158px">
-            <div class="py-row">
-              <span class="py-cell">EUR/USD</span>
-              <span class="py-cell up">+0.42%</span>
-              <span class="py-cell">1.0823</span>
-            </div>
-            <div class="py-row">
-              <span class="py-cell">GBP/USD</span>
-              <span class="py-cell dn">-0.18%</span>
-              <span class="py-cell">1.2641</span>
-            </div>
-            <div class="py-row">
-              <span class="py-cell">USD/JPY</span>
-              <span class="py-cell up">+0.31%</span>
-              <span class="py-cell">151.22</span>
+      <!-- ambient glow blobs -->
+      <div class="cases-glow cg1"></div>
+      <div class="cases-glow cg2"></div>
+      <div class="cases-glow cg3"></div>
+
+      <!-- CARD 1: McLaren -->
+      <a href="https://vbvb00590-tech.github.io/Case1/" target="_blank" class="fcard fcard-1">
+        <div class="fc-thumb">
+          <div class="prev-mclaren" style="position:absolute;inset:0">
+            <div class="pm-grid"></div><div class="pm-glow"></div><div class="pm-dot"></div>
+            <div class="pm-title">FX.<br>AI CLUB</div>
+            <div class="pm-bars">
+              <div class="pm-bar" style="height:28px"></div><div class="pm-bar" style="height:44px"></div>
+              <div class="pm-bar" style="height:20px"></div><div class="pm-bar" style="height:56px"></div>
+              <div class="pm-bar" style="height:36px"></div><div class="pm-bar" style="height:48px"></div>
             </div>
           </div>
-          <div class="py-label">FX. AI CLUB — TRADING TERMINAL</div>
         </div>
-        <div class="case-preview-overlay"></div>
-      </div>
-      <div class="case-body">
-        <div class="case-tags">
-          <span class="case-tag">Dashboard</span>
-          <span class="case-tag">Fintech</span>
-          <span class="case-tag">Terminal UI</span>
+        <div class="fc-body">
+          <div class="fc-num">01 / Landing Page</div>
+          <div class="fc-title">FX. AI Club — McLaren</div>
+          <div class="fc-tags"><span class="fc-tag">Automotive</span><span class="fc-tag">AI Design</span><span class="fc-tag">Neon</span></div>
+          <div class="fc-link">Переглянути ↗</div>
         </div>
-        <div class="case-title">FX. AI Club — Trading Terminal</div>
-        <p class="case-desc">Мінімалістичний торговий термінал у стилі Bloomberg — монохромна кольорова схема, щільна типографіка, реал-тайм дані.</p>
-        <div class="case-link">Переглянути проект →</div>
-      </div>
-    </a>
+      </a>
 
-    <!-- Case 3: GPT INV -->
-    <a href="gpt-inv-app.html" target="_blank" class="case-card">
-      <div class="case-num">03</div>
-      <div class="case-preview">
-        <div class="prev-gptinv">
-          <div class="pg-atm"></div>
-          <div class="pg-nav">
-            <div class="pg-badge">G</div>
-            <div class="pg-navtitle">GPT INV</div>
+      <!-- CARD 2: Trading Terminal -->
+      <a href="https://vbvb00590-tech.github.io/Case2/" target="_blank" class="fcard fcard-2">
+        <div class="fc-thumb" style="height:165px">
+          <div class="prev-yinger" style="position:absolute;inset:0">
+            <div class="py-ticker">
+              <span class="py-pair">EUR/USD <span>1.0823</span></span>
+              <span class="py-pair">BTC <span style="color:#00e5ff">43,210</span></span>
+            </div>
+            <div class="py-chart" style="top:40px">
+              <svg viewBox="0 0 400 70" preserveAspectRatio="none">
+                <polyline points="0,65 60,50 120,55 200,28 280,18 360,22 400,10" fill="none" stroke="rgba(0,255,136,0.65)" stroke-width="1.5"/>
+                <polygon points="0,65 60,50 120,55 200,28 280,18 360,22 400,10 400,70 0,70" fill="rgba(0,255,136,0.05)"/>
+              </svg>
+            </div>
+            <div class="py-rows" style="top:120px">
+              <div class="py-row"><span class="py-cell">EUR/USD</span><span class="py-cell up">+0.42%</span><span class="py-cell">1.0823</span></div>
+              <div class="py-row"><span class="py-cell">GBP/USD</span><span class="py-cell dn">-0.18%</span><span class="py-cell">1.2641</span></div>
+            </div>
           </div>
-          <div class="pg-hero">
-            <div class="pg-tag">AI Trading Platform</div>
+        </div>
+        <div class="fc-body">
+          <div class="fc-num">02 / Dashboard</div>
+          <div class="fc-title">Trading Terminal</div>
+          <div class="fc-tags"><span class="fc-tag">Fintech</span><span class="fc-tag">Terminal UI</span></div>
+          <div class="fc-link">Переглянути ↗</div>
+        </div>
+      </a>
+
+      <!-- CARD 3: GPT INV -->
+      <a href="https://vbvb00590-tech.github.io/Case3/" target="_blank" class="fcard fcard-3">
+        <div class="fc-thumb" style="height:195px">
+          <div class="prev-gptinv" style="position:absolute;inset:0">
+            <div class="pg-atm"></div>
+            <div class="pg-nav"><div class="pg-badge">G</div><div class="pg-navtitle">GPT INV</div></div>
             <div class="pg-h1">Trade<br>smarter<br>with <span>AI</span></div>
-            <div class="pg-btn">Get Started →</div>
-          </div>
-          <div class="pg-card">
-            <div class="pg-clabel">PORTFOLIO VALUE</div>
-            <div class="pg-cval">$48,291<small>↑ 12.4%</small></div>
+            <div class="pg-card"><div class="pg-clabel">PORTFOLIO VALUE</div><div class="pg-cval">$48,291<small>↑ 12.4%</small></div></div>
           </div>
         </div>
-        <div class="case-preview-overlay"></div>
-      </div>
-      <div class="case-body">
-        <div class="case-tags">
-          <span class="case-tag">SaaS</span>
-          <span class="case-tag">AI Platform</span>
-          <span class="case-tag">Fintech</span>
+        <div class="fc-body">
+          <div class="fc-num">03 / SaaS Platform</div>
+          <div class="fc-title">GPT INV — AI Trading</div>
+          <div class="fc-tags"><span class="fc-tag">AI Platform</span><span class="fc-tag">Fintech</span></div>
+          <div class="fc-link">Переглянути ↗</div>
         </div>
-        <div class="case-title">GPT INV — AI Trading Platform</div>
-        <p class="case-desc">Платформа для AI-торгівлі — bold червона палітра, складна ієрархія даних, адаптивна дизайн-система.</p>
-        <div class="case-link">Переглянути проект →</div>
-      </div>
-    </a>
+      </a>
 
+      <!-- mini deco cards -->
+      <div class="fcard fcard-mini fcard-m1" style="background:#050505;display:flex;align-items:center;justify-content:center;">
+        <div style="font-family:'Space Mono',monospace;font-size:8px;color:var(--accent);text-align:center;padding:8px;">UX/UI<br>Design</div>
+      </div>
+      <div class="fcard fcard-mini fcard-m2" style="background:#050505;display:flex;align-items:center;justify-content:center;">
+        <div style="font-family:'Space Mono',monospace;font-size:8px;color:#00d4ff;text-align:center;padding:8px;">AI<br>Powered</div>
+      </div>
+      <div class="fcard fcard-mini fcard-m3" style="background:#050505;display:flex;align-items:center;justify-content:center;">
+        <div style="font-family:'Space Mono',monospace;font-size:8px;color:#ff00aa;text-align:center;padding:8px;">100+<br>Projects</div>
+      </div>
+
+    </div>
   </div>
+
+  <!-- MOBILE: accordion -->
+  <div class="cases-mobile">
+
+    <div class="cm-item open">
+      <div class="cm-header">
+        <span class="cm-num">01</span>
+        <span class="cm-name">FX. AI Club — McLaren</span>
+        <span class="cm-chevron">▾</span>
+      </div>
+      <div class="cm-body">
+        <div class="cm-thumb">
+          <div class="prev-mclaren">
+            <div class="pm-grid"></div><div class="pm-glow"></div><div class="pm-dot"></div>
+            <div class="pm-title" style="font-size:18px">FX.<br>AI CLUB</div>
+            <div class="pm-bars">
+              <div class="pm-bar" style="height:22px"></div><div class="pm-bar" style="height:34px"></div>
+              <div class="pm-bar" style="height:16px"></div><div class="pm-bar" style="height:42px"></div>
+              <div class="pm-bar" style="height:28px"></div>
+            </div>
+          </div>
+        </div>
+        <div class="cm-tags"><span class="cm-tag">Landing Page</span><span class="cm-tag">Automotive</span><span class="cm-tag">AI Design</span></div>
+        <p class="cm-desc">Неоновий лендінг для автомобільного клубу — агресивна зелена палітра, глітч-ефекти, кастомний курсор.</p>
+        <a href="https://vbvb00590-tech.github.io/Case1/" target="_blank" class="cm-link">Переглянути проект ↗</a>
+      </div>
+    </div>
+
+    <div class="cm-item">
+      <div class="cm-header">
+        <span class="cm-num">02</span>
+        <span class="cm-name">Trading Terminal</span>
+        <span class="cm-chevron">▾</span>
+      </div>
+      <div class="cm-body">
+        <div class="cm-thumb">
+          <div class="prev-yinger">
+            <div class="py-ticker"><span class="py-pair">EUR/USD <span>1.0823</span></span><span class="py-pair">BTC <span style="color:#00e5ff">43,210</span></span></div>
+            <div class="py-chart"><svg viewBox="0 0 400 80" preserveAspectRatio="none"><polyline points="0,70 80,50 160,35 240,20 320,15 400,8" fill="none" stroke="rgba(0,255,136,0.6)" stroke-width="1.5"/></svg></div>
+          </div>
+        </div>
+        <div class="cm-tags"><span class="cm-tag">Dashboard</span><span class="cm-tag">Fintech</span><span class="cm-tag">Terminal UI</span></div>
+        <p class="cm-desc">Мінімалістичний термінал у стилі Bloomberg — монохромна кольорова схема, реал-тайм дані.</p>
+        <a href="https://vbvb00590-tech.github.io/Case2/" target="_blank" class="cm-link">Переглянути проект ↗</a>
+      </div>
+    </div>
+
+    <div class="cm-item">
+      <div class="cm-header">
+        <span class="cm-num">03</span>
+        <span class="cm-name">GPT INV Platform</span>
+        <span class="cm-chevron">▾</span>
+      </div>
+      <div class="cm-body">
+        <div class="cm-thumb">
+          <div class="prev-gptinv">
+            <div class="pg-atm"></div>
+            <div class="pg-nav"><div class="pg-badge">G</div><div class="pg-navtitle">GPT INV</div></div>
+            <div class="pg-h1" style="font-size:22px">Trade<br>with <span>AI</span></div>
+          </div>
+        </div>
+        <div class="cm-tags"><span class="cm-tag">SaaS</span><span class="cm-tag">AI Platform</span><span class="cm-tag">Fintech</span></div>
+        <p class="cm-desc">Платформа для AI-торгівлі — bold червона палітра, складна ієрархія даних, адаптивна система.</p>
+        <a href="https://vbvb00590-tech.github.io/Case3/" target="_blank" class="cm-link">Переглянути проект ↗</a>
+      </div>
+    </div>
+
+  </div><!-- /cases-mobile -->
 </section>
 
 <!-- CTA -->
@@ -1139,121 +752,113 @@ footer {
 </footer>
 
 <script>
-// ── Scroll progress bar ──
-const line = document.getElementById('scrollLine');
-window.addEventListener('scroll', () => {
-  const s = document.documentElement.scrollTop;
-  const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-  line.style.width = (s / h * 100) + '%';
+// ── Scroll progress ──
+const sl = document.getElementById('scrollLine');
+window.addEventListener('scroll',()=>{
+  const s=document.documentElement.scrollTop;
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  sl.style.width=(s/h*100)+'%';
 });
 
-// ── Particle Sphere ──
-(function () {
-  const canvas = document.getElementById('particleCanvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const isMobile = window.innerWidth <= 900;
-  const SIZE = isMobile ? 320 : 420;
-  canvas.width  = SIZE;
-  canvas.height = SIZE;
-  const CX = SIZE / 2, CY = SIZE / 2;
-  const RADIUS = isMobile ? 130 : 160;
-  const TOTAL  = isMobile ? 600 : 900;
+// ── Hamburger menu ──
+const burger=document.getElementById('burger');
+const mm=document.getElementById('mobileMenu');
+burger.addEventListener('click',()=>{
+  burger.classList.toggle('open');
+  mm.classList.toggle('open');
+});
+mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+  burger.classList.remove('open');mm.classList.remove('open');
+}));
 
-  let hovering = false;
-  let rotX = 0, rotY = 0, targetRotX = 0, targetRotY = 0;
-  let pulseScale = 1, pulseDir = 1, pulseTime = 0;
+// ── 3D Cases parallax ──
+const stage = document.getElementById('casesStage');
+const inner = document.getElementById('casesInner');
+if(stage && inner){
+  let targetX=0,targetY=0,curX=0,curY=0;
+  stage.addEventListener('mousemove',e=>{
+    const r=stage.getBoundingClientRect();
+    targetX=((e.clientX-r.left)/r.width-.5)*18;
+    targetY=((e.clientY-r.top)/r.height-.5)*-12;
+  });
+  stage.addEventListener('mouseleave',()=>{targetX=0;targetY=0;});
+  (function animStage(){
+    curX+=(targetX-curX)*.07;
+    curY+=(targetY-curY)*.07;
+    inner.style.transform=`rotateY(${curX}deg) rotateX(${curY}deg)`;
+    requestAnimationFrame(animStage);
+  })();
+}
 
-  // Fibonacci lattice sphere
-  const points = [];
-  const golden = Math.PI * (3 - Math.sqrt(5));
-  for (let i = 0; i < TOTAL; i++) {
-    const y = 1 - (i / (TOTAL - 1)) * 2;
-    const r = Math.sqrt(1 - y * y);
-    const theta = golden * i;
-    points.push({
-      ox: Math.cos(theta) * r,
-      oy: y,
-      oz: Math.sin(theta) * r,
-      size:   Math.random() * 1.2 + 0.3,
-      bright: Math.random() * 0.5 + 0.3,
+// ── Process step animation ──
+const track = document.getElementById('processTrack');
+if(track){
+  const pObs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        track.classList.add('animated');
+        track.querySelectorAll('.pstep').forEach(s=>s.classList.add('visible'));
+        pObs.disconnect();
+      }
     });
+  },{threshold:0.2});
+  pObs.observe(track);
+}
+
+// ── Mobile accordion ──
+document.querySelectorAll('.cm-header').forEach(h=>{
+  h.addEventListener('click',()=>{
+    const item=h.parentElement;
+    const isOpen=item.classList.contains('open');
+    document.querySelectorAll('.cm-item').forEach(i=>i.classList.remove('open'));
+    if(!isOpen) item.classList.add('open');
+  });
+});
+
+// ── Particle sphere ──
+(function(){
+  const canvas=document.getElementById('particleCanvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const isMobile=window.innerWidth<=900;
+  const SIZE=isMobile?320:420;
+  canvas.width=SIZE;canvas.height=SIZE;
+  const CX=SIZE/2,CY=SIZE/2,R=isMobile?130:160,TOTAL=isMobile?600:900;
+  let hovering=false,rotX=0,rotY=0,tRX=0,tRY=0,pulseTime=0,autoAngle=0;
+  const pts=[];
+  const g=Math.PI*(3-Math.sqrt(5));
+  for(let i=0;i<TOTAL;i++){
+    const y=1-(i/(TOTAL-1))*2,r=Math.sqrt(1-y*y),t=g*i;
+    pts.push({ox:Math.cos(t)*r,oy:y,oz:Math.sin(t)*r,sz:Math.random()*1.2+0.3,br:Math.random()*.5+.3});
   }
-
-  // Mouse (desktop)
-  const hero = document.querySelector('.hero');
-  if (!isMobile) {
-    hero.addEventListener('mousemove', e => {
-      const rect = canvas.getBoundingClientRect();
-      hovering = true;
-      targetRotY = ((e.clientX - rect.left  - CX) / CX) *  0.6;
-      targetRotX = ((e.clientY - rect.top   - CY) / CY) * -0.4;
-    });
-    hero.addEventListener('mouseleave', () => {
-      hovering = false; targetRotX = 0; targetRotY = 0;
-    });
+  const hero=document.querySelector('.hero');
+  if(!isMobile){
+    hero.addEventListener('mousemove',e=>{const rc=canvas.getBoundingClientRect();hovering=true;tRY=((e.clientX-rc.left-CX)/CX)*.6;tRX=((e.clientY-rc.top-CY)/CY)*-.4;});
+    hero.addEventListener('mouseleave',()=>{hovering=false;tRX=0;tRY=0;});
   }
-
-  // Touch tilt (mobile)
-  if (isMobile && window.DeviceOrientationEvent) {
-    window.addEventListener('deviceorientation', e => {
-      targetRotY = ((e.gamma || 0) / 45) * 0.5;
-      targetRotX = ((e.beta  || 0) / 45) * 0.3;
+  function draw(){
+    ctx.clearRect(0,0,SIZE,SIZE);
+    rotX+=(tRX-rotX)*.06;rotY+=(tRY-rotY)*.06;
+    if(!hovering)autoAngle+=isMobile?.004:.002;
+    pulseTime+=.025;
+    const ps=1+Math.sin(pulseTime)*(isMobile?.07:.04);
+    const cRX=Math.cos(rotX),sRX=Math.sin(rotX),cRY=Math.cos(rotY+autoAngle),sRY=Math.sin(rotY+autoAngle);
+    const proj=pts.map(p=>{
+      let x=p.ox*cRY-p.oz*sRY,z=p.ox*sRY+p.oz*cRY;
+      let y=p.oy*cRX-z*sRX;z=p.oy*sRX+z*cRX;
+      const sc=(z+1.5)/2.5;
+      return{sx:CX+x*R*ps,sy:CY+y*R*ps,depth:(z+1)/2,sz:p.sz*sc,br:p.br*sc};
     });
-  }
-
-  let autoAngle = 0;
-
-  function draw() {
-    ctx.clearRect(0, 0, SIZE, SIZE);
-
-    rotX += (targetRotX - rotX) * 0.06;
-    rotY += (targetRotY - rotY) * 0.06;
-
-    if (!hovering) autoAngle += isMobile ? 0.004 : 0.002;
-
-    // Breathing pulse (always on mobile, hover-triggered on desktop)
-    if (isMobile || hovering) {
-      pulseTime += 0.025;
-      pulseScale = 1 + Math.sin(pulseTime) * 0.07;
-    } else {
-      pulseScale += (1 - pulseScale) * 0.05;
-    }
-
-    const cosRX = Math.cos(rotX), sinRX = Math.sin(rotX);
-    const cosRY = Math.cos(rotY + autoAngle), sinRY = Math.sin(rotY + autoAngle);
-
-    const projected = points.map(p => {
-      let x = p.ox * cosRY - p.oz * sinRY;
-      let z = p.ox * sinRY + p.oz * cosRY;
-      let y = p.oy * cosRX - z * sinRX;
-          z = p.oy * sinRX + z * cosRX;
-      const depth = (z + 1) / 2;
-      const scale = (z + 1.5) / 2.5;
-      return {
-        sx: CX + x * RADIUS * pulseScale,
-        sy: CY + y * RADIUS * pulseScale,
-        depth,
-        size:   p.size   * scale,
-        bright: p.bright * scale,
-      };
+    proj.sort((a,b)=>a.depth-b.depth);
+    proj.forEach(p=>{
+      const a=Math.min(p.br*(hovering?1:.75),1);
+      ctx.beginPath();ctx.arc(p.sx,p.sy,p.sz,0,Math.PI*2);
+      ctx.fillStyle=`rgba(255,255,255,${a.toFixed(2)})`;ctx.fill();
     });
-
-    projected.sort((a, b) => a.depth - b.depth);
-
-    projected.forEach(p => {
-      const alpha = p.bright * (hovering ? 1.0 : isMobile ? 0.85 : 0.7);
-      ctx.beginPath();
-      ctx.arc(p.sx, p.sy, p.size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,255,255,${Math.min(alpha,1).toFixed(2)})`;
-      ctx.fill();
-    });
-
     requestAnimationFrame(draw);
   }
   draw();
 })();
 </script>
-
 </body>
 </html>
