@@ -114,60 +114,32 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;height:64px;padding:0 48px;
   }
 }
 
-/* Mobile pulse bg — green sphere (hidden on desktop) */
+/* Mobile pulse bg — 2 outer rings only, no dot, no inner static ring */
 .hero-pulse-bg{
   display:none;
   position:absolute;
   top:50%;left:50%;
   transform:translate(-50%,-50%);
-  width:72vw;height:72vw;      /* scales with screen */
+  width:72vw;height:72vw;
   max-width:360px;max-height:360px;
   border-radius:50%;z-index:0;pointer-events:none;
 }
-
-/* static outer ring — always visible green outline */
-.hero-pulse-bg-ring{
-  position:absolute;inset:0;border-radius:50%;
-  border:1.5px solid rgba(200,255,0,0.35);
-  box-shadow:0 0 32px rgba(200,255,0,0.12),inset 0 0 32px rgba(200,255,0,0.06);
-}
-
-/* pulsing rings — start from inside the static ring */
+/* two pulsing rings — staggered 2s apart */
 .hero-pulse-bg::before,.hero-pulse-bg span{
   content:'';position:absolute;inset:0;border-radius:50%;
-  border:1.5px solid rgba(200,255,0,0.55);
-  box-shadow:0 0 16px rgba(200,255,0,0.3);
+  border:1.5px solid rgba(200,255,0,0.6);
+  box-shadow:0 0 18px rgba(200,255,0,0.28);
 }
-.hero-pulse-bg::before{animation:pulse-ring 3.8s ease-out infinite;}
-/* span:nth-child counts from 1; child 1 = .hero-pulse-bg-ring div, so spans are 2,3,4 */
-.hero-pulse-bg span:nth-child(2){display:block;animation:pulse-ring 3.8s ease-out infinite 1.26s;}
-.hero-pulse-bg span:nth-child(3){display:block;animation:pulse-ring 3.8s ease-out infinite 2.52s;}
-.hero-pulse-bg span:nth-child(4){
-  display:block;
-  border-color:rgba(200,255,0,0.22);
-  box-shadow:none;
-  animation:pulse-ring 3.8s ease-out infinite 3.78s;
-}
-
-/* centre glow dot */
-.hero-pulse-bg::after{
-  content:'';position:absolute;
-  left:50%;top:50%;
-  width:8px;height:8px;border-radius:50%;
-  background:var(--accent);
-  box-shadow:0 0 20px rgba(200,255,0,1),0 0 40px rgba(200,255,0,0.55);
-  transform:translate(-50%,-50%);
-  animation:core-glow 2.6s ease-in-out infinite;
-}
+.hero-pulse-bg::before{animation:pulse-ring 4.2s ease-out infinite;}
+.hero-pulse-bg span{display:block;animation:pulse-ring 4.2s ease-out infinite 2.1s;}
+/* no dot */
+.hero-pulse-bg::after{display:none;}
 @keyframes pulse-ring{
-  0%  {transform:scale(.55);opacity:.85;}
-  60% {opacity:.18;}
-  100%{transform:scale(1.15);opacity:0;}
+  0%  {transform:scale(.65);opacity:.8;}
+  65% {opacity:.15;}
+  100%{transform:scale(1.22);opacity:0;}
 }
-@keyframes core-glow{
-  0%,100%{box-shadow:0 0 16px rgba(200,255,0,.75),0 0 32px rgba(200,255,0,.35);}
-  50%    {box-shadow:0 0 30px rgba(200,255,0,1), 0 0 60px rgba(200,255,0,.55);}
-}
+@keyframes core-glow{0%{}}
 
 /* ── SECTION BASE ── */
 section{position:relative;z-index:1;padding:100px 48px;}
@@ -420,7 +392,8 @@ section{position:relative;z-index:1;padding:100px 48px;}
 .cases-links-title::before{content:'';display:block;width:20px;height:1px;background:var(--grey);}
 .cl-grid{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);}
 .cl-item{background:var(--black);padding:14px 20px;display:flex;align-items:center;
-  gap:14px;transition:background .2s;border-bottom:1px solid var(--border);}
+  gap:14px;transition:background .2s;border-bottom:1px solid var(--border);
+  text-decoration:none;color:inherit;cursor:pointer;}
 .cl-item:last-child{border-bottom:none;}
 .cl-item:hover{background:var(--card);}
 .cl-item:hover .cl-link{color:var(--white);}
@@ -599,12 +572,7 @@ footer{position:relative;z-index:1;padding:32px 48px;border-top:1px solid var(--
     <a href="#cases" class="btn-primary" data-i18n="hero.btn1">View Cases</a>
     <a href="https://t.me/fx_social_club" target="_blank" class="btn-secondary" data-i18n="hero.btn2">Discuss a Project</a>
   </div>
-  <div class="hero-pulse-bg" aria-hidden="true">
-    <div class="hero-pulse-bg-ring"></div>
-    <span></span><!-- ring 1 -->
-    <span></span><!-- ring 2 -->
-    <span></span><!-- ring 3 -->
-  </div>
+  <div class="hero-pulse-bg" aria-hidden="true"><span></span></div>
   <div class="hero-deco" aria-hidden="true">
     <canvas id="particleCanvas" width="600" height="600"></canvas>
   </div>
@@ -726,7 +694,7 @@ footer{position:relative;z-index:1;padding:32px 48px;border-top:1px solid var(--
       <div class="section-label" data-i18n="cases.label">Our Work</div>
       <h2 class="section-title" data-i18n="cases.title">Cases</h2>
     </div>
-    <div class="section-count" data-i18n="cases.count">09 projects</div>
+    <div class="section-count" data-i18n="cases.count">08 projects</div>
   </div>
 
   <div class="cases-stage" id="casesStage">
@@ -815,19 +783,6 @@ footer{position:relative;z-index:1;padding:32px 48px;border-top:1px solid var(--
         </div>
       </a>
 
-      <!-- CARD 7 (small center card) -->
-      <a href="https://fx-socialclub.github.io/Case7/" target="_blank" class="fcard fcard-7">
-        <div class="fc-thumb" style="height:120px;">
-          <iframe src="https://fx-socialclub.github.io/Case7/" loading="lazy" scrolling="no" frameborder="0" title="Case 7"></iframe>
-        </div>
-        <div class="fc-body">
-          <div class="fc-num">07 / Affiliate</div>
-          <div class="fc-title">Affiliate Stack</div>
-          <div class="fc-tags"><span class="fc-tag">B2B</span><span class="fc-tag">Crypto</span></div>
-          <div class="fc-link" data-i18n="cases.view">View ↗</div>
-        </div>
-      </a>
-
       <!-- CARD 8 — FB Soft for Media Buyer (web) -->
       <a href="https://fx-socialclub.github.io/https-vbvb00590-tech.github.io/" target="_blank" class="fcard fcard-8">
         <div class="fc-thumb">
@@ -885,51 +840,46 @@ footer{position:relative;z-index:1;padding:32px 48px;border-top:1px solid var(--
   <div class="cases-links">
     <div class="cases-links-title" data-i18n="cases.allLinks">All projects</div>
     <div class="cl-grid">
-      <div class="cl-item">
+      <a href="https://fx-socialclub.github.io/Case1/" target="_blank" class="cl-item">
         <span class="cl-num">Case #1</span>
-        <span class="cl-name">A Smarter Way to Trade & Invest</span>
-        <a href="https://fx-socialclub.github.io/Case1/" target="_blank" class="cl-link">↗ View</a>
-      </div>
-      <div class="cl-item">
+        <span class="cl-name">A Smarter Way to Trade &amp; Invest</span>
+        <span class="cl-link">↗ View</span>
+      </a>
+      <a href="https://fx-socialclub.github.io/Case2/" target="_blank" class="cl-item">
         <span class="cl-num">Case #2</span>
         <span class="cl-name">GPT INV</span>
-        <a href="https://fx-socialclub.github.io/Case2/" target="_blank" class="cl-link">↗ View</a>
-      </div>
-      <div class="cl-item">
+        <span class="cl-link">↗ View</span>
+      </a>
+      <a href="https://fx-socialclub.github.io/Case3/" target="_blank" class="cl-item">
         <span class="cl-num">Case #3</span>
         <span class="cl-name">Auto Cash flow.</span>
-        <a href="https://fx-socialclub.github.io/Case3/" target="_blank" class="cl-link">↗ View</a>
-      </div>
-      <div class="cl-item">
+        <span class="cl-link">↗ View</span>
+      </a>
+      <a href="https://fx-socialclub.github.io/Case4/" target="_blank" class="cl-item">
         <span class="cl-num">Case #4</span>
         <span class="cl-name">Coffee Shop</span>
-        <a href="https://fx-socialclub.github.io/Case4/" target="_blank" class="cl-link">↗ View</a>
-      </div>
-      <div class="cl-item">
+        <span class="cl-link">↗ View</span>
+      </a>
+      <a href="https://anubis-crypto-ai.github.io/ONE/" target="_blank" class="cl-item">
         <span class="cl-num">Case #5</span>
         <span class="cl-name">Anubis Crypto — ONE</span>
-        <a href="https://anubis-crypto-ai.github.io/ONE/" target="_blank" class="cl-link">↗ View</a>
-      </div>
-      <div class="cl-item">
+        <span class="cl-link">↗ View</span>
+      </a>
+      <a href="https://anubis-crypto-ai.github.io/Weekly-plan/" target="_blank" class="cl-item">
         <span class="cl-num">Case #6</span>
         <span class="cl-name">Weekly Plan — Anubis</span>
-        <a href="https://anubis-crypto-ai.github.io/Weekly-plan/" target="_blank" class="cl-link">↗ View</a>
-      </div>
-      <div class="cl-item">
-        <span class="cl-num">Case #7</span>
-        <span class="cl-name">Affiliate Stack</span>
-        <a href="https://fx-socialclub.github.io/Case7/" target="_blank" class="cl-link">↗ View</a>
-      </div>
-      <div class="cl-item">
+        <span class="cl-link">↗ View</span>
+      </a>
+      <a href="https://fx-socialclub.github.io/https-vbvb00590-tech.github.io/" target="_blank" class="cl-item">
         <span class="cl-num">Case #8</span>
         <span class="cl-name">FB Soft for Media Buyer (web)</span>
-        <a href="https://fx-socialclub.github.io/https-vbvb00590-tech.github.io/" target="_blank" class="cl-link">↗ View</a>
-      </div>
-      <div class="cl-item">
+        <span class="cl-link">↗ View</span>
+      </a>
+      <a href="https://t.me/fxsocialclub_bot" target="_blank" class="cl-item">
         <span class="cl-num">Case #8.1</span>
         <span class="cl-name">FB Soft for Media Buyer (Telegram WebView)</span>
-        <a href="https://t.me/fxsocialclub_bot" target="_blank" class="cl-link">↗ View</a>
-      </div>
+        <span class="cl-link">↗ View</span>
+      </a>
     </div>
   </div>
 </section>
@@ -983,7 +933,7 @@ const T = {
     'p2.title':'Concept & Wireframes','p2.desc':'Structure, navigation and interaction logic. We rapidly test hypotheses on prototypes.','p2.tag':'2–4 days',
     'p3.title':'UI & Detailing','p3.desc':'Colors, typography, components, micro-animations. Design system ready for handoff.','p3.tag':'3–7 days',
     'p4.title':'Handoff & Support','p4.desc':'Final Figma files, developer handover and ongoing support during development.','p4.tag':'Ongoing',
-    'cases.label':'Our Work','cases.title':'Cases','cases.count':'09 projects','cases.view':'View ↗','cases.allLinks':'All projects',
+    'cases.label':'Our Work','cases.title':'Cases','cases.count':'08 projects','cases.view':'View ↗','cases.allLinks':'All projects',
     'cta.label':'Ready to Start?',
     'cta.title':'Let\'s create<br>something <em>outstanding</em>',
     'cta.sub':'Tell us about your project — we\'ll respond within 24 hours with the first ideas.',
@@ -1014,7 +964,7 @@ const T = {
     'p2.title':'Концепция и вайрфреймы','p2.desc':'Структура, навигация и логика взаимодействия. Быстро тестируем гипотезы на прототипах.','p2.tag':'2–4 дня',
     'p3.title':'UI и детализация','p3.desc':'Цвета, типографика, компоненты, микро-анимации. Дизайн-система готова к передаче.','p3.tag':'3–7 дней',
     'p4.title':'Передача и поддержка','p4.desc':'Готовые макеты в Figma, хендовер для разработчиков и поддержка во время верстки.','p4.tag':'Ongoing',
-    'cases.label':'Наши работы','cases.title':'Кейсы','cases.count':'09 проектов','cases.view':'Смотреть ↗','cases.allLinks':'Все проекты',
+    'cases.label':'Наши работы','cases.title':'Кейсы','cases.count':'08 проектов','cases.view':'Смотреть ↗','cases.allLinks':'Все проекты',
     'cta.label':'Готовы начать?',
     'cta.title':'Давайте создадим<br>что-то <em>выдающееся</em>',
     'cta.sub':'Расскажите о вашем проекте — мы ответим в течение 24 часов с первыми идеями.',
@@ -1193,10 +1143,10 @@ if(track){
   const stage = document.getElementById('casesStage');
   if(!svg || !stage) return;
 
-  // star topology: only hub (index 0) connects to each node
-  // no lines between peripheral nodes
+  // star topology: hub (index 0) → each node
+  // fcard-7 removed; fcard-8 now idx 6, fcard-9 now idx 7
   const edges = [
-    [0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[0,8]
+    [0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7]
   ];
 
   function drawLines(){
