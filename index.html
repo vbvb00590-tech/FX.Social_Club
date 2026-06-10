@@ -106,50 +106,59 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;height:64px;padding:0 48px;
   #particleCanvas{width:340px!important;height:340px!important;}
 }
 
-/* Mobile pulse bg — green sphere */
-.hero-pulse-bg{display:none;position:absolute;top:42%;left:50%;transform:translate(-50%,-50%);
-  width:340px;height:340px;border-radius:50%;z-index:0;pointer-events:none;}
-
-/* static inner ring — always visible green outline */
-.hero-pulse-bg-ring{
-  position:absolute;inset:8%;border-radius:50%;
-  border:1px solid rgba(200,255,0,0.15);
-  box-shadow:0 0 40px rgba(200,255,0,0.06),inset 0 0 40px rgba(200,255,0,0.04);
+/* Mobile pulse bg — green sphere (hidden on desktop) */
+.hero-pulse-bg{
+  display:none;
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:72vw;height:72vw;      /* scales with screen */
+  max-width:360px;max-height:360px;
+  border-radius:50%;z-index:0;pointer-events:none;
 }
 
-/* pulsing rings */
+/* static outer ring — always visible green outline */
+.hero-pulse-bg-ring{
+  position:absolute;inset:0;border-radius:50%;
+  border:1.5px solid rgba(200,255,0,0.35);
+  box-shadow:0 0 32px rgba(200,255,0,0.12),inset 0 0 32px rgba(200,255,0,0.06);
+}
+
+/* pulsing rings — start from inside the static ring */
 .hero-pulse-bg::before,.hero-pulse-bg span{
   content:'';position:absolute;inset:0;border-radius:50%;
-  border:1.5px solid rgba(200,255,0,0.5);
-  box-shadow:0 0 14px rgba(200,255,0,0.25);
+  border:1.5px solid rgba(200,255,0,0.55);
+  box-shadow:0 0 16px rgba(200,255,0,0.3);
 }
-.hero-pulse-bg::before{animation:pulse-ring 3.6s ease-out infinite;}
-.hero-pulse-bg span:nth-child(1){display:block;animation:pulse-ring 3.6s ease-out infinite 1.2s;}
-.hero-pulse-bg span:nth-child(2){
+.hero-pulse-bg::before{animation:pulse-ring 3.8s ease-out infinite;}
+/* span:nth-child counts from 1; child 1 = .hero-pulse-bg-ring div, so spans are 2,3,4 */
+.hero-pulse-bg span:nth-child(2){display:block;animation:pulse-ring 3.8s ease-out infinite 1.26s;}
+.hero-pulse-bg span:nth-child(3){display:block;animation:pulse-ring 3.8s ease-out infinite 2.52s;}
+.hero-pulse-bg span:nth-child(4){
   display:block;
-  border-color:rgba(200,255,0,0.3);
+  border-color:rgba(200,255,0,0.22);
   box-shadow:none;
-  animation:pulse-ring 3.6s ease-out infinite 2.4s;
+  animation:pulse-ring 3.8s ease-out infinite 3.78s;
 }
 
 /* centre glow dot */
 .hero-pulse-bg::after{
   content:'';position:absolute;
   left:50%;top:50%;
-  width:7px;height:7px;border-radius:50%;
+  width:8px;height:8px;border-radius:50%;
   background:var(--accent);
-  box-shadow:0 0 18px rgba(200,255,0,0.9),0 0 36px rgba(200,255,0,0.5);
+  box-shadow:0 0 20px rgba(200,255,0,1),0 0 40px rgba(200,255,0,0.55);
   transform:translate(-50%,-50%);
   animation:core-glow 2.6s ease-in-out infinite;
 }
 @keyframes pulse-ring{
-  0%{transform:scale(.68);opacity:.8;}
-  65%{opacity:.2;}
-  100%{transform:scale(1.3);opacity:0;}
+  0%  {transform:scale(.55);opacity:.85;}
+  60% {opacity:.18;}
+  100%{transform:scale(1.15);opacity:0;}
 }
 @keyframes core-glow{
-  0%,100%{box-shadow:0 0 14px rgba(200,255,0,0.7),0 0 28px rgba(200,255,0,0.35);}
-  50%{box-shadow:0 0 28px rgba(200,255,0,1),0 0 56px rgba(200,255,0,0.55);}
+  0%,100%{box-shadow:0 0 16px rgba(200,255,0,.75),0 0 32px rgba(200,255,0,.35);}
+  50%    {box-shadow:0 0 30px rgba(200,255,0,1), 0 0 60px rgba(200,255,0,.55);}
 }
 
 /* ── SECTION BASE ── */
@@ -584,8 +593,9 @@ footer{position:relative;z-index:1;padding:32px 48px;border-top:1px solid var(--
   </div>
   <div class="hero-pulse-bg" aria-hidden="true">
     <div class="hero-pulse-bg-ring"></div>
-    <span></span>
-    <span></span>
+    <span></span><!-- ring 1 -->
+    <span></span><!-- ring 2 -->
+    <span></span><!-- ring 3 -->
   </div>
   <div class="hero-deco" aria-hidden="true">
     <canvas id="particleCanvas" width="600" height="600"></canvas>
