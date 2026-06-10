@@ -468,18 +468,32 @@ footer{position:relative;z-index:1;padding:32px 48px;border-top:1px solid var(--
   .hero-title{font-size:clamp(36px,9vw,60px);}
 }
 
-/* ── TOUCH DEVICE FIX ──
-   Safari / iOS: :hover never fires → show service accents permanently */
+/* ── TOUCH / SCROLL REVEAL (Safari, iOS, TG WebView) ──
+   Each service card highlights when it scrolls into view.
+   JS IntersectionObserver adds .in-view class. */
 @media(hover:none){
-  /* Bottom accent line always visible on touch */
-  .service-card::after{width:100%;opacity:0.7;}
-  /* Icon always glows */
-  .service-card .service-icon{border-color:rgba(200,255,0,0.4);box-shadow:0 0 16px rgba(200,255,0,0.2);}
-  /* Subtle card bg */
-  .service-card{background:var(--card);}
-  /* Process dots always fully lit */
-  .pstep .ps-dot{box-shadow:0 0 0 6px var(--accent2),var(--glow);}
-  /* Active tap feedback */
+  /* smooth transitions on all interactive elements */
+  .service-card{
+    transition:background .45s ease;
+  }
+  .service-card::after{
+    transition:width .55s cubic-bezier(0.4,0,0.2,1);
+  }
+  .service-card .service-icon{
+    transition:border-color .45s ease, box-shadow .45s ease;
+  }
+  /* ── IN-VIEW state (applied by JS) ── */
+  .service-card.in-view{
+    background:var(--card);
+  }
+  .service-card.in-view::after{
+    width:100%;
+  }
+  .service-card.in-view .service-icon{
+    border-color:var(--accent);
+    box-shadow:var(--glow);
+  }
+  /* tap feedback */
   .service-card:active{background:var(--card2);}
   .fcard:active{transform:scale(1.04)!important;border-color:var(--accent)!important;}
 }
@@ -1083,6 +1097,33 @@ if(track){
     requestAnimationFrame(draw);
   }
   draw();
+})();
+
+// ════════════════════════════════
+// SCROLL-REVEAL SERVICE CARDS (touch / mobile)
+// Each card highlights as it enters the viewport
+// ════════════════════════════════
+(function(){
+  // only run on touch / non-hover devices (iOS Safari, TG WebView, etc.)
+  if(!window.matchMedia('(hover:none)').matches) return;
+
+  const serviceCards = document.querySelectorAll('.service-card');
+  if(!serviceCards.length) return;
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+      } else {
+        entry.target.classList.remove('in-view');
+      }
+    });
+  },{
+    // card is considered "in view" when ≥45% of it is visible
+    threshold: 0.45
+  });
+
+  serviceCards.forEach(card => obs.observe(card));
 })();
 
 // ════════════════════════════════
