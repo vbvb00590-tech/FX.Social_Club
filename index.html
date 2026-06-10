@@ -99,11 +99,19 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;height:64px;padding:0 48px;
 /* ring removed */
 #particleCanvas{display:block;position:relative;z-index:1;}
 
-/* Mobile sphere */
+/* Mobile sphere — particle canvas sits INSIDE the green ring */
 @media(max-width:900px){
-  .hero-deco{display:block!important;width:340px!important;height:340px!important;
-    top:42%;left:50%;right:auto;transform:translate(-50%,-50%);}
-  #particleCanvas{width:340px!important;height:340px!important;}
+  .hero-deco{
+    display:block!important;
+    width:68vw!important;height:68vw!important;
+    max-width:340px!important;max-height:340px!important;
+    top:50%!important;left:50%!important;right:auto!important;
+    transform:translate(-50%,-50%)!important;
+    z-index:1!important;
+  }
+  #particleCanvas{
+    width:100%!important;height:100%!important;
+  }
 }
 
 /* Mobile pulse bg — green sphere (hidden on desktop) */
@@ -483,8 +491,8 @@ footer{position:relative;z-index:1;padding:32px 48px;border-top:1px solid var(--
   section{padding:70px 20px;}
   .hero{padding:100px 20px 80px;}
   .hero-stats{display:none;}
-  .hero-deco{display:none!important;}
-  .hero-pulse-bg{display:block;}
+  /* hero-deco shown via the first mobile block above */
+  .hero-pulse-bg{display:block;z-index:2;}/* ring above canvas so it frames the particles */
   .services-grid{grid-template-columns:1fr;}
   .ai-grid{grid-template-columns:1fr;gap:40px;}
   .process-track{grid-template-columns:1fr 1fr;}
