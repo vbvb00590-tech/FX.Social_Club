@@ -106,14 +106,51 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;height:64px;padding:0 48px;
   #particleCanvas{width:340px!important;height:340px!important;}
 }
 
-/* Mobile pulse bg */
-.hero-pulse-bg{display:none;position:absolute;top:38%;left:50%;transform:translate(-50%,-50%);
-  width:320px;height:320px;border-radius:50%;z-index:0;pointer-events:none;}
-.hero-pulse-bg::before,.hero-pulse-bg span{content:'';position:absolute;inset:0;border-radius:50%;
-  border:1px solid rgba(200,255,0,0.25);}
-.hero-pulse-bg::before{animation:pulse-ring 3s ease-out infinite;}
-.hero-pulse-bg span{display:block;animation:pulse-ring 3s ease-out infinite .8s;}
-@keyframes pulse-ring{0%{transform:scale(.7);opacity:.6;}70%{transform:scale(1.15);opacity:.15;}100%{transform:scale(1.3);opacity:0;}}
+/* Mobile pulse bg — green sphere */
+.hero-pulse-bg{display:none;position:absolute;top:42%;left:50%;transform:translate(-50%,-50%);
+  width:340px;height:340px;border-radius:50%;z-index:0;pointer-events:none;}
+
+/* static inner ring — always visible green outline */
+.hero-pulse-bg-ring{
+  position:absolute;inset:8%;border-radius:50%;
+  border:1px solid rgba(200,255,0,0.15);
+  box-shadow:0 0 40px rgba(200,255,0,0.06),inset 0 0 40px rgba(200,255,0,0.04);
+}
+
+/* pulsing rings */
+.hero-pulse-bg::before,.hero-pulse-bg span{
+  content:'';position:absolute;inset:0;border-radius:50%;
+  border:1.5px solid rgba(200,255,0,0.5);
+  box-shadow:0 0 14px rgba(200,255,0,0.25);
+}
+.hero-pulse-bg::before{animation:pulse-ring 3.6s ease-out infinite;}
+.hero-pulse-bg span:nth-child(1){display:block;animation:pulse-ring 3.6s ease-out infinite 1.2s;}
+.hero-pulse-bg span:nth-child(2){
+  display:block;
+  border-color:rgba(200,255,0,0.3);
+  box-shadow:none;
+  animation:pulse-ring 3.6s ease-out infinite 2.4s;
+}
+
+/* centre glow dot */
+.hero-pulse-bg::after{
+  content:'';position:absolute;
+  left:50%;top:50%;
+  width:7px;height:7px;border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 18px rgba(200,255,0,0.9),0 0 36px rgba(200,255,0,0.5);
+  transform:translate(-50%,-50%);
+  animation:core-glow 2.6s ease-in-out infinite;
+}
+@keyframes pulse-ring{
+  0%{transform:scale(.68);opacity:.8;}
+  65%{opacity:.2;}
+  100%{transform:scale(1.3);opacity:0;}
+}
+@keyframes core-glow{
+  0%,100%{box-shadow:0 0 14px rgba(200,255,0,0.7),0 0 28px rgba(200,255,0,0.35);}
+  50%{box-shadow:0 0 28px rgba(200,255,0,1),0 0 56px rgba(200,255,0,0.55);}
+}
 
 /* ── SECTION BASE ── */
 section{position:relative;z-index:1;padding:100px 48px;}
@@ -537,15 +574,19 @@ footer{position:relative;z-index:1;padding:32px 48px;border-top:1px solid var(--
   <div class="hero-label" data-i18n="hero.label">Design × AI Studio</div>
   <h1 class="hero-title" data-i18n-html="hero.title">
     Design that<br>
-    <span class="accent-word">sells</span> &amp;<br>
-    <span class="accent-hl">amazes</span>
+    <span class="accent-word">sells &amp;</span><br>
+    <span class="accent-hl">Amazes</span>
   </h1>
   <p class="hero-sub" data-i18n="hero.sub">We create UX/UI design for business, combining deep understanding of human behavior with AI capabilities.</p>
   <div class="hero-actions">
     <a href="#cases" class="btn-primary" data-i18n="hero.btn1">View Cases</a>
     <a href="https://t.me/fx_social_club" target="_blank" class="btn-secondary" data-i18n="hero.btn2">Discuss a Project</a>
   </div>
-  <div class="hero-pulse-bg" aria-hidden="true"><span></span></div>
+  <div class="hero-pulse-bg" aria-hidden="true">
+    <div class="hero-pulse-bg-ring"></div>
+    <span></span>
+    <span></span>
+  </div>
   <div class="hero-deco" aria-hidden="true">
     <canvas id="particleCanvas" width="600" height="600"></canvas>
   </div>
@@ -902,7 +943,7 @@ const T = {
   en: {
     'nav.services':'Services','nav.process':'Process','nav.cases':'Cases','nav.cta':'Contact',
     'hero.label':'Design × AI Studio',
-    'hero.title':'Design that<br><span class="accent-word">sells</span> &amp;<br><span class="accent-hl">amazes</span>',
+    'hero.title':'Design that<br><span class="accent-word">sells &amp;</span><br><span class="accent-hl">Amazes</span>',
     'hero.sub':'We create UX/UI design for business, combining deep understanding of human behavior with AI capabilities.',
     'hero.btn1':'View Cases','hero.btn2':'Discuss a Project',
     'stat.projects':'Projects','stat.faster':'Faster with AI','stat.clients':'Happy Clients',
@@ -933,7 +974,7 @@ const T = {
   ru: {
     'nav.services':'Услуги','nav.process':'Процесс','nav.cases':'Кейсы','nav.cta':'Связаться',
     'hero.label':'Дизайн × AI Студия',
-    'hero.title':'Дизайн что<br><span class="accent-word">продаёт</span> и<br><span class="accent-hl">впечатляет</span>',
+    'hero.title':'Дизайн что<br><span class="accent-word">продаёт и</span><br><span class="accent-hl">Впечатляет</span>',
     'hero.sub':'Мы создаём UX/UI дизайн для бизнеса, объединяя глубокое понимание поведения людей с возможностями AI.',
     'hero.btn1':'Смотреть кейсы','hero.btn2':'Обсудить проект',
     'stat.projects':'Проектов','stat.faster':'Быстрее с AI','stat.clients':'Довольных клиентов',
