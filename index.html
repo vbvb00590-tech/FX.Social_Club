@@ -476,9 +476,9 @@ footer{position:relative;z-index:1;padding:32px 48px;border-top:1px solid var(--
   /* reset depth shadows on mobile */
   .fcard-1,.fcard-2,.fcard-3,.fcard-4,.fcard-5,.fcard-6,.fcard-7,.fcard-8,.fcard-9{box-shadow:0 4px 20px rgba(0,0,0,0.5);}
   .cases-glow,.cases-web-svg{display:none;}
-  /* bigger thumbnails on mobile */
+  /* bigger thumbnails on mobile — scale set by JS to fill full width */
   .fc-thumb{height:200px!important;}
-  .fc-thumb iframe{transform:scale(0.24)!important;transform-origin:top left!important;}
+  .fc-thumb iframe{transform-origin:top left!important;}
   .tg-thumb.fc-thumb{height:200px!important;}
   .tg-preview{padding:10px 9px 26px!important;}
   .tg-brand{font-size:10px!important;} .tg-total{font-size:12px!important;}
@@ -1106,6 +1106,26 @@ if(track){
     requestAnimationFrame(draw);
   }
   draw();
+})();
+
+// ════════════════════════════════
+// MOBILE IFRAME SCALE — fill thumbnail width, no gaps
+// ════════════════════════════════
+(function(){
+  function scaleMobileIframes(){
+    if(window.innerWidth > 900) return;
+    document.querySelectorAll('.fc-thumb iframe').forEach(function(iframe){
+      var thumb = iframe.closest('.fc-thumb');
+      if(!thumb) return;
+      var w = thumb.offsetWidth;
+      if(!w) return;
+      var scale = (w / 1280).toFixed(5);
+      iframe.style.transform = 'scale(' + scale + ')';
+    });
+  }
+  // run after DOM + layout settle
+  requestAnimationFrame(function(){ setTimeout(scaleMobileIframes, 80); });
+  window.addEventListener('resize', scaleMobileIframes);
 })();
 
 // ════════════════════════════════
