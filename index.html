@@ -1,22 +1,21 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FX. Social Club — UX/UI Design Studio</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
-:root {
-  --black:#000; --dark:#080808; --card:#0d0d0d; --card2:#111;
-  --white:#f0f0f0; --grey:#555; --lgrey:#888;
-  --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.12);
-  --accent:#c8ff00; --accent2:rgba(200,255,0,0.15); --accent3:rgba(200,255,0,0.06);
+:root{
+  --black:#000;--dark:#080808;--card:#0d0d0d;--card2:#111;
+  --white:#f0f0f0;--grey:#555;--lgrey:#888;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
+  --accent:#c8ff00;--accent2:rgba(200,255,0,0.15);--accent3:rgba(200,255,0,0.06);
   --glow:0 0 24px rgba(200,255,0,0.35);
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{font-family:'Space Grotesk',sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;}
-
 body::before{content:'';position:fixed;inset:0;z-index:0;
   background-image:linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px);
   background-size:60px 60px;pointer-events:none;}
@@ -28,12 +27,21 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;height:64px;padding:0 48px;
 .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
 .nav-logo img{height:38px;width:38px;object-fit:contain;}
 .nav-logo-text{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;color:var(--white);letter-spacing:0.05em;}
+.nav-right{display:flex;align-items:center;gap:8px;}
 .nav-links{display:flex;align-items:center;gap:36px;}
 .nav-links a{font-size:12px;color:var(--lgrey);text-decoration:none;letter-spacing:0.06em;font-family:'Space Mono',monospace;transition:color .2s;}
 .nav-links a:hover{color:var(--white);}
 .nav-cta{background:transparent!important;border:1px solid var(--border2)!important;color:var(--white)!important;
   padding:8px 20px;border-radius:4px;font-size:12px!important;cursor:pointer;transition:all .2s!important;}
 .nav-cta:hover{border-color:var(--accent)!important;color:var(--accent)!important;}
+
+/* Language switcher */
+.lang-sw{display:flex;align-items:center;gap:4px;margin-left:16px;}
+.lang-btn{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.12em;
+  background:none;border:none;color:var(--grey);cursor:pointer;padding:4px 2px;transition:color .2s;}
+.lang-btn.active{color:var(--accent);}
+.lang-btn:hover{color:var(--white);}
+.lang-sep{color:var(--grey);font-size:10px;font-family:'Space Mono',monospace;opacity:0.5;}
 
 /* hamburger */
 .nav-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;}
@@ -43,12 +51,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;height:64px;padding:0 48px;
 .nav-burger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
 .mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;z-index:499;
   background:rgba(0,0,0,0.97);backdrop-filter:blur(20px);
-  padding:28px 24px;border-bottom:1px solid var(--border);
-  flex-direction:column;gap:0;}
+  padding:28px 24px;border-bottom:1px solid var(--border);flex-direction:column;gap:0;}
 .mobile-menu.open{display:flex;}
 .mobile-menu a{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:0.06em;
-  color:var(--lgrey);text-decoration:none;padding:16px 0;
-  border-bottom:1px solid var(--border);transition:color .2s;}
+  color:var(--lgrey);text-decoration:none;padding:16px 0;border-bottom:1px solid var(--border);transition:color .2s;}
 .mobile-menu a:hover{color:var(--white);}
 .mobile-menu .m-cta{color:var(--accent)!important;border-bottom:none!important;margin-top:8px;}
 
@@ -60,10 +66,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;height:64px;padding:0 48px;
 .hero-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.2em;color:var(--accent);
   text-transform:uppercase;margin-bottom:28px;display:flex;align-items:center;gap:10px;}
 .hero-label::before{content:'';width:24px;height:1px;background:var(--accent);box-shadow:var(--glow);}
-.hero-title{font-size:clamp(42px,7vw,96px);font-weight:700;line-height:1.0;letter-spacing:-0.03em;max-width:900px;margin-bottom:32px;}
-.hero-title .accent-word{color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.3);}
-.hero-title .accent-hl{color:var(--accent);text-shadow:0 0 40px rgba(200,255,0,0.4);}
-.hero-sub{font-size:16px;color:var(--lgrey);max-width:500px;line-height:1.7;margin-bottom:52px;}
+.hero-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(44px,7.5vw,100px);font-weight:700;line-height:0.96;letter-spacing:-0.04em;max-width:620px;margin-bottom:32px;}
+.hero-title .accent-word{color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,0.28);}
+.hero-title .accent-hl{color:var(--accent);text-shadow:0 0 50px rgba(200,255,0,0.5);}
+.hero-sub{font-size:16px;color:var(--lgrey);max-width:480px;line-height:1.7;margin-bottom:52px;}
 .hero-actions{display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
 .btn-primary{background:var(--accent);color:#000;padding:14px 32px;border-radius:4px;font-weight:700;
   font-size:13px;text-decoration:none;letter-spacing:0.04em;
@@ -79,14 +85,35 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;height:64px;padding:0 48px;
 .stat-num{font-family:'Space Mono',monospace;font-size:28px;font-weight:700;color:var(--white);line-height:1;}
 .stat-num span{color:var(--accent);}
 .stat-label{font-size:10px;color:var(--grey);letter-spacing:0.12em;text-transform:uppercase;margin-top:4px;}
-.hero-deco{position:absolute;top:50%;right:48px;transform:translateY(-50%);width:420px;height:420px;z-index:0;}
-#particleCanvas{display:block;}
+
+/* ── HERO DECO: larger circle, shifted left ── */
+.hero-deco{
+  position:absolute;
+  top:50%;
+  left:34%;           /* shifted left — was right:48px */
+  transform:translateY(-50%);
+  width:600px;        /* was 420px */
+  height:600px;
+  z-index:0;
+}
+/* ring removed */
+#particleCanvas{display:block;position:relative;z-index:1;}
 
 /* Mobile sphere */
 @media(max-width:900px){
-  .hero-deco{display:block!important;width:320px;height:320px;top:42%;left:50%;right:auto;transform:translate(-50%,-50%);opacity:0.55;}
-  #particleCanvas{width:320px!important;height:320px!important;}
+  .hero-deco{display:block!important;width:340px!important;height:340px!important;
+    top:42%;left:50%;right:auto;transform:translate(-50%,-50%);}
+  #particleCanvas{width:340px!important;height:340px!important;}
 }
+
+/* Mobile pulse bg */
+.hero-pulse-bg{display:none;position:absolute;top:38%;left:50%;transform:translate(-50%,-50%);
+  width:320px;height:320px;border-radius:50%;z-index:0;pointer-events:none;}
+.hero-pulse-bg::before,.hero-pulse-bg span{content:'';position:absolute;inset:0;border-radius:50%;
+  border:1px solid rgba(200,255,0,0.25);}
+.hero-pulse-bg::before{animation:pulse-ring 3s ease-out infinite;}
+.hero-pulse-bg span{display:block;animation:pulse-ring 3s ease-out infinite .8s;}
+@keyframes pulse-ring{0%{transform:scale(.7);opacity:.6;}70%{transform:scale(1.15);opacity:.15;}100%{transform:scale(1.3);opacity:0;}}
 
 /* ── SECTION BASE ── */
 section{position:relative;z-index:1;padding:100px 48px;}
@@ -119,48 +146,30 @@ section{position:relative;z-index:1;padding:100px 48px;}
 .service-card::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--accent);transition:width .4s ease;}
 .service-card:hover::after{width:100%;}
 
-/* ── PROCESS (animated) ── */
+/* ── PROCESS ── */
 .process-scene{position:relative;}
 .process-track{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;}
-.process-track::before{
-  content:'';position:absolute;top:52px;left:10%;right:10%;height:1px;
+.process-track::before{content:'';position:absolute;top:52px;left:10%;right:10%;height:1px;
   background:linear-gradient(90deg,transparent,var(--accent),var(--accent),transparent);
-  opacity:0;transition:opacity .6s .4s;z-index:0;
-}
+  opacity:0;transition:opacity .6s .4s;z-index:0;}
 .process-track.animated::before{opacity:.3;}
-.pstep{
-  padding:40px 28px 36px;border:1px solid var(--border);border-right:none;
+.pstep{padding:40px 28px 36px;border:1px solid var(--border);border-right:none;
   position:relative;z-index:1;background:var(--black);
-  opacity:0;transform:translateY(32px);
-  transition:opacity .6s ease,transform .6s ease,background .25s;
-}
+  opacity:0;transform:translateY(32px);transition:opacity .6s ease,transform .6s ease,background .25s;}
 .pstep:last-child{border-right:1px solid var(--border);}
 .pstep.visible{opacity:1;transform:translateY(0);}
 .pstep:hover{background:var(--card);}
 .pstep:hover .ps-dot{box-shadow:0 0 0 6px var(--accent2),var(--glow);}
 .pstep:hover .ps-num{color:var(--accent);}
-
-/* connector dot on top */
-.ps-dot{
-  width:10px;height:10px;border-radius:50%;background:var(--accent);
-  margin-bottom:28px;
-  box-shadow:0 0 0 3px var(--accent3),var(--glow);
-  transition:box-shadow .3s;
-  animation:dot-breathe 3s ease-in-out infinite;
-}
+.ps-dot{width:10px;height:10px;border-radius:50%;background:var(--accent);margin-bottom:28px;
+  box-shadow:0 0 0 3px var(--accent3),var(--glow);transition:box-shadow .3s;animation:dot-breathe 3s ease-in-out infinite;}
 .pstep:nth-child(2) .ps-dot{animation-delay:.5s;}
 .pstep:nth-child(3) .ps-dot{animation-delay:1s;}
 .pstep:nth-child(4) .ps-dot{animation-delay:1.5s;}
-@keyframes dot-breathe{
-  0%,100%{box-shadow:0 0 0 3px var(--accent3),0 0 8px rgba(200,255,0,0.3);}
-  50%{box-shadow:0 0 0 8px rgba(200,255,0,0.06),0 0 24px rgba(200,255,0,0.5);}
-}
-/* animated connector line between dots */
-.ps-line{
-  position:absolute;top:44px;right:-1px;width:0;height:1px;
-  background:linear-gradient(90deg,var(--accent),rgba(200,255,0,0.2));
-  z-index:2;transition:width .8s cubic-bezier(.16,1,.3,1);
-}
+@keyframes dot-breathe{0%,100%{box-shadow:0 0 0 3px var(--accent3),0 0 8px rgba(200,255,0,0.3);}
+  50%{box-shadow:0 0 0 8px rgba(200,255,0,0.06),0 0 24px rgba(200,255,0,0.5);}}
+.ps-line{position:absolute;top:44px;right:-1px;width:0;height:1px;
+  background:linear-gradient(90deg,var(--accent),rgba(200,255,0,0.2));z-index:2;transition:width .8s cubic-bezier(.16,1,.3,1);}
 .pstep.visible .ps-line{width:100%;}
 .pstep:last-child .ps-line{display:none;}
 .ps-num{font-family:'Space Mono',monospace;font-size:9px;color:var(--grey);letter-spacing:0.15em;margin-bottom:16px;transition:color .25s;}
@@ -181,157 +190,223 @@ section{position:relative;z-index:1;padding:100px 48px;}
 .ai-metric-val span{color:var(--accent);}
 .ai-metric-label{font-size:12px;color:var(--grey);line-height:1.5;}
 
-/* ══════════════════════════════════════
-   CASES — 3D FLOATING CARDS
-══════════════════════════════════════ */
-.cases-stage{
-  position:relative;height:640px;
-  perspective:1200px;perspective-origin:50% 45%;
-  overflow:hidden;
+/* ══════════════════════════════════
+   CASES — Obsidian graph / web layout
+   7 nodes scattered like a knowledge graph
+   with SVG lines connecting them
+══════════════════════════════════ */
+.cases-stage{position:relative;height:900px;perspective:1400px;perspective-origin:50% 50%;overflow:hidden;}
+.cases-stage-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .05s linear;}
+.fcard{position:absolute;background:var(--card);border:1px solid var(--border2);border-radius:12px;
+  overflow:hidden;cursor:pointer;text-decoration:none;color:inherit;
+  transform-style:preserve-3d;transition:box-shadow .5s cubic-bezier(0.4,0,0.2,1),border-color .5s cubic-bezier(0.4,0,0.2,1),transform 0.55s cubic-bezier(0.4,0,0.2,1);will-change:transform;}
+
+/* depth shadow tiers — front cards cast more shadow */
+.fcard-1{box-shadow:0 16px 48px rgba(0,0,0,0.65),0 2px 8px rgba(0,0,0,0.4);}
+.fcard-2,.fcard-4,.fcard-6,.fcard-8{box-shadow:0 10px 32px rgba(0,0,0,0.55),0 2px 6px rgba(0,0,0,0.35);}
+.fcard-3,.fcard-5,.fcard-9{box-shadow:0 6px 20px rgba(0,0,0,0.45),0 2px 4px rgba(0,0,0,0.3);}
+.fcard-7{box-shadow:0 4px 12px rgba(0,0,0,0.35);opacity:0.88;}
+
+/* ── TELEGRAM WEBVIEW THUMBNAIL ── */
+.tg-thumb{background:#17212b!important;position:relative;}
+.tg-preview{position:absolute;inset:0;padding:6px 5px 18px;display:flex;flex-direction:column;gap:4px;overflow:hidden;}
+.tg-hdr{display:flex;justify-content:space-between;align-items:flex-start;}
+.tg-brand-wrap{display:flex;flex-direction:column;gap:1px;}
+.tg-brand{font-family:'Space Mono',monospace;font-size:6.5px;color:#fff;font-weight:700;letter-spacing:0.04em;}
+.tg-sub{font-family:'Space Mono',monospace;font-size:4.5px;color:#5c7a90;letter-spacing:0.05em;}
+.tg-total{font-family:'Space Mono',monospace;font-size:8px;color:#fff;font-weight:700;text-align:right;}
+.tg-total-sub{font-family:'Space Mono',monospace;font-size:4px;color:#4caf50;text-align:right;}
+.tg-tabs-row{display:flex;gap:2px;}
+.tg-tab-i{font-size:4.5px;padding:1.5px 4px;border-radius:8px;color:#5c7a90;font-family:'Space Mono',monospace;letter-spacing:0.04em;border:1px solid rgba(255,255,255,0.05);}
+.tg-tab-i.on{background:#fff;color:#17212b;border-color:#fff;}
+.tg-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5px;flex:1;}
+.tg-met{background:#1e2e3d;border-radius:3px;padding:3px 4px;border:1px solid rgba(255,255,255,0.04);}
+.tg-met-lbl{font-family:'Space Mono',monospace;font-size:4px;color:#5c7a90;letter-spacing:0.1em;margin-bottom:1px;}
+.tg-met-val{font-family:'Space Mono',monospace;font-size:9px;font-weight:700;color:#4caf50;line-height:1;}
+.tg-met-target{font-size:3.5px;color:#5c7a90;font-family:'Space Mono',monospace;}
+.tg-badge{position:absolute;bottom:3px;left:0;right:0;display:flex;justify-content:center;}
+.tg-badge-inner{background:rgba(35,142,196,0.2);border:1px solid rgba(35,142,196,0.4);border-radius:3px;font-family:'Space Mono',monospace;font-size:5px;color:#48aee8;padding:1.5px 6px;letter-spacing:0.08em;}
+/* pulsing glow delays for new cards */
+.fcard-8::after{animation-delay:0.7s;}
+.fcard-9::after{animation-delay:1.1s;}
+
+/* Mac Dock hover — card pops forward */
+.fcard.dock-hover{
+  transform:scale(1.10) translateZ(30px)!important;
+  z-index:30!important;
+  border-color:var(--accent)!important;
+  box-shadow:0 0 48px rgba(200,255,0,0.22),0 20px 60px rgba(0,0,0,0.8),0 0 0 1px rgba(200,255,0,0.12)!important;
+  animation-play-state:paused!important;
+  opacity:1!important;
 }
-.cases-stage-inner{
-  position:relative;width:100%;height:100%;
-  transform-style:preserve-3d;
-  transition:transform .05s linear;
+/* slight scale boost on cards adjacent to hovered */
+.fcard.dock-near{
+  transform:scale(1.03)!important;
+  z-index:25!important;
+  animation-play-state:paused!important;
+  opacity:1!important;
 }
 
-/* Individual floating card */
-.fcard{
-  position:absolute;
-  background:var(--card);
-  border:1px solid var(--border2);
-  border-radius:12px;overflow:hidden;
-  cursor:pointer;text-decoration:none;color:inherit;
-  transform-style:preserve-3d;
-  transition:box-shadow .3s, border-color .3s;
-  will-change:transform;
+/* pulsing glow border via ::after */
+.fcard::after{content:'';position:absolute;inset:-1px;border-radius:12px;border:1px solid rgba(200,255,0,0);
+  pointer-events:none;transition:border-color .3s;
+  animation:fcard-glow 2.8s ease-in-out infinite;}
+.fcard-2::after{animation-delay:0.4s;}
+.fcard-3::after{animation-delay:0.8s;}
+.fcard-4::after{animation-delay:1.2s;}
+.fcard-5::after{animation-delay:1.6s;}
+.fcard-6::after{animation-delay:2.0s;}
+.fcard-7::after{animation-delay:2.4s;}
+
+@keyframes fcard-glow{
+  0%,100%{border-color:rgba(200,255,0,0);box-shadow:none;}
+  50%{border-color:rgba(200,255,0,0.2);box-shadow:0 0 18px rgba(200,255,0,0.08);}
 }
-.fcard:hover{
-  border-color:var(--accent);
-  box-shadow:0 0 40px rgba(200,255,0,0.15),0 24px 60px rgba(0,0,0,0.6);
-  z-index:10!important;
+.fcard.dock-hover::after,.fcard.dock-near::after{animation:none;border-color:rgba(200,255,0,0.35);}
+
+/* Obsidian graph — compact star layout, hub at centre */
+
+/* HUB — visual centre of the graph */
+.fcard-1{
+  width:192px;
+  left:calc(40% - 96px);
+  top:38%;
+  z-index:7;
+  animation:float1 6s ease-in-out infinite;
+}
+/* top-right */
+.fcard-2{
+  width:172px;
+  left:calc(54% - 86px);
+  top:7%;
+  z-index:6;
+  animation:float2 7s ease-in-out infinite .6s;
+}
+/* right — moved from 83% to 62% */
+.fcard-3{
+  width:172px;
+  left:calc(63% - 86px);
+  top:34%;
+  z-index:5;
+  animation:float3 8s ease-in-out infinite 1.2s;
+}
+/* bottom-centre */
+.fcard-4{
+  width:172px;
+  left:calc(50% - 86px);
+  top:68%;
+  z-index:6;
+  animation:float4 7.5s ease-in-out infinite 1.8s;
+}
+/* bottom-left */
+.fcard-5{
+  width:166px;
+  left:calc(20% - 83px);
+  top:65%;
+  z-index:5;
+  animation:float1 8.5s ease-in-out infinite 2.4s;
+}
+/* left */
+.fcard-6{
+  width:172px;
+  left:5%;
+  top:30%;
+  z-index:6;
+  animation:float2 6.5s ease-in-out infinite 0.3s;
+}
+/* top-left */
+.fcard-7{
+  width:160px;
+  left:calc(24% - 80px);
+  top:6%;
+  z-index:3;
+  animation:float3 9s ease-in-out infinite 3s;
+  opacity:0.88;
+}
+/* Case #8 — far right top */
+.fcard-8{
+  width:172px;
+  left:calc(78% - 86px);
+  top:6%;
+  z-index:5;
+  animation:float2 7.2s ease-in-out infinite 0.9s;
+}
+/* Case #8.1 — Telegram, right-bottom cluster */
+.fcard-9{
+  width:160px;
+  left:calc(71% - 80px);
+  top:56%;
+  z-index:4;
+  animation:float4 8s ease-in-out infinite 1.5s;
+  opacity:0.92;
 }
 
-/* pulsing glow ring on each card */
-.fcard::after{
-  content:'';position:absolute;inset:-1px;border-radius:12px;
-  border:1px solid transparent;pointer-events:none;
-  transition:border-color .3s;
+@keyframes float1{
+  0%,100%{transform:rotateX(5deg) rotateY(-7deg) translateZ(22px);}
+  50%{transform:rotateX(2deg) rotateY(-4deg) translateZ(42px);}
 }
-.fcard:hover::after{border-color:rgba(200,255,0,0.4);}
+@keyframes float2{
+  0%,100%{transform:rotateX(7deg) rotateY(9deg) translateZ(12px) rotate(-1.5deg);}
+  50%{transform:rotateX(3deg) rotateY(5deg) translateZ(32px) rotate(-.8deg);}
+}
+@keyframes float3{
+  0%,100%{transform:rotateX(-4deg) rotateY(7deg) translateZ(16px) rotate(1.2deg);}
+  50%{transform:rotateX(-1deg) rotateY(3deg) translateZ(36px) rotate(.4deg);}
+}
+@keyframes float4{
+  0%,100%{transform:rotateX(3deg) rotateY(-5deg) translateZ(18px) rotate(-.8deg);}
+  50%{transform:rotateX(1deg) rotateY(-2deg) translateZ(38px) rotate(-.2deg);}
+}
 
-/* CARD 1 — McLaren (large, center-left) */
-.fcard-1{width:320px;left:6%;top:8%;z-index:3;
-  animation:float1 6s ease-in-out infinite;}
-@keyframes float1{0%,100%{transform:rotateX(6deg) rotateY(-8deg) translateZ(20px);}
-  50%{transform:rotateX(3deg) rotateY(-5deg) translateZ(40px);}}
+/* ── CASES LINKS LIST ── */
+.cases-links{margin-top:56px;}
+.cases-links-title{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.22em;
+  text-transform:uppercase;color:var(--grey);margin-bottom:16px;
+  display:flex;align-items:center;gap:10px;}
+.cases-links-title::before{content:'';display:block;width:20px;height:1px;background:var(--grey);}
+.cl-grid{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);}
+.cl-item{background:var(--black);padding:14px 20px;display:flex;align-items:center;
+  gap:14px;transition:background .2s;border-bottom:1px solid var(--border);}
+.cl-item:last-child{border-bottom:none;}
+.cl-item:hover{background:var(--card);}
+.cl-item:hover .cl-link{color:var(--white);}
+.cl-num{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.12em;
+  color:var(--accent);flex-shrink:0;min-width:56px;}
+.cl-name{font-size:13px;font-weight:500;color:var(--white);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cl-link{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.1em;
+  color:var(--accent);text-decoration:none;flex-shrink:0;transition:color .2s;}
+.cl-link:hover{color:var(--white);}
 
-/* CARD 2 — Trading Terminal (medium, top-right) */
-.fcard-2{width:260px;right:8%;top:4%;z-index:4;
-  animation:float2 7s ease-in-out infinite .8s;}
-@keyframes float2{0%,100%{transform:rotateX(8deg) rotateY(10deg) translateZ(10px) rotate(-2deg);}
-  50%{transform:rotateX(4deg) rotateY(6deg) translateZ(30px) rotate(-1deg);}}
+/* card inner */
+.fc-thumb{height:100px;position:relative;overflow:hidden;flex-shrink:0;background:#040404;}
+.fcard-1 .fc-thumb{height:112px;}
+.fcard-4 .fc-thumb{height:106px;}
+.fc-thumb iframe{
+  position:absolute;top:0;left:0;
+  width:1280px;height:800px;
+  transform:scale(0.14);transform-origin:top left;
+  pointer-events:none;border:none;
+}
+.fcard-7 .fc-thumb iframe{transform:scale(0.12);}
 
-/* CARD 3 — GPT INV (large, bottom-right) */
-.fcard-3{width:300px;right:5%;bottom:5%;z-index:2;
-  animation:float3 8s ease-in-out infinite 1.5s;}
-@keyframes float3{0%,100%{transform:rotateX(-5deg) rotateY(8deg) translateZ(15px) rotate(1.5deg);}
-  50%{transform:rotateX(-2deg) rotateY(4deg) translateZ(35px) rotate(.5deg);}}
-
-/* mini decorative cards */
-.fcard-mini{width:120px;height:90px;z-index:1;pointer-events:none;
-  background:var(--dark);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
-.fcard-m1{left:34%;top:5%;animation:float2 9s ease-in-out infinite .3s;}
-.fcard-m2{left:2%;bottom:12%;animation:float1 7.5s ease-in-out infinite 2s;}
-.fcard-m3{right:30%;bottom:10%;animation:float3 6.5s ease-in-out infinite .6s;}
-
-/* card inner layout */
-.fc-thumb{height:180px;position:relative;overflow:hidden;flex-shrink:0;}
-.fcard-1 .fc-thumb{height:200px;}
-.fcard-3 .fc-thumb{height:195px;}
-.fc-body{padding:16px 18px 20px;}
-.fc-num{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:0.15em;
-  color:var(--grey);margin-bottom:8px;text-transform:uppercase;}
-.fc-title{font-size:15px;font-weight:600;letter-spacing:-0.01em;margin-bottom:8px;line-height:1.2;}
-.fc-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;}
+/* ── WEB LINES (SVG layer) ── */
+.cases-web-svg{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:visible;}
+.web-line{stroke:rgba(200,255,0,0.1);stroke-width:1;fill:none;}
+.web-line-glow{stroke:rgba(200,255,0,0.04);stroke-width:5;fill:none;}
+.fc-body{padding:14px 16px 18px;}
+.fc-num{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:0.15em;color:var(--grey);margin-bottom:6px;text-transform:uppercase;}
+.fc-title{font-size:14px;font-weight:600;letter-spacing:-0.01em;margin-bottom:7px;line-height:1.2;}
+.fc-tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px;}
 .fc-tag{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:0.1em;text-transform:uppercase;
-  color:var(--grey);border:1px solid var(--border);padding:2px 6px;border-radius:2px;}
+  color:var(--grey);border:1px solid var(--border);padding:2px 5px;border-radius:2px;}
 .fc-link{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:0.12em;
   text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:6px;}
 
-/* ambient glow behind cards */
-.cases-glow{
-  position:absolute;pointer-events:none;border-radius:50%;filter:blur(80px);opacity:.12;
-}
+/* ambient glow */
+.cases-glow{position:absolute;pointer-events:none;border-radius:50%;filter:blur(80px);opacity:.12;}
 .cg1{width:400px;height:400px;background:var(--accent);left:10%;top:10%;}
 .cg2{width:300px;height:300px;background:#00d4ff;right:15%;bottom:15%;}
 .cg3{width:200px;height:200px;background:#ff00aa;right:40%;top:5%;}
-
-/* Preview thumbnails (same CSS previews as before) */
-.prev-mclaren{position:absolute;inset:0;background:#000;}
-.prev-mclaren .pm-grid{position:absolute;inset:0;
-  background-image:linear-gradient(rgba(57,255,20,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(57,255,20,0.06) 1px,transparent 1px);
-  background-size:30px 30px;}
-.prev-mclaren .pm-glow{position:absolute;top:30%;left:50%;transform:translate(-50%,-50%);
-  width:200px;height:200px;background:radial-gradient(circle,rgba(57,255,20,0.18) 0%,transparent 70%);}
-.prev-mclaren .pm-title{position:absolute;top:28px;left:28px;font-family:'Space Mono',monospace;
-  font-size:26px;font-weight:700;color:#39ff14;text-shadow:0 0 20px #39ff14,0 0 40px rgba(57,255,20,0.5);letter-spacing:-0.02em;line-height:1.1;}
-.prev-mclaren .pm-dot{position:absolute;top:32px;right:28px;width:8px;height:8px;border-radius:50%;
-  background:#39ff14;box-shadow:0 0 12px #39ff14;animation:pg 1.8s ease-in-out infinite;}
-@keyframes pg{0%,100%{opacity:1}50%{opacity:.4}}
-.prev-mclaren .pm-bars{position:absolute;bottom:28px;left:28px;display:flex;align-items:flex-end;gap:6px;}
-.prev-mclaren .pm-bar{width:16px;background:rgba(57,255,20,0.5);border-top:1px solid #39ff14;box-shadow:0 0 6px rgba(57,255,20,.4);}
-
-.prev-yinger{position:absolute;inset:0;background:#000;font-family:'Space Mono',monospace;}
-.prev-yinger .py-ticker{position:absolute;top:0;left:0;right:0;height:36px;border-bottom:1px solid #222;
-  display:flex;align-items:center;padding:0 20px;gap:20px;}
-.prev-yinger .py-pair{font-size:9px;color:#444;letter-spacing:.05em;}
-.prev-yinger .py-pair span{color:#00ff88;}
-.prev-yinger .py-chart{position:absolute;top:50px;left:20px;right:20px;height:100px;}
-.prev-yinger .py-chart svg{width:100%;height:100%;}
-.prev-yinger .py-rows{position:absolute;top:158px;left:0;right:0;}
-.prev-yinger .py-row{height:26px;border-bottom:1px solid #111;display:flex;align-items:center;padding:0 20px;gap:16px;}
-.prev-yinger .py-cell{font-size:8px;color:#555;flex:1;}
-.prev-yinger .py-cell.up{color:#00ff88;}
-.prev-yinger .py-cell.dn{color:#ff1a1a;}
-
-.prev-gptinv{position:absolute;inset:0;background:#060608;}
-.prev-gptinv .pg-atm{position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 80% 50%,rgba(180,10,24,0.4) 0%,transparent 65%);}
-.prev-gptinv .pg-nav{position:absolute;top:0;left:0;right:0;height:40px;background:rgba(6,6,8,.9);
-  border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;padding:0 20px;gap:10px;}
-.prev-gptinv .pg-badge{width:22px;height:22px;background:#e01c2e;border-radius:6px;font-size:10px;font-weight:900;
-  color:#fff;display:flex;align-items:center;justify-content:center;}
-.prev-gptinv .pg-navtitle{font-size:12px;font-weight:700;color:#f4f2ee;}
-.prev-gptinv .pg-h1{position:absolute;bottom:28px;left:24px;font-size:32px;font-weight:900;
-  color:#f4f2ee;letter-spacing:-.03em;line-height:1;}
-.prev-gptinv .pg-h1 span{color:#e01c2e;}
-.prev-gptinv .pg-card{position:absolute;right:20px;top:56px;width:140px;background:#111116;
-  border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:14px;}
-.prev-gptinv .pg-clabel{font-family:'Space Mono',monospace;font-size:7px;color:#666;margin-bottom:6px;}
-.prev-gptinv .pg-cval{font-size:20px;font-weight:900;color:#f4f2ee;letter-spacing:-.02em;}
-.prev-gptinv .pg-cval small{font-size:10px;color:#22c55e;margin-left:4px;}
-
-/* Mobile cases: accordion */
-.cases-mobile{display:none;}
-.cm-item{border:1px solid var(--border);margin-bottom:1px;}
-.cm-header{display:flex;align-items:center;gap:16px;padding:20px 20px;cursor:pointer;
-  background:var(--card);transition:background .2s;}
-.cm-header:hover{background:var(--card2);}
-.cm-num{font-family:'Space Mono',monospace;font-size:10px;color:var(--grey);letter-spacing:0.1em;min-width:32px;}
-.cm-name{flex:1;font-size:16px;font-weight:600;letter-spacing:-0.01em;}
-.cm-chevron{font-size:16px;color:var(--lgrey);transition:transform .3s;}
-.cm-item.open .cm-chevron{transform:rotate(180deg);}
-.cm-item.open .cm-header{background:rgba(200,255,0,.04);}
-.cm-item.open .cm-num{color:var(--accent);}
-.cm-body{display:none;padding:0 20px 24px;background:var(--card);}
-.cm-item.open .cm-body{display:block;}
-.cm-thumb{height:160px;position:relative;overflow:hidden;margin-bottom:16px;border-radius:4px;}
-.cm-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
-.cm-tag{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;
-  color:var(--grey);border:1px solid var(--border);padding:2px 7px;border-radius:2px;}
-.cm-desc{font-size:13px;color:var(--lgrey);line-height:1.65;margin-bottom:16px;}
-.cm-link{display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;
-  font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);text-decoration:none;}
 
 /* ── CTA ── */
 .cta-section{padding:120px 48px;text-align:center;position:relative;z-index:1;border-top:1px solid var(--border);}
@@ -354,19 +429,6 @@ footer{position:relative;z-index:1;padding:32px 48px;border-top:1px solid var(--
   text-decoration:none;letter-spacing:0.08em;transition:color .2s;}
 .footer-links a:hover{color:var(--white);}
 
-/* ── PULSE CIRCLE (mobile hero) ── */
-.hero-pulse-bg{display:none;position:absolute;top:38%;left:50%;transform:translate(-50%,-50%);
-  width:320px;height:320px;border-radius:50%;z-index:0;pointer-events:none;}
-.hero-pulse-bg::before,.hero-pulse-bg span{content:'';position:absolute;inset:0;border-radius:50%;
-  border:1px solid rgba(200,255,0,0.25);}
-.hero-pulse-bg::before{animation:pulse-ring 3s ease-out infinite;}
-.hero-pulse-bg span{display:block;animation:pulse-ring 3s ease-out infinite .8s;}
-.hero-pulse-bg::after{content:'';position:absolute;inset:auto;width:6px;height:6px;top:50%;left:50%;
-  transform:translate(-50%,-50%);background:rgba(200,255,0,.8);border-radius:50%;
-  box-shadow:0 0 20px rgba(200,255,0,.6);animation:dot-p 3s ease-in-out infinite;}
-@keyframes pulse-ring{0%{transform:scale(.7);opacity:.6;border-color:rgba(200,255,0,.4);}70%{transform:scale(1.15);opacity:.15;}100%{transform:scale(1.3);opacity:0;}}
-@keyframes dot-p{0%,100%{opacity:1}50%{opacity:.5}}
-
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
   nav{padding:0 20px;}
@@ -379,34 +441,25 @@ footer{position:relative;z-index:1;padding:32px 48px;border-top:1px solid var(--
   .hero-pulse-bg{display:block;}
   .services-grid{grid-template-columns:1fr;}
   .ai-grid{grid-template-columns:1fr;gap:40px;}
-  /* process */
   .process-track{grid-template-columns:1fr 1fr;}
   .pstep{border-right:1px solid var(--border)!important;}
-  /* cases stage */
   .cases-stage{height:auto;perspective:none;overflow:visible;}
   .cases-stage-inner{transform:none!important;display:flex;flex-direction:column;gap:16px;padding:4px 0;}
   .fcard{position:static!important;width:100%!important;animation:none!important;transform:none!important;}
-  .fcard-mini{display:none!important;}
   .cases-glow{display:none;}
   footer{flex-direction:column;gap:16px;text-align:center;}
   .footer-links{justify-content:center;}
   .section-header{flex-direction:column;align-items:flex-start;gap:8px;}
   .cta-section{padding:80px 20px;}
-  .cases-mobile{display:none!important;}
 }
 @media(max-width:600px){
   .process-track{grid-template-columns:1fr;}
-  .pstep{border-right:1px solid var(--border)!important;}
-}
-@media(max-width:600px){
   .services-grid{grid-template-columns:1fr;}
   .hero-title{font-size:clamp(36px,9vw,60px);}
-  .btn-primary,.btn-secondary{font-size:12px;}
 }
 </style>
 </head>
 <body>
-
 <div class="scroll-line" id="scrollLine"></div>
 
 <!-- NAV -->
@@ -415,46 +468,51 @@ footer{position:relative;z-index:1;padding:32px 48px;border-top:1px solid var(--
     <img src="logo.png" alt="FX. Social Club">
     <span class="nav-logo-text">FX. SOCIAL CLUB</span>
   </a>
-  <div class="nav-links">
-    <a href="#services">Послуги</a>
-    <a href="#process">Процес</a>
-    <a href="#cases">Кейси</a>
-    <a href="#contact" class="nav-cta">Зв'язатись</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="#services" data-i18n="nav.services">Services</a>
+      <a href="#process" data-i18n="nav.process">Process</a>
+      <a href="#cases" data-i18n="nav.cases">Cases</a>
+      <a href="#contact" class="nav-cta" data-i18n="nav.cta">Contact</a>
+    </div>
+    <div class="lang-sw">
+      <button class="lang-btn active" data-lang="en">ENG</button>
+      <span class="lang-sep">/</span>
+      <button class="lang-btn" data-lang="ru">RU</button>
+    </div>
+    <button class="nav-burger" id="burger"><span></span><span></span><span></span></button>
   </div>
-  <button class="nav-burger" id="burger" aria-label="Меню">
-    <span></span><span></span><span></span>
-  </button>
 </nav>
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#services" class="mm-link">Послуги</a>
-  <a href="#process" class="mm-link">Процес</a>
-  <a href="#cases" class="mm-link">Кейси</a>
-  <a href="https://t.me/fx_social_club" target="_blank" class="m-cta">Зв'язатись →</a>
+  <a href="#services" data-i18n="nav.services">Services</a>
+  <a href="#process" data-i18n="nav.process">Process</a>
+  <a href="#cases" data-i18n="nav.cases">Cases</a>
+  <a href="https://t.me/fx_social_club" target="_blank" class="m-cta" data-i18n="nav.cta">Contact →</a>
 </div>
 
 <!-- HERO -->
 <section class="hero" id="home">
-  <div class="hero-label">Design × AI Studio</div>
-  <h1 class="hero-title">
-    Дизайн що<br>
-    <span class="accent-word">продає</span> та<br>
-    <span class="accent-hl">вражає</span>
+  <div class="hero-label" data-i18n="hero.label">Design × AI Studio</div>
+  <h1 class="hero-title" data-i18n-html="hero.title">
+    Design that<br>
+    <span class="accent-word">sells</span> &amp;<br>
+    <span class="accent-hl">amazes</span>
   </h1>
-  <p class="hero-sub">Ми створюємо UX/UI дизайн для бізнесу, поєднуючи глибоке розуміння людської поведінки з можливостями AI.</p>
+  <p class="hero-sub" data-i18n="hero.sub">We create UX/UI design for business, combining deep understanding of human behavior with AI capabilities.</p>
   <div class="hero-actions">
-    <a href="#cases" class="btn-primary">Дивитись кейси</a>
-    <a href="https://t.me/fx_social_club" target="_blank" class="btn-secondary">Обговорити проект</a>
+    <a href="#cases" class="btn-primary" data-i18n="hero.btn1">View Cases</a>
+    <a href="https://t.me/fx_social_club" target="_blank" class="btn-secondary" data-i18n="hero.btn2">Discuss a Project</a>
   </div>
   <div class="hero-pulse-bg" aria-hidden="true"><span></span></div>
   <div class="hero-deco" aria-hidden="true">
-    <canvas id="particleCanvas" width="420" height="420"></canvas>
+    <canvas id="particleCanvas" width="600" height="600"></canvas>
   </div>
   <div class="hero-stats">
-    <div class="stat-item"><div class="stat-num">100<span>+</span></div><div class="stat-label">Проектів</div></div>
-    <div class="stat-item"><div class="stat-num">3<span>×</span></div><div class="stat-label">Швидше з AI</div></div>
-    <div class="stat-item"><div class="stat-num">100<span>%</span></div><div class="stat-label">Задоволених клієнтів</div></div>
+    <div class="stat-item"><div class="stat-num">100<span>+</span></div><div class="stat-label" data-i18n="stat.projects">Projects</div></div>
+    <div class="stat-item"><div class="stat-num">3<span>×</span></div><div class="stat-label" data-i18n="stat.faster">Faster with AI</div></div>
+    <div class="stat-item"><div class="stat-num">100<span>%</span></div><div class="stat-label" data-i18n="stat.clients">Happy Clients</div></div>
   </div>
 </section>
 
@@ -485,16 +543,19 @@ footer{position:relative;z-index:1;padding:32px 48px;border-top:1px solid var(--
 <!-- SERVICES -->
 <section id="services">
   <div class="section-header">
-    <div><div class="section-label">Що ми робимо</div><h2 class="section-title">Послуги</h2></div>
-    <div class="section-count">06 напрямків</div>
+    <div>
+      <div class="section-label" data-i18n="services.label">What We Do</div>
+      <h2 class="section-title" data-i18n="services.title">Services</h2>
+    </div>
+    <div class="section-count" data-i18n="services.count">06 directions</div>
   </div>
   <div class="services-grid">
-    <div class="service-card"><div class="service-num">01</div><div class="service-icon">◈</div><div class="service-name">UX/UI Дизайн</div><p class="service-desc">Проектуємо інтерфейси з урахуванням поведінки користувача — від дослідження до фінального пікселя.</p></div>
-    <div class="service-card"><div class="service-num">02</div><div class="service-icon">▦</div><div class="service-name">Лендінги та сайти</div><p class="service-desc">Конверсійні сторінки з унікальним дизайном, що відображає суть бренду і закриває задачі бізнесу.</p></div>
-    <div class="service-card"><div class="service-num">03</div><div class="service-icon">⬡</div><div class="service-name">Дашборди та SaaS</div><p class="service-desc">Складні продукти з великою кількістю даних — робимо зрозумілими, зручними та візуально бездоганними.</p></div>
-    <div class="service-card"><div class="service-num">04</div><div class="service-icon">◎</div><div class="service-name">Брендинг</div><p class="service-desc">Візуальна ідентичність, що відрізняє — логотип, стиль, гайдлайн для всіх каналів комунікації.</p></div>
-    <div class="service-card"><div class="service-num">05</div><div class="service-icon">⬕</div><div class="service-name">Мобільні додатки</div><p class="service-desc">Дизайн iOS / Android з глибокою UX-логікою, анімаціями та готовими компонентами для розробників.</p></div>
-    <div class="service-card"><div class="service-num">06</div><div class="service-icon">✦</div><div class="service-name">AI-прискорення</div><p class="service-desc">Використовуємо AI-інструменти щоб скоротити час розробки дизайну без шкоди для якості та кастомізації.</p></div>
+    <div class="service-card"><div class="service-num">01</div><div class="service-icon">◈</div><div class="service-name" data-i18n="s1.name">UX/UI Design</div><p class="service-desc" data-i18n="s1.desc">We design interfaces with user behavior in mind — from research to the final pixel.</p></div>
+    <div class="service-card"><div class="service-num">02</div><div class="service-icon">▦</div><div class="service-name" data-i18n="s2.name">Landing Pages & Sites</div><p class="service-desc" data-i18n="s2.desc">Conversion-focused pages with unique design that reflects the brand and meets business goals.</p></div>
+    <div class="service-card"><div class="service-num">03</div><div class="service-icon">⬡</div><div class="service-name" data-i18n="s3.name">Dashboards & SaaS</div><p class="service-desc" data-i18n="s3.desc">Complex data-heavy products — we make them clear, convenient and visually flawless.</p></div>
+    <div class="service-card"><div class="service-num">04</div><div class="service-icon">◎</div><div class="service-name" data-i18n="s4.name">Branding</div><p class="service-desc" data-i18n="s4.desc">Visual identity that stands out — logo, style, brand guidelines for all communication channels.</p></div>
+    <div class="service-card"><div class="service-num">05</div><div class="service-icon">⬕</div><div class="service-name" data-i18n="s5.name">Mobile Applications</div><p class="service-desc" data-i18n="s5.desc">iOS / Android design with deep UX logic, animations and developer-ready components.</p></div>
+    <div class="service-card"><div class="service-num">06</div><div class="service-icon">✦</div><div class="service-name" data-i18n="s6.name">AI Acceleration</div><p class="service-desc" data-i18n="s6.desc">We leverage AI tools to cut design development time without sacrificing quality or customization.</p></div>
   </div>
 </section>
 
@@ -502,257 +563,396 @@ footer{position:relative;z-index:1;padding:32px 48px;border-top:1px solid var(--
 <section class="ai-section" id="ai">
   <div class="ai-grid">
     <div class="ai-left">
-      <div class="section-label">Наша перевага</div>
-      <h2 class="ai-headline">AI не замінює<br>дизайнера —<br>він дає йому<br><em>суперсилу</em></h2>
-      <p class="ai-text">Ми інтегруємо штучний інтелект у кожен етап дизайн-процесу. Генерація концепцій, автоматизація рутини, швидкий ітеративний прототипінг — все це дозволяє нам доставляти рішення рівня топ-студій за доступну ціну і у стислі терміни.</p>
-      <a href="#contact" class="btn-primary">Почати проект</a>
+      <div class="section-label" data-i18n="ai.label">Our Advantage</div>
+      <h2 class="ai-headline" data-i18n-html="ai.headline">AI doesn't replace<br>the designer —<br>it gives them<br><em>superpowers</em></h2>
+      <p class="ai-text" data-i18n="ai.text">We integrate artificial intelligence into every stage of the design process. Concept generation, routine automation, rapid iterative prototyping — all this allows us to deliver top-studio level solutions at accessible prices and tight timelines.</p>
+      <a href="#contact" class="btn-primary" data-i18n="ai.btn">Start a Project</a>
     </div>
     <div class="ai-right">
-      <div class="ai-metric"><div class="ai-metric-val">3<span>×</span></div><div class="ai-metric-label">швидше від<br>традиційних студій</div></div>
-      <div class="ai-metric"><div class="ai-metric-val">↓<span>60%</span></div><div class="ai-metric-label">вартість ітерацій<br>та правок</div></div>
-      <div class="ai-metric"><div class="ai-metric-val">∞</div><div class="ai-metric-label">кількість варіантів<br>на вибір</div></div>
-      <div class="ai-metric"><div class="ai-metric-val">24<span>h</span></div><div class="ai-metric-label">перший концепт<br>вже завтра</div></div>
+      <div class="ai-metric"><div class="ai-metric-val">3<span>×</span></div><div class="ai-metric-label" data-i18n="ai.m1">faster than<br>traditional studios</div></div>
+      <div class="ai-metric"><div class="ai-metric-val">↓<span>60%</span></div><div class="ai-metric-label" data-i18n="ai.m2">cost of iterations<br>and revisions</div></div>
+      <div class="ai-metric"><div class="ai-metric-val">∞</div><div class="ai-metric-label" data-i18n="ai.m3">number of concept<br>variants to choose</div></div>
+      <div class="ai-metric"><div class="ai-metric-val">24<span>h</span></div><div class="ai-metric-label" data-i18n="ai.m4">first concept<br>by tomorrow</div></div>
     </div>
   </div>
 </section>
 
-<!-- PROCESS (animated) -->
+<!-- PROCESS -->
 <section id="process">
   <div class="section-header">
-    <div><div class="section-label">Як ми працюємо</div><h2 class="section-title">Процес</h2></div>
-    <div class="section-count">04 етапи</div>
+    <div>
+      <div class="section-label" data-i18n="process.label">How We Work</div>
+      <h2 class="section-title" data-i18n="process.title">Process</h2>
+    </div>
+    <div class="section-count" data-i18n="process.count">04 stages</div>
   </div>
   <div class="process-scene">
     <div class="process-track" id="processTrack">
-
       <div class="pstep" style="transition-delay:.0s">
-        <div class="ps-line"></div>
-        <div class="ps-dot"></div>
+        <div class="ps-line"></div><div class="ps-dot"></div>
         <div class="ps-num">01</div>
-        <div class="ps-title">Діскавері та брифінг</div>
-        <p class="ps-desc">Занурюємось у ваш бізнес, аудиторію і конкурентів. Формуємо чітке ТЗ та бачення продукту.</p>
-        <span class="ps-tag">1–2 дні</span>
+        <div class="ps-title" data-i18n="p1.title">Discovery & Brief</div>
+        <p class="ps-desc" data-i18n="p1.desc">We dive into your business, audience and competitors. We form a clear specification and product vision.</p>
+        <span class="ps-tag" data-i18n="p1.tag">1–2 days</span>
       </div>
-
       <div class="pstep" style="transition-delay:.15s">
-        <div class="ps-line"></div>
-        <div class="ps-dot"></div>
+        <div class="ps-line"></div><div class="ps-dot"></div>
         <div class="ps-num">02</div>
-        <div class="ps-title">Концепція та wireframes</div>
-        <p class="ps-desc">Структура, навігація і логіка взаємодії. Швидко тестуємо гіпотези на прототипах.</p>
-        <span class="ps-tag">2–4 дні</span>
+        <div class="ps-title" data-i18n="p2.title">Concept & Wireframes</div>
+        <p class="ps-desc" data-i18n="p2.desc">Structure, navigation and interaction logic. We rapidly test hypotheses on prototypes.</p>
+        <span class="ps-tag" data-i18n="p2.tag">2–4 days</span>
       </div>
-
       <div class="pstep" style="transition-delay:.3s">
-        <div class="ps-line"></div>
-        <div class="ps-dot"></div>
+        <div class="ps-line"></div><div class="ps-dot"></div>
         <div class="ps-num">03</div>
-        <div class="ps-title">UI та деталізація</div>
-        <p class="ps-desc">Кольори, типографіка, компоненти, мікро-анімації. Дизайн-система готова до передачі.</p>
-        <span class="ps-tag">3–7 днів</span>
+        <div class="ps-title" data-i18n="p3.title">UI & Detailing</div>
+        <p class="ps-desc" data-i18n="p3.desc">Colors, typography, components, micro-animations. Design system ready for handoff.</p>
+        <span class="ps-tag" data-i18n="p3.tag">3–7 days</span>
       </div>
-
       <div class="pstep" style="transition-delay:.45s">
         <div class="ps-dot"></div>
         <div class="ps-num">04</div>
-        <div class="ps-title">Передача та підтримка</div>
-        <p class="ps-desc">Готові макети у Figma, хендовер для розробників і підтримка під час верстки.</p>
-        <span class="ps-tag">Ongoing</span>
+        <div class="ps-title" data-i18n="p4.title">Handoff & Support</div>
+        <p class="ps-desc" data-i18n="p4.desc">Final Figma files, developer handover and ongoing support during development.</p>
+        <span class="ps-tag" data-i18n="p4.tag">Ongoing</span>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════
-     CASES — hover-reveal list
-═══════════════════════════════ -->
+<!-- CASES — 7 cards with live iframes -->
 <section id="cases">
   <div class="section-header">
-    <div><div class="section-label">Наші роботи</div><h2 class="section-title">Кейси</h2></div>
-    <div class="section-count">03 проекти</div>
+    <div>
+      <div class="section-label" data-i18n="cases.label">Our Work</div>
+      <h2 class="section-title" data-i18n="cases.title">Cases</h2>
+    </div>
+    <div class="section-count" data-i18n="cases.count">09 projects</div>
   </div>
 
-  <!-- 3D FLOATING CARDS STAGE -->
   <div class="cases-stage" id="casesStage">
     <div class="cases-stage-inner" id="casesInner">
-
-      <!-- ambient glow blobs -->
+      <!-- Obsidian web SVG lines — drawn by JS -->
+      <svg class="cases-web-svg" id="webSvg" xmlns="http://www.w3.org/2000/svg"></svg>
       <div class="cases-glow cg1"></div>
       <div class="cases-glow cg2"></div>
       <div class="cases-glow cg3"></div>
 
-      <!-- CARD 1: McLaren -->
-      <a href="https://vbvb00590-tech.github.io/Case1/" target="_blank" class="fcard fcard-1">
+      <!-- CARD 1 -->
+      <a href="https://fx-socialclub.github.io/Case1/" target="_blank" class="fcard fcard-1">
         <div class="fc-thumb">
-          <div class="prev-mclaren" style="position:absolute;inset:0">
-            <div class="pm-grid"></div><div class="pm-glow"></div><div class="pm-dot"></div>
-            <div class="pm-title">FX.<br>AI CLUB</div>
-            <div class="pm-bars">
-              <div class="pm-bar" style="height:28px"></div><div class="pm-bar" style="height:44px"></div>
-              <div class="pm-bar" style="height:20px"></div><div class="pm-bar" style="height:56px"></div>
-              <div class="pm-bar" style="height:36px"></div><div class="pm-bar" style="height:48px"></div>
-            </div>
-          </div>
+          <iframe src="https://fx-socialclub.github.io/Case1/" loading="lazy" scrolling="no" frameborder="0" title="Case 1"></iframe>
         </div>
         <div class="fc-body">
           <div class="fc-num">01 / Landing Page</div>
-          <div class="fc-title">FX. AI Club — McLaren</div>
+          <div class="fc-title">A Smarter Way to Trade & Invest</div>
           <div class="fc-tags"><span class="fc-tag">Automotive</span><span class="fc-tag">AI Design</span><span class="fc-tag">Neon</span></div>
-          <div class="fc-link">Переглянути ↗</div>
+          <div class="fc-link" data-i18n="cases.view">View ↗</div>
         </div>
       </a>
 
-      <!-- CARD 2: Trading Terminal -->
-      <a href="https://vbvb00590-tech.github.io/Case2/" target="_blank" class="fcard fcard-2">
-        <div class="fc-thumb" style="height:165px">
-          <div class="prev-yinger" style="position:absolute;inset:0">
-            <div class="py-ticker">
-              <span class="py-pair">EUR/USD <span>1.0823</span></span>
-              <span class="py-pair">BTC <span style="color:#00e5ff">43,210</span></span>
-            </div>
-            <div class="py-chart" style="top:40px">
-              <svg viewBox="0 0 400 70" preserveAspectRatio="none">
-                <polyline points="0,65 60,50 120,55 200,28 280,18 360,22 400,10" fill="none" stroke="rgba(0,255,136,0.65)" stroke-width="1.5"/>
-                <polygon points="0,65 60,50 120,55 200,28 280,18 360,22 400,10 400,70 0,70" fill="rgba(0,255,136,0.05)"/>
-              </svg>
-            </div>
-            <div class="py-rows" style="top:120px">
-              <div class="py-row"><span class="py-cell">EUR/USD</span><span class="py-cell up">+0.42%</span><span class="py-cell">1.0823</span></div>
-              <div class="py-row"><span class="py-cell">GBP/USD</span><span class="py-cell dn">-0.18%</span><span class="py-cell">1.2641</span></div>
-            </div>
-          </div>
+      <!-- CARD 2 -->
+      <a href="https://fx-socialclub.github.io/Case2/" target="_blank" class="fcard fcard-2">
+        <div class="fc-thumb">
+          <iframe src="https://fx-socialclub.github.io/Case2/" loading="lazy" scrolling="no" frameborder="0" title="Case 2"></iframe>
         </div>
         <div class="fc-body">
           <div class="fc-num">02 / Dashboard</div>
-          <div class="fc-title">Trading Terminal</div>
+          <div class="fc-title">GPT INV</div>
           <div class="fc-tags"><span class="fc-tag">Fintech</span><span class="fc-tag">Terminal UI</span></div>
-          <div class="fc-link">Переглянути ↗</div>
+          <div class="fc-link" data-i18n="cases.view">View ↗</div>
         </div>
       </a>
 
-      <!-- CARD 3: GPT INV -->
-      <a href="https://vbvb00590-tech.github.io/Case3/" target="_blank" class="fcard fcard-3">
-        <div class="fc-thumb" style="height:195px">
-          <div class="prev-gptinv" style="position:absolute;inset:0">
-            <div class="pg-atm"></div>
-            <div class="pg-nav"><div class="pg-badge">G</div><div class="pg-navtitle">GPT INV</div></div>
-            <div class="pg-h1">Trade<br>smarter<br>with <span>AI</span></div>
-            <div class="pg-card"><div class="pg-clabel">PORTFOLIO VALUE</div><div class="pg-cval">$48,291<small>↑ 12.4%</small></div></div>
-          </div>
+      <!-- CARD 3 -->
+      <a href="https://fx-socialclub.github.io/Case3/" target="_blank" class="fcard fcard-3">
+        <div class="fc-thumb">
+          <iframe src="https://fx-socialclub.github.io/Case3/" loading="lazy" scrolling="no" frameborder="0" title="Case 3"></iframe>
         </div>
         <div class="fc-body">
           <div class="fc-num">03 / SaaS Platform</div>
-          <div class="fc-title">GPT INV — AI Trading</div>
+          <div class="fc-title">Auto Cash flow.</div>
           <div class="fc-tags"><span class="fc-tag">AI Platform</span><span class="fc-tag">Fintech</span></div>
-          <div class="fc-link">Переглянути ↗</div>
+          <div class="fc-link" data-i18n="cases.view">View ↗</div>
         </div>
       </a>
 
-      <!-- mini deco cards -->
-      <div class="fcard fcard-mini fcard-m1" style="background:#050505;display:flex;align-items:center;justify-content:center;">
-        <div style="font-family:'Space Mono',monospace;font-size:8px;color:var(--accent);text-align:center;padding:8px;">UX/UI<br>Design</div>
-      </div>
-      <div class="fcard fcard-mini fcard-m2" style="background:#050505;display:flex;align-items:center;justify-content:center;">
-        <div style="font-family:'Space Mono',monospace;font-size:8px;color:#00d4ff;text-align:center;padding:8px;">AI<br>Powered</div>
-      </div>
-      <div class="fcard fcard-mini fcard-m3" style="background:#050505;display:flex;align-items:center;justify-content:center;">
-        <div style="font-family:'Space Mono',monospace;font-size:8px;color:#ff00aa;text-align:center;padding:8px;">100+<br>Projects</div>
-      </div>
+      <!-- CARD 4 -->
+      <a href="https://fx-socialclub.github.io/Case4/" target="_blank" class="fcard fcard-4">
+        <div class="fc-thumb">
+          <iframe src="https://fx-socialclub.github.io/Case4/" loading="lazy" scrolling="no" frameborder="0" title="Case 4"></iframe>
+        </div>
+        <div class="fc-body">
+          <div class="fc-num">04 / Landing Page</div>
+          <div class="fc-title">Coffee Shop</div>
+          <div class="fc-tags"><span class="fc-tag">Web Design</span><span class="fc-tag">UX/UI</span></div>
+          <div class="fc-link" data-i18n="cases.view">View ↗</div>
+        </div>
+      </a>
+
+      <!-- CARD 5 -->
+      <a href="https://anubis-crypto-ai.github.io/ONE/" target="_blank" class="fcard fcard-5">
+        <div class="fc-thumb">
+          <iframe src="https://anubis-crypto-ai.github.io/ONE/" loading="lazy" scrolling="no" frameborder="0" title="Case 5"></iframe>
+        </div>
+        <div class="fc-body">
+          <div class="fc-num">05 / Platform</div>
+          <div class="fc-title">Anubis Crypto — ONE</div>
+          <div class="fc-tags"><span class="fc-tag">Crypto</span><span class="fc-tag">Media</span></div>
+          <div class="fc-link" data-i18n="cases.view">View ↗</div>
+        </div>
+      </a>
+
+      <!-- CARD 6 -->
+      <a href="https://anubis-crypto-ai.github.io/Weekly-plan/" target="_blank" class="fcard fcard-6">
+        <div class="fc-thumb">
+          <iframe src="https://anubis-crypto-ai.github.io/Weekly-plan/" loading="lazy" scrolling="no" frameborder="0" title="Case 6"></iframe>
+        </div>
+        <div class="fc-body">
+          <div class="fc-num">06 / Dashboard</div>
+          <div class="fc-title">Weekly Plan — Anubis</div>
+          <div class="fc-tags"><span class="fc-tag">Crypto</span><span class="fc-tag">Strategy</span></div>
+          <div class="fc-link" data-i18n="cases.view">View ↗</div>
+        </div>
+      </a>
+
+      <!-- CARD 7 (small center card) -->
+      <a href="https://fx-socialclub.github.io/Case7/" target="_blank" class="fcard fcard-7">
+        <div class="fc-thumb" style="height:120px;">
+          <iframe src="https://fx-socialclub.github.io/Case7/" loading="lazy" scrolling="no" frameborder="0" title="Case 7"></iframe>
+        </div>
+        <div class="fc-body">
+          <div class="fc-num">07 / Affiliate</div>
+          <div class="fc-title">Affiliate Stack</div>
+          <div class="fc-tags"><span class="fc-tag">B2B</span><span class="fc-tag">Crypto</span></div>
+          <div class="fc-link" data-i18n="cases.view">View ↗</div>
+        </div>
+      </a>
+
+      <!-- CARD 8 — FB Soft for Media Buyer (web) -->
+      <a href="https://fx-socialclub.github.io/https-vbvb00590-tech.github.io/" target="_blank" class="fcard fcard-8">
+        <div class="fc-thumb">
+          <iframe src="https://fx-socialclub.github.io/https-vbvb00590-tech.github.io/" loading="lazy" scrolling="no" frameborder="0" title="Case 8"></iframe>
+        </div>
+        <div class="fc-body">
+          <div class="fc-num">08 / SaaS Tool</div>
+          <div class="fc-title">FB Soft for Media Buyer</div>
+          <div class="fc-tags"><span class="fc-tag">Web App</span><span class="fc-tag">Media Buying</span></div>
+          <div class="fc-link" data-i18n="cases.view">View ↗</div>
+        </div>
+      </a>
+
+      <!-- CARD 9 — Case #8.1 Telegram WebView -->
+      <a href="https://t.me/fxsocialclub_bot" target="_blank" class="fcard fcard-9">
+        <div class="fc-thumb tg-thumb">
+          <div class="tg-preview">
+            <div class="tg-hdr">
+              <div class="tg-brand-wrap">
+                <div class="tg-brand">FX. Social Club</div>
+                <div class="tg-sub">AI Agent System</div>
+              </div>
+              <div>
+                <div class="tg-total">$612</div>
+                <div class="tg-total-sub">↑ 18% · 11 AC · 2 BM</div>
+              </div>
+            </div>
+            <div class="tg-tabs-row">
+              <span class="tg-tab-i on">All GEO</span>
+              <span class="tg-tab-i">US</span>
+              <span class="tg-tab-i">UK</span>
+              <span class="tg-tab-i">AU</span>
+            </div>
+            <div class="tg-grid">
+              <div class="tg-met"><div class="tg-met-lbl">ROAS</div><div class="tg-met-val">4.4x</div><div class="tg-met-target">цель >4x</div></div>
+              <div class="tg-met"><div class="tg-met-lbl">CPL</div><div class="tg-met-val">$0.57</div><div class="tg-met-target">цель &lt;$0.65</div></div>
+              <div class="tg-met"><div class="tg-met-lbl">CTR</div><div class="tg-met-val">2.9%</div><div class="tg-met-target">цель >2%</div></div>
+              <div class="tg-met"><div class="tg-met-lbl">ROI</div><div class="tg-met-val">285%</div><div class="tg-met-target">цель >150%</div></div>
+            </div>
+          </div>
+          <div class="tg-badge"><span class="tg-badge-inner">Telegram WebView</span></div>
+        </div>
+        <div class="fc-body">
+          <div class="fc-num">08.1 / Mini App</div>
+          <div class="fc-title">FB Soft (Telegram WebView)</div>
+          <div class="fc-tags"><span class="fc-tag">@fxsocialclub_bot</span><span class="fc-tag">TG App</span></div>
+          <div class="fc-link" data-i18n="cases.view">View ↗</div>
+        </div>
+      </a>
 
     </div>
   </div>
 
-  <!-- MOBILE: accordion -->
-  <div class="cases-mobile">
-
-    <div class="cm-item open">
-      <div class="cm-header">
-        <span class="cm-num">01</span>
-        <span class="cm-name">FX. AI Club — McLaren</span>
-        <span class="cm-chevron">▾</span>
+  <!-- ALL CASES LINKS -->
+  <div class="cases-links">
+    <div class="cases-links-title" data-i18n="cases.allLinks">All projects</div>
+    <div class="cl-grid">
+      <div class="cl-item">
+        <span class="cl-num">Case #1</span>
+        <span class="cl-name">A Smarter Way to Trade & Invest</span>
+        <a href="https://fx-socialclub.github.io/Case1/" target="_blank" class="cl-link">↗ View</a>
       </div>
-      <div class="cm-body">
-        <div class="cm-thumb">
-          <div class="prev-mclaren">
-            <div class="pm-grid"></div><div class="pm-glow"></div><div class="pm-dot"></div>
-            <div class="pm-title" style="font-size:18px">FX.<br>AI CLUB</div>
-            <div class="pm-bars">
-              <div class="pm-bar" style="height:22px"></div><div class="pm-bar" style="height:34px"></div>
-              <div class="pm-bar" style="height:16px"></div><div class="pm-bar" style="height:42px"></div>
-              <div class="pm-bar" style="height:28px"></div>
-            </div>
-          </div>
-        </div>
-        <div class="cm-tags"><span class="cm-tag">Landing Page</span><span class="cm-tag">Automotive</span><span class="cm-tag">AI Design</span></div>
-        <p class="cm-desc">Неоновий лендінг для автомобільного клубу — агресивна зелена палітра, глітч-ефекти, кастомний курсор.</p>
-        <a href="https://vbvb00590-tech.github.io/Case1/" target="_blank" class="cm-link">Переглянути проект ↗</a>
+      <div class="cl-item">
+        <span class="cl-num">Case #2</span>
+        <span class="cl-name">GPT INV</span>
+        <a href="https://fx-socialclub.github.io/Case2/" target="_blank" class="cl-link">↗ View</a>
       </div>
-    </div>
-
-    <div class="cm-item">
-      <div class="cm-header">
-        <span class="cm-num">02</span>
-        <span class="cm-name">Trading Terminal</span>
-        <span class="cm-chevron">▾</span>
+      <div class="cl-item">
+        <span class="cl-num">Case #3</span>
+        <span class="cl-name">Auto Cash flow.</span>
+        <a href="https://fx-socialclub.github.io/Case3/" target="_blank" class="cl-link">↗ View</a>
       </div>
-      <div class="cm-body">
-        <div class="cm-thumb">
-          <div class="prev-yinger">
-            <div class="py-ticker"><span class="py-pair">EUR/USD <span>1.0823</span></span><span class="py-pair">BTC <span style="color:#00e5ff">43,210</span></span></div>
-            <div class="py-chart"><svg viewBox="0 0 400 80" preserveAspectRatio="none"><polyline points="0,70 80,50 160,35 240,20 320,15 400,8" fill="none" stroke="rgba(0,255,136,0.6)" stroke-width="1.5"/></svg></div>
-          </div>
-        </div>
-        <div class="cm-tags"><span class="cm-tag">Dashboard</span><span class="cm-tag">Fintech</span><span class="cm-tag">Terminal UI</span></div>
-        <p class="cm-desc">Мінімалістичний термінал у стилі Bloomberg — монохромна кольорова схема, реал-тайм дані.</p>
-        <a href="https://vbvb00590-tech.github.io/Case2/" target="_blank" class="cm-link">Переглянути проект ↗</a>
+      <div class="cl-item">
+        <span class="cl-num">Case #4</span>
+        <span class="cl-name">Coffee Shop</span>
+        <a href="https://fx-socialclub.github.io/Case4/" target="_blank" class="cl-link">↗ View</a>
       </div>
-    </div>
-
-    <div class="cm-item">
-      <div class="cm-header">
-        <span class="cm-num">03</span>
-        <span class="cm-name">GPT INV Platform</span>
-        <span class="cm-chevron">▾</span>
+      <div class="cl-item">
+        <span class="cl-num">Case #5</span>
+        <span class="cl-name">Anubis Crypto — ONE</span>
+        <a href="https://anubis-crypto-ai.github.io/ONE/" target="_blank" class="cl-link">↗ View</a>
       </div>
-      <div class="cm-body">
-        <div class="cm-thumb">
-          <div class="prev-gptinv">
-            <div class="pg-atm"></div>
-            <div class="pg-nav"><div class="pg-badge">G</div><div class="pg-navtitle">GPT INV</div></div>
-            <div class="pg-h1" style="font-size:22px">Trade<br>with <span>AI</span></div>
-          </div>
-        </div>
-        <div class="cm-tags"><span class="cm-tag">SaaS</span><span class="cm-tag">AI Platform</span><span class="cm-tag">Fintech</span></div>
-        <p class="cm-desc">Платформа для AI-торгівлі — bold червона палітра, складна ієрархія даних, адаптивна система.</p>
-        <a href="https://vbvb00590-tech.github.io/Case3/" target="_blank" class="cm-link">Переглянути проект ↗</a>
+      <div class="cl-item">
+        <span class="cl-num">Case #6</span>
+        <span class="cl-name">Weekly Plan — Anubis</span>
+        <a href="https://anubis-crypto-ai.github.io/Weekly-plan/" target="_blank" class="cl-link">↗ View</a>
+      </div>
+      <div class="cl-item">
+        <span class="cl-num">Case #7</span>
+        <span class="cl-name">Affiliate Stack</span>
+        <a href="https://fx-socialclub.github.io/Case7/" target="_blank" class="cl-link">↗ View</a>
+      </div>
+      <div class="cl-item">
+        <span class="cl-num">Case #8</span>
+        <span class="cl-name">FB Soft for Media Buyer (web)</span>
+        <a href="https://fx-socialclub.github.io/https-vbvb00590-tech.github.io/" target="_blank" class="cl-link">↗ View</a>
+      </div>
+      <div class="cl-item">
+        <span class="cl-num">Case #8.1</span>
+        <span class="cl-name">FB Soft for Media Buyer (Telegram WebView)</span>
+        <a href="https://t.me/fxsocialclub_bot" target="_blank" class="cl-link">↗ View</a>
       </div>
     </div>
-
-  </div><!-- /cases-mobile -->
+  </div>
 </section>
 
 <!-- CTA -->
 <section class="cta-section" id="contact">
-  <div class="cta-label">Готові почати?</div>
-  <h2 class="cta-title">Давайте створимо<br>щось <em>видатне</em></h2>
-  <p class="cta-sub">Розкажіть про ваш проект — ми відповімо впродовж 24 годин з першими ідеями.</p>
-  <a href="https://t.me/fx_social_club" target="_blank" class="cta-email">Написати в Telegram →</a>
+  <div class="cta-label" data-i18n="cta.label">Ready to Start?</div>
+  <h2 class="cta-title" data-i18n-html="cta.title">Let's create<br>something <em>outstanding</em></h2>
+  <p class="cta-sub" data-i18n="cta.sub">Tell us about your project — we'll respond within 24 hours with the first ideas.</p>
+  <a href="https://t.me/fx_social_club" target="_blank" class="cta-email" data-i18n="cta.link">Write on Telegram →</a>
 </section>
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">FX. SOCIAL CLUB © 2025</div>
   <div class="footer-links">
-    <a href="#services">Послуги</a>
-    <a href="#cases">Кейси</a>
-    <a href="#contact">Контакт</a>
+    <a href="#services" data-i18n="nav.services">Services</a>
+    <a href="#cases" data-i18n="nav.cases">Cases</a>
+    <a href="#contact" data-i18n="footer.contact">Contact</a>
   </div>
   <div class="footer-copy">UX/UI Design × AI</div>
 </footer>
 
 <script>
-// ── Scroll progress ──
+// ════════════════════════════════
+// TRANSLATIONS
+// ════════════════════════════════
+const T = {
+  en: {
+    'nav.services':'Services','nav.process':'Process','nav.cases':'Cases','nav.cta':'Contact',
+    'hero.label':'Design × AI Studio',
+    'hero.title':'Design that<br><span class="accent-word">sells</span> &amp;<br><span class="accent-hl">amazes</span>',
+    'hero.sub':'We create UX/UI design for business, combining deep understanding of human behavior with AI capabilities.',
+    'hero.btn1':'View Cases','hero.btn2':'Discuss a Project',
+    'stat.projects':'Projects','stat.faster':'Faster with AI','stat.clients':'Happy Clients',
+    'services.label':'What We Do','services.title':'Services','services.count':'06 directions',
+    's1.name':'UX/UI Design','s1.desc':'We design interfaces with user behavior in mind — from research to the final pixel.',
+    's2.name':'Landing Pages & Sites','s2.desc':'Conversion-focused pages with unique design that reflects the brand and meets business goals.',
+    's3.name':'Dashboards & SaaS','s3.desc':'Complex data-heavy products — we make them clear, convenient and visually flawless.',
+    's4.name':'Branding','s4.desc':'Visual identity that stands out — logo, style, brand guidelines for all communication channels.',
+    's5.name':'Mobile Applications','s5.desc':'iOS / Android design with deep UX logic, animations and developer-ready components.',
+    's6.name':'AI Acceleration','s6.desc':'We leverage AI tools to cut design development time without sacrificing quality or customization.',
+    'ai.label':'Our Advantage',
+    'ai.headline':'AI doesn\'t replace<br>the designer —<br>it gives them<br><em>superpowers</em>',
+    'ai.text':'We integrate artificial intelligence into every stage of the design process. Concept generation, routine automation, rapid iterative prototyping — all this allows us to deliver top-studio level solutions at accessible prices and tight timelines.',
+    'ai.btn':'Start a Project',
+    'ai.m1':'faster than<br>traditional studios','ai.m2':'cost of iterations<br>and revisions',
+    'ai.m3':'number of concept<br>variants to choose','ai.m4':'first concept<br>by tomorrow',
+    'process.label':'How We Work','process.title':'Process','process.count':'04 stages',
+    'p1.title':'Discovery & Brief','p1.desc':'We dive into your business, audience and competitors. We form a clear specification and product vision.','p1.tag':'1–2 days',
+    'p2.title':'Concept & Wireframes','p2.desc':'Structure, navigation and interaction logic. We rapidly test hypotheses on prototypes.','p2.tag':'2–4 days',
+    'p3.title':'UI & Detailing','p3.desc':'Colors, typography, components, micro-animations. Design system ready for handoff.','p3.tag':'3–7 days',
+    'p4.title':'Handoff & Support','p4.desc':'Final Figma files, developer handover and ongoing support during development.','p4.tag':'Ongoing',
+    'cases.label':'Our Work','cases.title':'Cases','cases.count':'09 projects','cases.view':'View ↗','cases.allLinks':'All projects',
+    'cta.label':'Ready to Start?',
+    'cta.title':'Let\'s create<br>something <em>outstanding</em>',
+    'cta.sub':'Tell us about your project — we\'ll respond within 24 hours with the first ideas.',
+    'cta.link':'Write on Telegram →','footer.contact':'Contact',
+  },
+  ru: {
+    'nav.services':'Услуги','nav.process':'Процесс','nav.cases':'Кейсы','nav.cta':'Связаться',
+    'hero.label':'Дизайн × AI Студия',
+    'hero.title':'Дизайн что<br><span class="accent-word">продаёт</span> и<br><span class="accent-hl">впечатляет</span>',
+    'hero.sub':'Мы создаём UX/UI дизайн для бизнеса, объединяя глубокое понимание поведения людей с возможностями AI.',
+    'hero.btn1':'Смотреть кейсы','hero.btn2':'Обсудить проект',
+    'stat.projects':'Проектов','stat.faster':'Быстрее с AI','stat.clients':'Довольных клиентов',
+    'services.label':'Что мы делаем','services.title':'Услуги','services.count':'06 направлений',
+    's1.name':'UX/UI Дизайн','s1.desc':'Проектируем интерфейсы с учётом поведения пользователя — от исследования до финального пикселя.',
+    's2.name':'Лендинги и сайты','s2.desc':'Конверсионные страницы с уникальным дизайном, отражающим суть бренда и закрывающим задачи бизнеса.',
+    's3.name':'Дашборды и SaaS','s3.desc':'Сложные продукты с большим количеством данных — делаем их понятными, удобными и визуально безупречными.',
+    's4.name':'Брендинг','s4.desc':'Визуальная идентичность, которая выделяет — логотип, стиль, гайдлайн для всех каналов коммуникации.',
+    's5.name':'Мобильные приложения','s5.desc':'Дизайн iOS / Android с глубокой UX-логикой, анимациями и готовыми компонентами для разработчиков.',
+    's6.name':'AI-ускорение','s6.desc':'Используем AI-инструменты, чтобы сократить время разработки дизайна без ущерба для качества.',
+    'ai.label':'Наше преимущество',
+    'ai.headline':'AI не заменяет<br>дизайнера —<br>он даёт ему<br><em>суперсилу</em>',
+    'ai.text':'Мы интегрируем искусственный интеллект на каждом этапе дизайн-процесса. Генерация концепций, автоматизация рутины, быстрый итеративный прототипинг — всё это позволяет нам доставлять решения уровня топ-студий по доступной цене и в сжатые сроки.',
+    'ai.btn':'Начать проект',
+    'ai.m1':'быстрее<br>традиционных студий','ai.m2':'стоимость итераций<br>и правок',
+    'ai.m3':'количество вариантов<br>на выбор','ai.m4':'первый концепт<br>уже завтра',
+    'process.label':'Как мы работаем','process.title':'Процесс','process.count':'04 этапа',
+    'p1.title':'Дискавери и брифинг','p1.desc':'Погружаемся в ваш бизнес, аудиторию и конкурентов. Формируем чёткое ТЗ и видение продукта.','p1.tag':'1–2 дня',
+    'p2.title':'Концепция и вайрфреймы','p2.desc':'Структура, навигация и логика взаимодействия. Быстро тестируем гипотезы на прототипах.','p2.tag':'2–4 дня',
+    'p3.title':'UI и детализация','p3.desc':'Цвета, типографика, компоненты, микро-анимации. Дизайн-система готова к передаче.','p3.tag':'3–7 дней',
+    'p4.title':'Передача и поддержка','p4.desc':'Готовые макеты в Figma, хендовер для разработчиков и поддержка во время верстки.','p4.tag':'Ongoing',
+    'cases.label':'Наши работы','cases.title':'Кейсы','cases.count':'09 проектов','cases.view':'Смотреть ↗','cases.allLinks':'Все проекты',
+    'cta.label':'Готовы начать?',
+    'cta.title':'Давайте создадим<br>что-то <em>выдающееся</em>',
+    'cta.sub':'Расскажите о вашем проекте — мы ответим в течение 24 часов с первыми идеями.',
+    'cta.link':'Написать в Telegram →','footer.contact':'Контакт',
+  }
+};
+
+let currentLang = 'en';
+
+function applyLang(lang) {
+  currentLang = lang;
+  const d = T[lang];
+  // text nodes
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if(d[k] !== undefined) el.textContent = d[k];
+  });
+  // innerHTML (for elements with nested HTML/spans)
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const k = el.getAttribute('data-i18n-html');
+    if(d[k] !== undefined) el.innerHTML = d[k];
+  });
+  // update active button
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+  });
+  document.documentElement.lang = lang;
+}
+
+// Language buttons
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => applyLang(btn.getAttribute('data-lang')));
+});
+
+// ════════════════════════════════
+// SCROLL PROGRESS
+// ════════════════════════════════
 const sl = document.getElementById('scrollLine');
 window.addEventListener('scroll',()=>{
   const s=document.documentElement.scrollTop;
@@ -760,40 +960,40 @@ window.addEventListener('scroll',()=>{
   sl.style.width=(s/h*100)+'%';
 });
 
-// ── Hamburger menu ──
+// ════════════════════════════════
+// HAMBURGER
+// ════════════════════════════════
 const burger=document.getElementById('burger');
 const mm=document.getElementById('mobileMenu');
-burger.addEventListener('click',()=>{
-  burger.classList.toggle('open');
-  mm.classList.toggle('open');
-});
-mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
-  burger.classList.remove('open');mm.classList.remove('open');
-}));
+burger.addEventListener('click',()=>{burger.classList.toggle('open');mm.classList.toggle('open');});
+mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{burger.classList.remove('open');mm.classList.remove('open');}));
 
-// ── 3D Cases parallax ──
-const stage = document.getElementById('casesStage');
-const inner = document.getElementById('casesInner');
-if(stage && inner){
+// ════════════════════════════════
+// 3D CASES PARALLAX
+// ════════════════════════════════
+const stage=document.getElementById('casesStage');
+const inner=document.getElementById('casesInner');
+if(stage&&inner){
   let targetX=0,targetY=0,curX=0,curY=0;
   stage.addEventListener('mousemove',e=>{
     const r=stage.getBoundingClientRect();
-    targetX=((e.clientX-r.left)/r.width-.5)*18;
-    targetY=((e.clientY-r.top)/r.height-.5)*-12;
+    targetX=((e.clientX-r.left)/r.width-.5)*16;
+    targetY=((e.clientY-r.top)/r.height-.5)*-10;
   });
   stage.addEventListener('mouseleave',()=>{targetX=0;targetY=0;});
   (function animStage(){
-    curX+=(targetX-curX)*.07;
-    curY+=(targetY-curY)*.07;
+    curX+=(targetX-curX)*.07; curY+=(targetY-curY)*.07;
     inner.style.transform=`rotateY(${curX}deg) rotateX(${curY}deg)`;
     requestAnimationFrame(animStage);
   })();
 }
 
-// ── Process step animation ──
-const track = document.getElementById('processTrack');
+// ════════════════════════════════
+// PROCESS ANIMATION
+// ════════════════════════════════
+const track=document.getElementById('processTrack');
 if(track){
-  const pObs = new IntersectionObserver(entries=>{
+  const pObs=new IntersectionObserver(entries=>{
     entries.forEach(e=>{
       if(e.isIntersecting){
         track.classList.add('animated');
@@ -805,59 +1005,143 @@ if(track){
   pObs.observe(track);
 }
 
-// ── Mobile accordion ──
-document.querySelectorAll('.cm-header').forEach(h=>{
-  h.addEventListener('click',()=>{
-    const item=h.parentElement;
-    const isOpen=item.classList.contains('open');
-    document.querySelectorAll('.cm-item').forEach(i=>i.classList.remove('open'));
-    if(!isOpen) item.classList.add('open');
-  });
-});
-
-// ── Particle sphere ──
+// ════════════════════════════════
+// PARTICLE SPHERE — larger (600px)
+// ════════════════════════════════
 (function(){
   const canvas=document.getElementById('particleCanvas');
-  if(!canvas)return;
+  if(!canvas) return;
   const ctx=canvas.getContext('2d');
   const isMobile=window.innerWidth<=900;
-  const SIZE=isMobile?320:420;
-  canvas.width=SIZE;canvas.height=SIZE;
-  const CX=SIZE/2,CY=SIZE/2,R=isMobile?130:160,TOTAL=isMobile?600:900;
+  const SIZE=isMobile?340:600;
+  canvas.width=SIZE; canvas.height=SIZE;
+  const CX=SIZE/2, CY=SIZE/2;
+  const R=isMobile?140:228;
+  const TOTAL=isMobile?600:1100;
   let hovering=false,rotX=0,rotY=0,tRX=0,tRY=0,pulseTime=0,autoAngle=0;
   const pts=[];
   const g=Math.PI*(3-Math.sqrt(5));
   for(let i=0;i<TOTAL;i++){
     const y=1-(i/(TOTAL-1))*2,r=Math.sqrt(1-y*y),t=g*i;
-    pts.push({ox:Math.cos(t)*r,oy:y,oz:Math.sin(t)*r,sz:Math.random()*1.2+0.3,br:Math.random()*.5+.3});
+    pts.push({ox:Math.cos(t)*r,oy:y,oz:Math.sin(t)*r,sz:Math.random()*1.4+0.3,br:Math.random()*.5+.3});
   }
   const hero=document.querySelector('.hero');
   if(!isMobile){
-    hero.addEventListener('mousemove',e=>{const rc=canvas.getBoundingClientRect();hovering=true;tRY=((e.clientX-rc.left-CX)/CX)*.6;tRX=((e.clientY-rc.top-CY)/CY)*-.4;});
+    hero.addEventListener('mousemove',e=>{
+      const rc=canvas.getBoundingClientRect();
+      hovering=true;
+      tRY=((e.clientX-rc.left-CX)/CX)*.6;
+      tRX=((e.clientY-rc.top-CY)/CY)*-.4;
+    });
     hero.addEventListener('mouseleave',()=>{hovering=false;tRX=0;tRY=0;});
   }
   function draw(){
     ctx.clearRect(0,0,SIZE,SIZE);
-    rotX+=(tRX-rotX)*.06;rotY+=(tRY-rotY)*.06;
-    if(!hovering)autoAngle+=isMobile?.004:.002;
+    rotX+=(tRX-rotX)*.06; rotY+=(tRY-rotY)*.06;
+    if(!hovering) autoAngle+=isMobile?.004:.002;
     pulseTime+=.025;
     const ps=1+Math.sin(pulseTime)*(isMobile?.07:.04);
     const cRX=Math.cos(rotX),sRX=Math.sin(rotX),cRY=Math.cos(rotY+autoAngle),sRY=Math.sin(rotY+autoAngle);
     const proj=pts.map(p=>{
-      let x=p.ox*cRY-p.oz*sRY,z=p.ox*sRY+p.oz*cRY;
-      let y=p.oy*cRX-z*sRX;z=p.oy*sRX+z*cRX;
+      let x=p.ox*cRY-p.oz*sRY, z=p.ox*sRY+p.oz*cRY;
+      let y=p.oy*cRX-z*sRX; z=p.oy*sRX+z*cRX;
       const sc=(z+1.5)/2.5;
       return{sx:CX+x*R*ps,sy:CY+y*R*ps,depth:(z+1)/2,sz:p.sz*sc,br:p.br*sc};
     });
     proj.sort((a,b)=>a.depth-b.depth);
     proj.forEach(p=>{
       const a=Math.min(p.br*(hovering?1:.75),1);
-      ctx.beginPath();ctx.arc(p.sx,p.sy,p.sz,0,Math.PI*2);
-      ctx.fillStyle=`rgba(255,255,255,${a.toFixed(2)})`;ctx.fill();
+      ctx.beginPath(); ctx.arc(p.sx,p.sy,p.sz,0,Math.PI*2);
+      ctx.fillStyle=`rgba(255,255,255,${a.toFixed(2)})`; ctx.fill();
     });
     requestAnimationFrame(draw);
   }
   draw();
+})();
+
+// ════════════════════════════════
+// OBSIDIAN WEB LINES
+// ════════════════════════════════
+(function(){
+  const svg = document.getElementById('webSvg');
+  const stage = document.getElementById('casesStage');
+  if(!svg || !stage) return;
+
+  // star topology: only hub (index 0) connects to each node
+  // no lines between peripheral nodes
+  const edges = [
+    [0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[0,8]
+  ];
+
+  function drawLines(){
+    svg.innerHTML = '';
+    const stageR = stage.getBoundingClientRect();
+    const cards = [...document.querySelectorAll('.fcard')];
+    const centers = cards.map(c => {
+      const r = c.getBoundingClientRect();
+      return {
+        x: r.left - stageR.left + r.width / 2,
+        y: r.top  - stageR.top  + r.height / 2
+      };
+    });
+
+    const NS = 'http://www.w3.org/2000/svg';
+    edges.forEach(([a,b]) => {
+      if(!centers[a] || !centers[b]) return;
+      // glow layer
+      const lg = document.createElementNS(NS,'line');
+      lg.setAttribute('x1', centers[a].x); lg.setAttribute('y1', centers[a].y);
+      lg.setAttribute('x2', centers[b].x); lg.setAttribute('y2', centers[b].y);
+      lg.setAttribute('class','web-line-glow');
+      svg.appendChild(lg);
+      // sharp layer
+      const l = document.createElementNS(NS,'line');
+      l.setAttribute('x1', centers[a].x); l.setAttribute('y1', centers[a].y);
+      l.setAttribute('x2', centers[b].x); l.setAttribute('y2', centers[b].y);
+      l.setAttribute('class','web-line');
+      svg.appendChild(l);
+    });
+  }
+
+  // draw after layout settles
+  requestAnimationFrame(() => { setTimeout(drawLines, 120); });
+  window.addEventListener('resize', drawLines);
+})();
+
+// ════════════════════════════════
+// MAC DOCK HOVER — cases
+// ════════════════════════════════
+(function(){
+  const fcards = [...document.querySelectorAll('.fcard')];
+  if (!fcards.length) return;
+
+  function cardCenter(c){
+    const r = c.getBoundingClientRect();
+    return { x: r.left + r.width/2, y: r.top + r.height/2 };
+  }
+
+  function dist(a, b){
+    return Math.hypot(a.x - b.x, a.y - b.y);
+  }
+
+  fcards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      const hc = cardCenter(card);
+      card.classList.add('dock-hover');
+      fcards.forEach(other => {
+        if (other === card) return;
+        const d = dist(hc, cardCenter(other));
+        if (d < 280) {
+          other.classList.add('dock-near');
+        }
+      });
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.classList.remove('dock-hover');
+      fcards.forEach(other => other.classList.remove('dock-near'));
+    });
+  });
 })();
 </script>
 </body>
