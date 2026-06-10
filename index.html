@@ -444,9 +444,19 @@ footer{position:relative;z-index:1;padding:32px 48px;border-top:1px solid var(--
   .process-track{grid-template-columns:1fr 1fr;}
   .pstep{border-right:1px solid var(--border)!important;}
   .cases-stage{height:auto;perspective:none;overflow:visible;}
-  .cases-stage-inner{transform:none!important;display:flex;flex-direction:column;gap:16px;padding:4px 0;}
-  .fcard{position:static!important;width:100%!important;animation:none!important;transform:none!important;}
-  .cases-glow{display:none;}
+  .cases-stage-inner{transform:none!important;display:flex;flex-direction:column;gap:24px;padding:4px 0;}
+  .fcard{position:static!important;width:100%!important;animation:none!important;transform:none!important;opacity:1!important;}
+  /* reset depth shadows on mobile */
+  .fcard-1,.fcard-2,.fcard-3,.fcard-4,.fcard-5,.fcard-6,.fcard-7,.fcard-8,.fcard-9{box-shadow:0 4px 20px rgba(0,0,0,0.5);}
+  .cases-glow,.cases-web-svg{display:none;}
+  /* bigger thumbnails on mobile */
+  .fc-thumb{height:200px!important;}
+  .fc-thumb iframe{transform:scale(0.24)!important;transform-origin:top left!important;}
+  .tg-thumb.fc-thumb{height:200px!important;}
+  .tg-preview{padding:10px 9px 26px!important;}
+  .tg-brand{font-size:10px!important;} .tg-total{font-size:12px!important;}
+  .tg-met-val{font-size:14px!important;} .tg-met-lbl{font-size:6.5px!important;}
+  .tg-grid{gap:4px!important;}
   footer{flex-direction:column;gap:16px;text-align:center;}
   .footer-links{justify-content:center;}
   .section-header{flex-direction:column;align-items:flex-start;gap:8px;}
@@ -456,6 +466,22 @@ footer{position:relative;z-index:1;padding:32px 48px;border-top:1px solid var(--
   .process-track{grid-template-columns:1fr;}
   .services-grid{grid-template-columns:1fr;}
   .hero-title{font-size:clamp(36px,9vw,60px);}
+}
+
+/* ── TOUCH DEVICE FIX ──
+   Safari / iOS: :hover never fires → show service accents permanently */
+@media(hover:none){
+  /* Bottom accent line always visible on touch */
+  .service-card::after{width:100%;opacity:0.7;}
+  /* Icon always glows */
+  .service-card .service-icon{border-color:rgba(200,255,0,0.4);box-shadow:0 0 16px rgba(200,255,0,0.2);}
+  /* Subtle card bg */
+  .service-card{background:var(--card);}
+  /* Process dots always fully lit */
+  .pstep .ps-dot{box-shadow:0 0 0 6px var(--accent2),var(--glow);}
+  /* Active tap feedback */
+  .service-card:active{background:var(--card2);}
+  .fcard:active{transform:scale(1.04)!important;border-color:var(--accent)!important;}
 }
 </style>
 </head>
